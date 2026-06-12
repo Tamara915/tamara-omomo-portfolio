@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tamara Omomo — GTM Engineer</title>
+<meta name="description" content="GTM Engineer — I engineer go-to-market that compounds. Half operator, half engineer, I build the pipelines, enrichment and automation that turn messy go-to-market into a measurable, self-running system." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   Tamara Omomo — GTM Engineer · type-led portfolio
+   Warm dark + burnt ember system
+   ============================================================ */
+
+:root {
+  --ink: #15100d;          /* base canvas */
+  --ink-deep: #100b09;     /* deeper panels */
+  --ink-2: #1d1611;        /* raised panels */
+  --line: #2c2620;         /* hairlines */
+  --line-2: #3a322a;
+  --cream: #f0dfcb;        /* primary text */
+  --cream-dim: #c4b8a4;
+  --muted: #8c8170;        /* secondary text */
+  --faint: #5d5447;        /* tertiary / captions */
+  --ember: #f87f23;        /* primary accent */
+  --ember-deep: #cc3711;
+  --red: #cc0a0d;          /* hot accent */
+  --shell: 1320px;
+  --pad: clamp(20px, 5vw, 64px);
+  --font-g: "Space Grotesk", sans-serif;
+  --font-s: "Instrument Serif", Georgia, serif;
+  --font-m: "JetBrains Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-g);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+::selection { background: var(--ember); color: var(--ink); }
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ---- type helpers ---- */
+.ital { font-family: var(--font-s); font-style: italic; font-weight: 400; }
+.mono { font-family: var(--font-m); }
+.label {
+  font-family: var(--font-m); font-size: 12px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+}
+.shell { max-width: var(--shell); margin: 0 auto; padding: 0 var(--pad); }
+.ember { color: var(--ember); }
+.aster { color: var(--ember); display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.aster.spin { animation: spin 9s linear infinite; }
+
+/* ---- section scaffolding ---- */
+section { position: relative; }
+.sec-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 24px; padding-bottom: 28px; margin-bottom: clamp(36px, 5vw, 64px);
+  border-bottom: 1px solid var(--line);
+}
+.sec-head h2 {
+  font-family: var(--font-g); font-weight: 600; letter-spacing: -0.03em;
+  font-size: clamp(34px, 6vw, 76px); line-height: 0.92; margin: 0;
+  text-transform: uppercase;
+}
+.sec-head .n { color: var(--ember); }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px var(--pad);
+  transition: background .4s ease, border-color .4s ease, padding .4s ease;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(16,11,9,0.82); backdrop-filter: blur(12px);
+  border-bottom-color: var(--line); padding-top: 13px; padding-bottom: 13px;
+}
+.nav .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-m); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+.nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); box-shadow: 0 0 0 4px rgba(248,127,35,0.15); animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+.nav .links { display: flex; gap: 4px; }
+.nav .links a {
+  font-family: var(--font-m); font-size: 12.5px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--cream-dim); padding: 9px 14px; border-radius: 100px;
+  transition: background .25s, color .25s;
+}
+.nav .links a:hover { background: rgba(240,223,203,0.08); color: var(--cream); }
+@media (max-width: 720px) { .nav .links { display: none; } }
+
+/* circular-arrow CTA pill */
+.cta {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-m); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--ember); color: var(--ink); font-weight: 700;
+  padding: 9px 9px 9px 20px; border-radius: 100px; border: none; cursor: pointer;
+  white-space: nowrap;
+  transition: transform .25s, background .25s, box-shadow .25s;
+}
+.cta .arr {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: var(--ember);
+  display: grid; place-items: center; transition: transform .35s cubic-bezier(.16,1,.3,1);
+  font-size: 14px;
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(248,127,35,0.3); }
+.cta:hover .arr { transform: rotate(45deg); }
+.cta.ghost { background: transparent; color: var(--cream); border: 1px solid var(--line-2); font-weight: 500; }
+.cta.ghost .arr { background: var(--ember); color: var(--ink); }
+.cta.ghost:hover { box-shadow: none; border-color: var(--ember); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero { padding: clamp(120px, 18vh, 200px) 0 0; position: relative; overflow: hidden; }
+.hero .glow {
+  position: absolute; left: 64%; top: 30%; width: 70vw; height: 60vh; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(248,127,35,0.30), rgba(204,55,17,0.12) 50%, transparent 76%);
+  filter: blur(30px); animation: drift 12s ease-in-out infinite; z-index: 0;
+}
+@keyframes drift { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-4%, 4%) scale(1.1); } }
+.hero .inner { position: relative; z-index: 2; }
+.hero .eyebrow { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-m);
+  font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-dim);
+  border: 1px solid var(--line-2); border-radius: 100px; padding: 7px 14px; white-space: nowrap;
+}
+.badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 3px rgba(74,222,128,0.18); }
+
+.hero h1 {
+  font-family: var(--font-g); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(64px, 17vw, 280px); line-height: 0.82; letter-spacing: -0.045em;
+  margin: 0; color: var(--ember);
+}
+.hero h1 .line { display: block; overflow: hidden; }
+.hero h1 .line > span { display: block; }
+
+.hero .subrow {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 28px; margin-top: 38px; padding-top: 26px; border-top: 1px solid var(--line);
+}
+.hero .role { font-family: var(--font-s); font-style: italic; font-size: clamp(26px, 4vw, 46px); color: var(--cream); line-height: 1.05; max-width: 16ch; }
+.hero .role b { font-family: var(--font-g); font-style: normal; font-weight: 500; }
+.hero .blurb { max-width: 38ch; color: var(--cream-dim); font-size: clamp(15px, 1.4vw, 18px); line-height: 1.55; }
+.hero .blurb .cta { margin-top: 22px; }
+.hero .scroll { margin-top: 46px; display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-family: var(--font-m); font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; }
+.hero .scroll .arrowdown { animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+/* ============================================================
+   MARQUEE strip
+   ============================================================ */
+.marquee { margin-top: clamp(60px, 9vh, 110px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--red); color: var(--ink); overflow: hidden; white-space: nowrap; }
+.marquee .track { display: inline-flex; will-change: transform; }
+.marquee .track span { font-family: var(--font-m); font-weight: 700; font-size: clamp(14px, 1.5vw, 19px); letter-spacing: 0.05em; text-transform: uppercase; padding: 15px 0; display: inline-flex; align-items: center; }
+.marquee .track .item { padding: 15px 30px; }
+.marquee .track .sep { color: rgba(21,16,13,0.55); padding: 15px 0; }
+
+/* ============================================================
+   STATEMENT + STATS
+   ============================================================ */
+.statement { padding-block: clamp(80px, 12vh, 150px); }
+.statement .big {
+  font-family: var(--font-g); font-weight: 400; font-size: clamp(26px, 3.6vw, 50px);
+  line-height: 1.18; letter-spacing: -0.02em; max-width: 24ch; color: var(--muted);
+}
+.statement .big b { color: var(--cream); font-weight: 500; }
+.statement .big .ital { color: var(--ember); }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 64px); margin-top: clamp(60px, 9vh, 110px); border-top: 1px solid var(--line); padding-top: clamp(40px, 6vh, 70px); }
+@media (max-width: 780px) { .stats { grid-template-columns: 1fr; gap: 40px; } }
+.stat .num { font-family: var(--font-g); font-weight: 600; font-size: clamp(56px, 8vw, 110px); line-height: 0.9; letter-spacing: -0.04em; color: var(--cream); }
+.stat .num .u { color: var(--ember); }
+.stat .cap { margin-top: 14px; color: var(--muted); font-size: 14.5px; line-height: 1.5; max-width: 28ch; }
+.stat .cap b { color: var(--cream-dim); font-weight: 500; }
+
+/* ============================================================
+   SELECTED WORK
+   ============================================================ */
+.work { padding-block: clamp(40px, 6vh, 70px) clamp(80px, 12vh, 140px); }
+.work-list { border-top: 1px solid var(--line); }
+.work-row {
+  position: relative; display: grid; grid-template-columns: 90px 1fr auto;
+  gap: 28px; align-items: center; padding: clamp(28px, 4vw, 46px) 4px;
+  border-bottom: 1px solid var(--line); cursor: pointer; transition: padding-left .4s cubic-bezier(.16,1,.3,1);
+}
+.work-row::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(248,127,35,0.06), transparent 60%); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.work-row:hover::before { opacity: 1; }
+.work-row:hover { padding-left: 22px; }
+.work-row .wn { font-family: var(--font-m); font-size: 14px; color: var(--faint); transition: color .35s; }
+.work-row:hover .wn { color: var(--ember); }
+.work-row .wt { font-family: var(--font-g); font-weight: 500; font-size: clamp(24px, 3.4vw, 44px); letter-spacing: -0.02em; line-height: 1.04; transition: transform .4s cubic-bezier(.16,1,.3,1); }
+.work-row .wt .ital { color: var(--ember); }
+.work-row .wmeta { display: flex; flex-direction: column; gap: 8px; max-width: 40ch; }
+.work-row .wmeta p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.work-row .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.work-row .tags span { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--line-2); border-radius: 100px; padding: 5px 11px; white-space: nowrap; }
+.work-row .wgo { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--cream); font-size: 18px; transition: background .35s, color .35s, transform .35s, border-color .35s; flex-shrink: 0; }
+.work-row:hover .wgo { background: var(--ember); color: var(--ink); border-color: var(--ember); transform: rotate(45deg); }
+@media (max-width: 760px) {
+  .work-row { grid-template-columns: 1fr auto; }
+  .work-row .wn { display: none; }
+  .work-row .wmeta { grid-column: 1 / -1; }
+}
+
+/* floating cursor preview */
+.work-peek { position: fixed; top: 0; left: 0; width: 280px; height: 200px; border-radius: 10px; overflow: hidden; pointer-events: none; z-index: 60; opacity: 0; transform: translate(-50%, -50%) scale(.9); transition: opacity .3s, transform .3s; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.work-peek.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.work-peek .ph { width: 100%; height: 100%; display: grid; place-items: center; font-family: var(--font-m); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+
+/* ============================================================
+   STACK
+   ============================================================ */
+.stack { padding: clamp(80px, 12vh, 140px) 0; background: var(--ink-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 90px); }
+@media (max-width: 820px) { .stack-grid { grid-template-columns: 1fr; gap: 50px; } }
+.stack-col h3 { font-family: var(--font-m); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ember); margin: 0 0 22px; display: flex; align-items: center; gap: 12px; }
+.stack-col h3::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { font-family: var(--font-g); font-size: clamp(15px, 1.5vw, 19px); color: var(--cream); border: 1px solid var(--line-2); border-radius: 100px; padding: 10px 18px; transition: background .25s, color .25s, border-color .25s, transform .25s; cursor: default; }
+.chip:hover { background: var(--ember); color: var(--ink); border-color: var(--ember); transform: translateY(-2px); }
+
+/* ============================================================
+   PULL QUOTE
+   ============================================================ */
+.quote { padding-block: clamp(90px, 14vh, 170px); text-align: center; }
+.quote blockquote {
+  font-family: var(--font-s); font-style: italic; font-weight: 400; margin: 0 auto; max-width: 20ch;
+  font-size: clamp(34px, 6.5vw, 92px); line-height: 1.02; letter-spacing: -0.01em; color: var(--cream);
+}
+.quote .circled { position: relative; white-space: nowrap; color: var(--ember); }
+.quote .circled svg { position: absolute; left: -8%; top: -16%; width: 116%; height: 132%; pointer-events: none; overflow: visible; }
+.quote .circled path { fill: none; stroke: var(--ember); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 540; stroke-dashoffset: var(--dash, 0); }
+.quote .by { margin-top: 36px; font-family: var(--font-m); font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+
+/* ============================================================
+   CONTACT + FOOTER
+   ============================================================ */
+.contact { padding: clamp(90px, 14vh, 160px) 0 0; position: relative; overflow: hidden; }
+.contact .glow { position: absolute; left: 50%; transform: translateX(-50%); bottom: -10%; width: 90vw; height: 50vh; background: radial-gradient(closest-side, rgba(248,127,35,0.22), transparent 72%); filter: blur(40px); pointer-events: none; }
+.contact .inner { position: relative; z-index: 2; text-align: center; }
+.contact .label { justify-content: center; display: flex; }
+.contact h2 { font-family: var(--font-g); font-weight: 600; text-transform: uppercase; font-size: clamp(44px, 9vw, 150px); line-height: 0.9; letter-spacing: -0.04em; margin: 18px 0 0; }
+.contact h2 .ital { color: var(--ember); text-transform: none; }
+.contact .mail { display: inline-flex; margin-top: 40px; }
+.contact .socials { display: flex; justify-content: center; gap: 8px; margin-top: 36px; flex-wrap: wrap; }
+.contact .socials a { font-family: var(--font-m); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--line-2); border-radius: 100px; padding: 11px 20px; white-space: nowrap; transition: background .25s, color .25s, border-color .25s; }
+.contact .socials a:hover { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+
+/* oversized ghost wordmark */
+.ghostmark { margin-top: clamp(60px, 9vh, 110px); width: 100%; text-align: center; line-height: 0.78; overflow: hidden; }
+.ghostmark span { font-family: var(--font-g); font-weight: 700; text-transform: uppercase; font-size: 27vw; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1px rgba(240,223,203,0.16); display: block; }
+
+.footer { border-top: 1px solid var(--line); padding: 28px var(--pad); display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; font-family: var(--font-m); font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+/* ============================================================
+   scroll reveal (default visible; JS adds class .in for entrance)
+   ============================================================ */
+.r { opacity: 1; }
+.js .r:not(.in) { opacity: 0; }
+.js .r.in { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .js .r:not(.in) { opacity: 1; }
+}
+
+/* ============================================================
+   INTERACTIVE TYPE LAYER
+   ============================================================ */
+.split { display: inline-block; }
+.split .char {
+  display: inline-block;
+  font-variation-settings: "wght" var(--w, 400);
+}
+.split .char.space { width: 0.28em; }
+
+.hero h1 .split .char { cursor: default; }
+.hero h1.live .char:hover { color: var(--cream); }
+
+.scramble { display: inline-block; }
+.scramble.scrambling { color: var(--ember); }
+
+.dx { cursor: pointer; }
+.count { font-variant-numeric: tabular-nums; }
+
+/* ---- custom cursor ---- */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-on, .cursor-on * { cursor: none !important; }
+  .cur {
+    position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+    width: 14px; height: 14px; border-radius: 50%; background: var(--ember);
+    transform: translate(-50%, -50%); mix-blend-mode: difference;
+    transition: width .25s cubic-bezier(.16,1,.3,1), height .25s cubic-bezier(.16,1,.3,1), background .25s, opacity .3s;
+  }
+  .cur.dotmode { opacity: 1; }
+  .cur.ring { width: 64px; height: 64px; background: transparent; border: 1px solid var(--ember); mix-blend-mode: normal; }
+  .cur.view { width: 84px; height: 84px; background: var(--ember); mix-blend-mode: normal; }
+  .cur .vlabel { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); font-weight: 700; opacity: 0; transition: opacity .2s; }
+  .cur.view .vlabel { opacity: 1; }
+}
+
+.mag { display: inline-flex; will-change: transform; }
+
+.brand .glitchable { position: relative; display: inline-block; }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <a class="brand" href="#top">
+    <span class="dot"></span>
+    <span class="glitchable dx">Tamara Omomo</span>
+  </a>
+  <nav class="links">
+    <a href="#work" class="dx">Work</a>
+    <a href="#stack" class="dx">Stack</a>
+    <a href="#about" class="dx">About</a>
+    <a href="#contact" class="dx">Contact</a>
+  </nav>
+  <a href="#contact" class="cta mag" data-mag="0.3"><span>Let's talk</span><span class="arr">→</span></a>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="glow"></div>
+    <div class="shell inner">
+      <div class="eyebrow">
+        <span class="badge"><span class="dot"></span><span class="scramble onload">Available — Q3 '26</span></span>
+        <span class="label scramble onload">GTM Engineer / Portfolio '26</span>
+      </div>
+
+      <h1 id="heroName">
+        <span class="line"><span class="fill">Tamara</span></span>
+        <span class="line"><span class="fill">Omomo</span></span>
+      </h1>
+
+      <div class="subrow">
+        <div class="role">
+          <span class="ital">I engineer go-to-market that</span> <b class="ember" id="rotor" data-words="compounds.|converts.|scales.|runs itself.">compounds.</b>
+        </div>
+        <div class="blurb">
+          Half operator, half engineer — I live in the seam between marketing, sales and code, building the pipelines, enrichment and automation that turn messy go-to-market into a measurable, self-running system.
+          <a href="#work" class="cta mag" data-mag="0.25"><span>See the work</span><span class="arr">↓</span></a>
+        </div>
+      </div>
+
+      <a href="#about" class="scroll"><span class="arrowdown">↓</span><span>Scroll to explore</span></a>
+    </div>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="track">
+        <span class="item">Clay</span><span class="sep">✳</span>
+        <span class="item">HubSpot</span><span class="sep">✳</span>
+        <span class="item">Python</span><span class="sep">✳</span>
+        <span class="item">SQL</span><span class="sep">✳</span>
+        <span class="item">dbt</span><span class="sep">✳</span>
+        <span class="item">n8n</span><span class="sep">✳</span>
+        <span class="item">Salesforce</span><span class="sep">✳</span>
+        <span class="item">Apollo</span><span class="sep">✳</span>
+        <span class="item">Segment</span><span class="sep">✳</span>
+        <span class="item">Webhooks</span><span class="sep">✳</span>
+        <span class="item">Clay</span><span class="sep">✳</span>
+        <span class="item">HubSpot</span><span class="sep">✳</span>
+        <span class="item">Python</span><span class="sep">✳</span>
+        <span class="item">SQL</span><span class="sep">✳</span>
+        <span class="item">dbt</span><span class="sep">✳</span>
+        <span class="item">n8n</span><span class="sep">✳</span>
+        <span class="item">Salesforce</span><span class="sep">✳</span>
+        <span class="item">Apollo</span><span class="sep">✳</span>
+        <span class="item">Segment</span><span class="sep">✳</span>
+        <span class="item">Webhooks</span><span class="sep">✳</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT + STATS -->
+  <section class="statement shell" id="about">
+    <p class="big r">
+      <b>GTM engineering</b> is the discipline of treating go-to-market like a product:
+      instrumented, automated and <span class="ital">built to compound</span>. I design the systems
+      that move a lead from <b>raw data</b> to <b>closed revenue</b> — without the manual glue.
+    </p>
+
+    <div class="stats">
+      <div class="stat r d1">
+        <div class="num count" data-count="4.2" data-prefix="$" data-suffix="M">$0M</div>
+        <div class="cap"><b>Pipeline sourced</b> through automated enrichment, scoring &amp; routing.</div>
+      </div>
+      <div class="stat r d2">
+        <div class="num count" data-count="120" data-suffix="+">0</div>
+        <div class="cap"><b>Automations shipped</b> across acquisition, lifecycle &amp; ops.</div>
+      </div>
+      <div class="stat r d3">
+        <div class="num count" data-count="11" data-suffix="min">0min</div>
+        <div class="cap"><b>Median lead response</b>, down from four hours, via a live routing engine.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK -->
+  <section class="work shell" id="work">
+    <div class="sec-head">
+      <h2 class="scramble">Selected Work</h2>
+      <span class="label">( 04 — Systems )</span>
+    </div>
+
+    <div class="work-list">
+      <a class="work-row r" href="#contact" data-peek="Routing engine" data-color="linear-gradient(135deg,#cc3711,#f87f23)">
+        <span class="wn">01</span>
+        <div class="wt">Inbound routing <span class="ital">engine</span></div>
+        <div class="wmeta">
+          <p>Rebuilt lead routing as a rules engine wired into HubSpot + Slack. Median response time fell from 4h to 11min.</p>
+          <div class="tags"><span>Revenue Ops</span><span>HubSpot</span><span>Node</span></div>
+        </div>
+        <span class="wgo">→</span>
+      </a>
+
+      <a class="work-row r" href="#contact" data-peek="Enrichment" data-color="linear-gradient(135deg,#21130f,#cc0a0d)">
+        <span class="wn">02</span>
+        <div class="wt">Clay enrichment <span class="ital">pipeline</span></div>
+        <div class="wmeta">
+          <p>Auto-enriched 60k accounts on fit + intent signals; SQL-to-opportunity conversion up 38%.</p>
+          <div class="tags"><span>Clay</span><span>Python</span><span>Enrichment</span></div>
+        </div>
+        <span class="wgo">→</span>
+      </a>
+
+      <a class="work-row r" href="#contact" data-peek="Lifecycle" data-color="linear-gradient(135deg,#f87f23,#f0dfcb)">
+        <span class="wn">03</span>
+        <div class="wt">Event-driven <span class="ital">lifecycle</span></div>
+        <div class="wmeta">
+          <p>Replaced nine manual handoffs with an event-driven lifecycle orchestrated in n8n + dbt.</p>
+          <div class="tags"><span>n8n</span><span>dbt</span><span>Lifecycle</span></div>
+        </div>
+        <span class="wgo">→</span>
+      </a>
+
+      <a class="work-row r" href="#contact" data-peek="Attribution" data-color="linear-gradient(135deg,#cc0a0d,#21130f)">
+        <span class="wn">04</span>
+        <div class="wt">Multi-touch <span class="ital">attribution</span></div>
+        <div class="wmeta">
+          <p>A SQL/dbt attribution model that reallocated $1.1M of spend toward what actually closes.</p>
+          <div class="tags"><span>dbt</span><span>SQL</span><span>Analytics</span></div>
+        </div>
+        <span class="wgo">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack" id="stack">
+    <div class="shell">
+      <div class="sec-head">
+        <h2 class="scramble">The Stack</h2>
+        <span class="label">( Tools I build with )</span>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-col r">
+          <h3>Go-to-market</h3>
+          <div class="chips">
+            <span class="chip">Clay</span>
+            <span class="chip">HubSpot</span>
+            <span class="chip">Salesforce</span>
+            <span class="chip">Apollo</span>
+            <span class="chip">Outreach</span>
+            <span class="chip">Segment</span>
+            <span class="chip">Default</span>
+            <span class="chip">LinkedIn Ads</span>
+          </div>
+        </div>
+        <div class="stack-col r d1">
+          <h3>Engineering</h3>
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">SQL</span>
+            <span class="chip">dbt</span>
+            <span class="chip">n8n</span>
+            <span class="chip">Airflow</span>
+            <span class="chip">Postgres</span>
+            <span class="chip">APIs &amp; Webhooks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PULL QUOTE -->
+  <section class="quote shell">
+    <blockquote>
+      Great GTM isn't a deck — it's a&nbsp;<span class="circled">system<svg viewBox="0 0 300 90" preserveAspectRatio="none"><path d="M150 8 C70 6 18 22 14 45 C10 70 95 84 158 83 C240 82 292 64 286 40 C281 19 205 7 120 12" /></svg></span>. Functional, instrumented, built to&nbsp;compound.
+    </blockquote>
+    <div class="by">— Tamara Omomo, GTM Engineer</div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="glow"></div>
+    <div class="shell inner">
+      <span class="label">( Let's build the machine )</span>
+      <h2>Let's <span class="ital">talk</span>.</h2>
+      <a href="mailto:hello@tamaraomomo.com" class="cta mag" data-mag="0.25"><span>hello@tamaraomomo.com</span><span class="arr">→</span></a>
+      <div class="socials">
+        <a href="#" class="dx">LinkedIn</a>
+        <a href="#" class="dx">GitHub</a>
+        <a href="#" class="dx">X / Twitter</a>
+        <a href="#" class="dx">Read.cv</a>
+      </div>
+    </div>
+    <div class="ghostmark"><span>OMOMO</span></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>© 2026 Tamara Omomo</span>
+  <span>GTM Engineer — Designed &amp; built in the browser</span>
+  <span>Lagos → Remote</span>
+</footer>
+
+<!-- floating work preview -->
+<div class="work-peek" id="workPeek" aria-hidden="true"><div class="ph">Case study</div></div>
+
+<script>
+/* ============================================================
+   interactions.js — kinetic / interactive type layer
+   Vanilla JS. No deps. Respects prefers-reduced-motion.
+   ============================================================ */
+(function () {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  document.documentElement.classList.add('js');
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  /* ---- split text into per-character spans ---- */
+  function splitChars(el) {
+    if (el.dataset.split) return $$('.char', el);
+    el.dataset.split = '1';
+    const text = el.textContent;
+    el.textContent = '';
+    const wrap = document.createElement('span');
+    wrap.className = 'split';
+    for (const ch of text) {
+      const s = document.createElement('span');
+      s.className = 'char' + (ch === ' ' ? ' space' : '');
+      s.textContent = ch === ' ' ? ' ' : ch;
+      s.style.setProperty('--w', 400);
+      wrap.appendChild(s);
+    }
+    el.appendChild(wrap);
+    return $$('.char', wrap);
+  }
+
+  /* ---- hero: variable-weight wave follows cursor ---- */
+  function heroType() {
+    const h1 = $('#heroName');
+    if (!h1) return;
+    const lines = $$('.line .fill', h1);
+    let chars = [];
+    lines.forEach(l => { chars = chars.concat(splitChars(l)); });
+    h1.classList.add('live');
+
+    // rAF-driven entrance (staggered weight-bloom + fade in)
+    if (!reduced) {
+      chars.forEach(c => { c.style.opacity = '0'; c.style.setProperty('--w', 300); });
+      const t0 = performance.now(), per = 38, cdur = 560;
+      (function entr(now) {
+        let allDone = true;
+        chars.forEach((c, i) => {
+          const tt = clamp((now - t0 - i * per) / cdur, 0, 1);
+          if (tt < 1) allDone = false;
+          const e = 1 - Math.pow(1 - tt, 3);
+          c.style.opacity = String(e);
+          c.style.setProperty('--w', Math.round(lerp(300, 400, e)));
+        });
+        if (!allDone) requestAnimationFrame(entr);
+        else chars.forEach(c => { c.style.opacity = ''; });
+      })(performance.now());
+      // safety net: guarantee final state even if rAF is throttled
+      setTimeout(() => chars.forEach(c => { c.style.opacity = ''; c.style.setProperty('--w', 400); }), per * chars.length + cdur + 300);
+    }
+
+    if (reduced || !finePointer) return;
+
+    let mx = -9999, my = -9999, raf = null;
+    const RANGE = 240;
+    const positions = () => chars.map(c => { const r = c.getBoundingClientRect(); return { c, x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+    let pts = positions();
+    window.addEventListener('resize', () => { pts = positions(); });
+    window.addEventListener('scroll', () => { pts = positions(); }, { passive: true });
+
+    function frame() {
+      for (const p of pts) {
+        const dx = p.x - mx, dy = p.y - my;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        const t = clamp(1 - d / RANGE, 0, 1);
+        const ease = t * t * (3 - 2 * t);
+        if (ease < 0.01) { p.c.style.setProperty('--w', 400); p.c.style.color = ''; continue; }
+        const w = Math.round(lerp(400, 700, ease));
+        p.c.style.setProperty('--w', w);
+        p.c.style.color = ease > 0.55 ? 'var(--cream)' : '';
+      }
+      raf = null;
+    }
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      if (!raf) raf = requestAnimationFrame(frame);
+    });
+    document.addEventListener('mouseleave', () => { mx = my = -9999; if (!raf) raf = requestAnimationFrame(frame); });
+  }
+
+  /* ---- scramble / decode text effect ---- */
+  const GLYPHS = '!<>-_\\/[]{}—=+*^?#________';
+  function scramble(el, opts = {}) {
+    const finalText = el.dataset.text || el.textContent;
+    el.dataset.text = finalText;
+    const dur = opts.dur || 700;
+    const start = performance.now();
+    el.classList.add('scrambling');
+    const queue = finalText.split('').map(ch => ({
+      ch,
+      from: Math.floor(Math.random() * dur * 0.4),
+      to: Math.floor(dur * 0.4 + Math.random() * dur * 0.6)
+    }));
+    function tick(now) {
+      const elapsed = now - start;
+      let out = '', done = 0;
+      for (const q of queue) {
+        if (elapsed >= q.to) { out += q.ch; done++; }
+        else if (elapsed >= q.from) { out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; }
+        else { out += q.ch === ' ' ? ' ' : ''; }
+      }
+      el.textContent = out;
+      if (done < queue.length) requestAnimationFrame(tick);
+      else { el.textContent = finalText; el.classList.remove('scrambling'); }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // hover-decode for nav links and labeled elements
+  $$('.dx').forEach(el => {
+    el.dataset.text = el.textContent;
+    let busy = false;
+    el.addEventListener('mouseenter', () => {
+      if (reduced || busy) return;
+      busy = true;
+      scramble(el, { dur: 520 });
+      setTimeout(() => busy = false, 560);
+    });
+  });
+
+  /* ---- count-up numbers ---- */
+  function countUp(el) {
+    if (reduced) { el.textContent = el.dataset.prefix + el.dataset.count + (el.dataset.suffix || ''); return; }
+    const target = parseFloat(el.dataset.count);
+    const dec = (el.dataset.count.split('.')[1] || '').length;
+    const prefix = el.dataset.prefix || '', suffix = el.dataset.suffix || '';
+    const dur = 1400;
+    const start = performance.now();
+    function tick(now) {
+      const t = clamp((now - start) / dur, 0, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val = (target * ease).toFixed(dec);
+      el.textContent = prefix + Number(val).toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ---- scroll reveal ---- */
+  const revealEls = $$('.r, .scramble, [data-count], .quote');
+  const done = new WeakSet();
+
+  function triggerReveal(el) {
+    if (done.has(el)) return;
+    done.add(el);
+    el.classList.add('in');
+    if (!reduced) {
+      const t0 = performance.now(), dur = 850;
+      (function step(now) {
+        const tt = clamp((now - t0) / dur, 0, 1);
+        const e = 1 - Math.pow(1 - tt, 3);
+        el.style.opacity = String(e);
+        el.style.transform = 'translateY(' + ((1 - e) * 24).toFixed(1) + 'px)';
+        if (tt < 1) requestAnimationFrame(step);
+        else { el.style.opacity = ''; el.style.transform = ''; }
+      })(performance.now());
+      setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, dur + 300);
+    }
+    $$('.scramble', el).forEach((s, i) => setTimeout(() => scramble(s, { dur: 650 }), i * 90));
+    if (el.matches('.scramble')) scramble(el, { dur: 650 });
+    $$('[data-count]', el).forEach(countUp);
+    if (el.hasAttribute('data-count')) countUp(el);
+  }
+
+  function checkReveal() {
+    const trigger = window.innerHeight * 0.88;
+    for (const el of revealEls) {
+      if (done.has(el)) continue;
+      if (el.getBoundingClientRect().top < trigger) triggerReveal(el);
+    }
+  }
+  window.addEventListener('scroll', checkReveal, { passive: true });
+  window.addEventListener('resize', checkReveal);
+
+  /* ---- nav scrolled state ---- */
+  const nav = $('.nav');
+  const onScrollNav = () => nav && nav.classList.toggle('scrolled', window.scrollY > 40);
+  onScrollNav();
+  window.addEventListener('scroll', onScrollNav, { passive: true });
+
+  /* ---- marquee: rAF-driven translateX + velocity skew ---- */
+  (function marquee() {
+    const tracks = $$('.marquee .track');
+    if (!tracks.length || reduced) return;
+    const state = tracks.map(t => ({ t, off: 0, half: t.scrollWidth / 2 }));
+    window.addEventListener('resize', () => state.forEach(s => { s.half = s.t.scrollWidth / 2; }));
+    let last = window.scrollY, vel = 0;
+    function loop() {
+      const cur = window.scrollY;
+      vel = lerp(vel, cur - last, 0.2);
+      last = cur;
+      const sk = clamp(vel * 0.25, -8, 8);
+      state.forEach(s => {
+        if (!s.half) s.half = s.t.scrollWidth / 2;
+        s.off -= 0.7;
+        if (s.half && s.off <= -s.half) s.off += s.half;
+        s.t.style.transform = `translateX(${s.off.toFixed(2)}px) skewX(${sk.toFixed(2)}deg)`;
+      });
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
+
+  /* ---- magnetic buttons ---- */
+  if (finePointer && !reduced) {
+    $$('.mag').forEach(m => {
+      const strength = parseFloat(m.dataset.mag || 0.4);
+      m.addEventListener('mousemove', e => {
+        const r = m.getBoundingClientRect();
+        const x = e.clientX - (r.left + r.width / 2), y = e.clientY - (r.top + r.height / 2);
+        m.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      });
+      m.addEventListener('mouseleave', () => { m.style.transform = ''; });
+    });
+  }
+
+  /* ---- custom cursor ---- */
+  if (finePointer && !reduced) {
+    document.body.classList.add('cursor-on');
+    const cur = document.createElement('div');
+    cur.className = 'cur dotmode';
+    cur.innerHTML = '<span class="vlabel">View</span>';
+    document.body.appendChild(cur);
+    // start off-screen so no stray dot before first mouse move
+    let cx = -200, cy = -200, tx = cx, ty = cy;
+    window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+    (function ring() {
+      cx = lerp(cx, tx, 0.22); cy = lerp(cy, ty, 0.22);
+      cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
+      requestAnimationFrame(ring);
+    })();
+    const setMode = m => { cur.className = 'cur ' + m; };
+    $$('a, button, .cta, .chip').forEach(el => {
+      el.addEventListener('mouseenter', () => setMode('ring'));
+      el.addEventListener('mouseleave', () => setMode('dotmode'));
+    });
+    $$('.work-row').forEach(el => {
+      el.addEventListener('mouseenter', () => setMode('view'));
+      el.addEventListener('mouseleave', () => setMode('dotmode'));
+    });
+  }
+
+  /* ---- work row cursor-follow preview ---- */
+  (function workPeek() {
+    const peek = $('#workPeek');
+    if (!peek) return;
+    const rows = $$('.work-row');
+    let tx = 0, ty = 0, x = 0, y = 0, active = false;
+    rows.forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        active = true;
+        const ph = peek.querySelector('.ph');
+        ph.style.background = row.dataset.color || '#cc3711';
+        ph.textContent = row.dataset.peek || 'Case study';
+        peek.classList.add('show');
+      });
+      row.addEventListener('mouseleave', () => { active = false; peek.classList.remove('show'); });
+    });
+    window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+    (function loop() {
+      x = lerp(x, tx, 0.14); y = lerp(y, ty, 0.14);
+      if (active) { peek.style.left = x + 'px'; peek.style.top = y + 'px'; }
+      requestAnimationFrame(loop);
+    })();
+  })();
+
+  /* ---- rotating word in role line ---- */
+  (function rotator() {
+    const el = $('#rotor');
+    if (!el) return;
+    const words = (el.dataset.words || '').split('|');
+    let i = 0;
+    el.textContent = words[0];
+    if (reduced) return;
+    setInterval(() => {
+      i = (i + 1) % words.length;
+      el.dataset.text = words[i];
+      scramble(el, { dur: 600 });
+    }, 2600);
+  })();
+
+  /* ---- boot ---- */
+  function boot() {
+    heroType();
+    $$('.scramble.onload').forEach((s, i) => setTimeout(() => scramble(s, { dur: 800 }), 200 + i * 120));
+    checkReveal();
+    requestAnimationFrame(checkReveal);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
+  else window.addEventListener('load', boot);
+})();
+
+</script>
+</body>
+</html>

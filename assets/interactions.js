@@ -11,6 +11,17 @@
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, t) => a + (b - a) * t;
 
+  /* -------------------------------------------------- logo image fallback (global — called from onerror) */
+  window.logoFallback = function (img) {
+    const tile = img.parentElement;
+    if (!tile) return;
+    const mark = document.createElement('span');
+    mark.className = 'lmark' + (img.dataset.ink ? ' ink' : '');
+    mark.style.setProperty('--c', img.dataset.c || '#888');
+    mark.textContent = img.dataset.m || '?';
+    tile.replaceChild(mark, img);
+  };
+
   /* -------------------------------------------------- split text into chars */
   function splitChars(el) {
     if (el.dataset.split) return;
@@ -66,9 +77,8 @@
     const RANGE = 260;
     const positions = () => chars.map(c => { const r = c.getBoundingClientRect(); return { c, x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
     let pts = positions();
-    const reflow = () => { pts = positions(); };
-    window.addEventListener('resize', reflow);
-    window.addEventListener('scroll', reflow, { passive: true });
+    window.addEventListener('resize', () => { pts = positions(); });
+    window.addEventListener('scroll', () => { pts = positions(); }, { passive: true });
 
     function frame() {
       for (const p of pts) {
@@ -76,24 +86,18 @@
         const d = Math.sqrt(dx * dx + dy * dy);
         const t = clamp(1 - d / RANGE, 0, 1);
         const ease = t * t * (3 - 2 * t);
-        if (ease < 0.01) {
-          p.c.style.setProperty('--w', 400); p.c.style.color = ''; p.c.style.webkitTextStrokeColor = '';
-          continue;
-        }
+        if (ease < 0.01) { p.c.style.setProperty('--w', 400); p.c.style.color = ''; p.c.style.webkitTextStrokeColor = ''; continue; }
         p.c.style.color = `rgba(248,127,35,${ease.toFixed(3)})`;
         p.c.style.webkitTextStrokeColor = `rgba(240,223,203,${(0.5 * (1 - ease)).toFixed(3)})`;
         p.c.style.setProperty('--w', Math.round(lerp(400, 680, ease)));
       }
       raf = null;
     }
-    window.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      if (!raf) raf = requestAnimationFrame(frame);
-    });
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(frame); });
     document.addEventListener('mouseleave', () => { mx = my = -9999; if (!raf) raf = requestAnimationFrame(frame); });
   }
 
-  /* -------------------------------------------------- scramble / decode text */
+  /* -------------------------------------------------- scramble */
   const GLYPHS = '!<>-_\\/[]{}—=+*^?#________';
   function scramble(el, opts = {}) {
     const finalText = el.dataset.text || el.textContent;
@@ -101,7 +105,7 @@
     const dur = opts.dur || 700;
     const start = performance.now();
     el.classList.add('scrambling');
-    const queue = finalText.split('').map((ch, i) => ({
+    const queue = finalText.split('').map(ch => ({
       ch, from: Math.floor(Math.random() * dur * 0.4), to: Math.floor(dur * 0.4 + Math.random() * dur * 0.6)
     }));
     function tick(now) {
@@ -148,7 +152,7 @@
     const target = parseFloat(el.dataset.count);
     const dec = (el.dataset.count.split('.')[1] || '').length;
     const prefix = el.dataset.prefix || '', suffix = el.dataset.suffix || '';
-    const dur = 1400; const start = performance.now();
+    const dur = 1400, start = performance.now();
     function tick(now) {
       const t = clamp((now - start) / dur, 0, 1);
       const ease = 1 - Math.pow(1 - t, 3);
@@ -160,9 +164,9 @@
   }
 
   /* -------------------------------------------------- scroll reveal
-     Uses IntersectionObserver (reliable on mobile) with a scroll fallback.
-     Elements with .r start hidden (.js .r:not(.in) { opacity:0 }) and
-     get revealed as they enter the viewport.                           */
+     Primary: IntersectionObserver (reliable on mobile, fires on load)
+     Fallback: scroll-event check + staggered timers
+     Nuclear: after 1.5s, force-reveal anything still hidden            */
   const revealEls = $$('.r, .scramble, [data-count], .quote');
   const done = new WeakSet();
 
@@ -171,52 +175,110 @@
     done.add(el);
     el.classList.add('in');
     if (!reduced) {
-      const t0 = performance.now(), dur = 850;
+      const t0 = performance.now(), dur = 750;
       (function step(now) {
         const tt = clamp((now - t0) / dur, 0, 1);
         const e = 1 - Math.pow(1 - tt, 3);
         el.style.opacity = String(e);
-        el.style.transform = 'translateY(' + ((1 - e) * 24).toFixed(1) + 'px)';
+        el.style.transform = 'translateY(' + ((1 - e) * 20).toFixed(1) + 'px)';
         if (tt < 1) requestAnimationFrame(step);
         else { el.style.opacity = ''; el.style.transform = ''; }
       })(performance.now());
-      setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, dur + 300);
+      setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, dur + 200);
     }
     $$('[data-count]', el).forEach(countUp);
     if (el.hasAttribute('data-count')) countUp(el);
   }
 
-  // IntersectionObserver: fires correctly on mobile even before scroll
-  let observer;
+  // IntersectionObserver: fires for elements already in viewport on load
   if ('IntersectionObserver' in window) {
-    observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          triggerReveal(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-    revealEls.forEach(el => observer.observe(el));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { triggerReveal(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+    revealEls.forEach(el => io.observe(el));
   }
 
-  // Scroll fallback for older browsers
+  // Scroll fallback
   function checkReveal() {
-    const trigger = window.innerHeight * 0.92;
+    const limit = window.innerHeight * 0.98;
     for (const el of revealEls) {
-      if (done.has(el)) continue;
-      if (el.getBoundingClientRect().top < trigger) triggerReveal(el);
+      if (!done.has(el) && el.getBoundingClientRect().top < limit) triggerReveal(el);
     }
   }
   window.addEventListener('scroll', checkReveal, { passive: true });
   window.addEventListener('resize', checkReveal);
 
+  // Nuclear fallback: reveal everything that's still hidden after 1.5s
+  setTimeout(() => { revealEls.forEach(el => { if (!done.has(el)) triggerReveal(el); }); }, 1500);
+
   /* -------------------------------------------------- nav scrolled state */
   const nav = $('.nav');
   const onScrollNav = () => nav && nav.classList.toggle('scrolled', window.scrollY > 40);
-  onScrollNav(); window.addEventListener('scroll', onScrollNav, { passive: true });
+  onScrollNav();
+  window.addEventListener('scroll', onScrollNav, { passive: true });
 
-  /* -------------------------------------------------- marquee (rAF: translateX + velocity skew) */
+  /* -------------------------------------------------- mobile nav */
+  (function mobileNav() {
+    if (!nav) return;
+
+    // Build hamburger button
+    const btn = document.createElement('button');
+    btn.className = 'mob-menu-btn';
+    btn.setAttribute('aria-label', 'Open menu');
+    btn.innerHTML = '<span></span><span></span><span></span>';
+    nav.appendChild(btn);
+
+    // Build overlay menu
+    const overlay = document.createElement('div');
+    overlay.className = 'mob-menu';
+    overlay.setAttribute('aria-hidden', 'true');
+
+    // Determine which page we're on to build correct links
+    const isHome = !window.location.pathname.includes('about') && !window.location.pathname.includes('work');
+    const isAbout = window.location.pathname.includes('about');
+    const isWork = window.location.pathname.includes('work');
+
+    const links = [
+      { href: isHome ? '#top' : 'index.html', label: 'Home' },
+      { href: isHome ? '#work' : 'work.html', label: 'Work' },
+      { href: 'about.html', label: 'About' },
+      { href: isHome ? '#contact' : (isWork ? '#contact' : '#contact'), label: 'Contact' },
+    ];
+
+    overlay.innerHTML = `
+      <div class="mob-menu-inner">
+        <nav class="mob-links">
+          ${links.map((l, i) => `<a href="${l.href}" class="mob-link" style="--i:${i}">${l.label}</a>`).join('')}
+        </nav>
+        <div class="mob-socials">
+          <a href="https://www.linkedin.com/in/tamara-omomo-940379129/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack</a>
+          <a href="mailto:omomo.oj@gmail.com">Email</a>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+
+    let open = false;
+    function toggleMenu(force) {
+      open = force !== undefined ? force : !open;
+      btn.classList.toggle('open', open);
+      overlay.classList.toggle('open', open);
+      overlay.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', () => toggleMenu());
+
+    // Close on link tap
+    overlay.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // Close on backdrop tap
+    overlay.addEventListener('click', e => { if (e.target === overlay) toggleMenu(false); });
+  })();
+
+  /* -------------------------------------------------- marquee */
   (function marquee() {
     const tracks = $$('.marquee .track');
     if (!tracks.length || reduced) return;
@@ -243,7 +305,7 @@
     const track = $('.hs-rail-track');
     if (!track || reduced) return;
     let off = 0, half = track.scrollHeight / 2;
-    window.addEventListener('resize', () => half = track.scrollHeight / 2);
+    window.addEventListener('resize', () => { half = track.scrollHeight / 2; });
     function loop() {
       if (!half) half = track.scrollHeight / 2;
       off += 0.45;
@@ -259,31 +321,24 @@
     const arrows = $$('.arch-arrow');
     if (!arrows.length || reduced) return;
     let i = 0;
-    setInterval(() => {
-      arrows.forEach(a => a.classList.remove('flow'));
-      arrows[i].classList.add('flow');
-      i = (i + 1) % arrows.length;
-    }, 520);
+    setInterval(() => { arrows.forEach(a => a.classList.remove('flow')); arrows[i].classList.add('flow'); i = (i + 1) % arrows.length; }, 520);
   })();
 
-  /* -------------------------------------------------- full-stack logo marquee */
+  /* -------------------------------------------------- logo marquee */
   (function logoMarquee() {
     const track = $('#logoTrack');
     if (!track) return;
-    // Only clone once
-    if (!track.dataset.cloned) {
-      track.innerHTML += track.innerHTML;
-      track.dataset.cloned = '1';
-    }
+    if (!track.dataset.cloned) { track.innerHTML += track.innerHTML; track.dataset.cloned = '1'; }
     if (reduced) return;
-    let off = 0, half = track.scrollWidth / 2, paused = false;
-    window.addEventListener('resize', () => { half = track.scrollWidth / 2; });
+    let off = 0, half = 0, paused = false;
+    function getHalf() { return track.scrollWidth / 2; }
+    half = getHalf();
+    window.addEventListener('resize', () => { half = getHalf(); });
     const wrap = track.parentElement;
-    // pointerenter/leave works for both mouse and touch
     wrap.addEventListener('pointerenter', () => { paused = true; });
     wrap.addEventListener('pointerleave', () => { paused = false; });
     function loop() {
-      if (!half) half = track.scrollWidth / 2;
+      if (!half) half = getHalf();
       if (!paused) { off -= 1.1; if (half && off <= -half) off += half; }
       track.style.transform = `translateX(${off.toFixed(2)}px)`;
       requestAnimationFrame(loop);
@@ -297,8 +352,7 @@
       const strength = parseFloat(m.dataset.mag || 0.4);
       m.addEventListener('mousemove', e => {
         const r = m.getBoundingClientRect();
-        const x = e.clientX - (r.left + r.width / 2), y = e.clientY - (r.top + r.height / 2);
-        m.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+        m.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * strength}px, ${(e.clientY - r.top - r.height / 2) * strength}px)`;
       });
       m.addEventListener('mouseleave', () => { m.style.transform = ''; });
     });
@@ -313,27 +367,16 @@
     document.body.appendChild(cur);
     let cx = -100, cy = -100, tx = cx, ty = cy;
     window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-    (function ring() {
-      cx = lerp(cx, tx, 0.22); cy = lerp(cy, ty, 0.22);
-      cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
-      requestAnimationFrame(ring);
-    })();
-    const setMode = (m) => { cur.className = 'cur ' + m; };
-    $$('a, button, .cta, .chip').forEach(el => {
-      el.addEventListener('mouseenter', () => setMode('ring'));
-      el.addEventListener('mouseleave', () => setMode('dotmode'));
-    });
-    $$('.work-row').forEach(el => {
-      el.addEventListener('mouseenter', () => setMode('view'));
-      el.addEventListener('mouseleave', () => setMode('dotmode'));
-    });
+    (function ring() { cx = lerp(cx, tx, 0.22); cy = lerp(cy, ty, 0.22); cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(ring); })();
+    const setMode = m => { cur.className = 'cur ' + m; };
+    $$('a, button, .cta, .chip').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
+    $$('.work-row').forEach(el => { el.addEventListener('mouseenter', () => setMode('view')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
   }
 
-  /* -------------------------------------------------- work row cursor-follow preview (desktop only) */
+  /* -------------------------------------------------- work row preview (desktop only) */
   if (finePointer) {
-    (function workPeek() {
-      const peek = $('#workPeek');
-      if (!peek) return;
+    const peek = $('#workPeek');
+    if (peek) {
       const rows = $$('.work-row');
       let tx = 0, ty = 0, x = 0, y = 0, active = false;
       rows.forEach(row => {
@@ -347,12 +390,8 @@
         row.addEventListener('mouseleave', () => { active = false; peek.classList.remove('show'); });
       });
       window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-      (function loop() {
-        x = lerp(x, tx, 0.14); y = lerp(y, ty, 0.14);
-        if (active) { peek.style.left = x + 'px'; peek.style.top = y + 'px'; }
-        requestAnimationFrame(loop);
-      })();
-    })();
+      (function loop() { x = lerp(x, tx, 0.14); y = lerp(y, ty, 0.14); if (active) { peek.style.left = x + 'px'; peek.style.top = y + 'px'; } requestAnimationFrame(loop); })();
+    }
   }
 
   /* -------------------------------------------------- rotating words */
@@ -366,34 +405,21 @@
       if (reduced || words.length < 2) return;
       let i = 0;
       const interval = parseInt(el.dataset.interval || '2600', 10);
-      const startDelay = parseInt(el.dataset.delay || '0', 10);
-      setTimeout(() => setInterval(() => {
-        i = (i + 1) % words.length;
-        softSwap(el, words[i]);
-      }, interval), startDelay);
+      setTimeout(() => setInterval(() => { i = (i + 1) % words.length; softSwap(el, words[i]); }, interval), parseInt(el.dataset.delay || '0', 10));
     });
   })();
 
-  /* -------------------------------------------------- kick off */
+  /* -------------------------------------------------- boot */
   function boot() {
     heroType();
-    $$('.scramble.onload').forEach((s) => { s.dataset.text = s.textContent; });
-    // Run reveal immediately and at staggered delays to handle mobile layout shifts
+    $$('.scramble.onload').forEach(s => { s.dataset.text = s.textContent; });
     checkReveal();
     requestAnimationFrame(checkReveal);
-    setTimeout(checkReveal, 150);
+    setTimeout(checkReveal, 100);
     setTimeout(checkReveal, 400);
-    setTimeout(checkReveal, 800);
   }
 
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(boot);
-  } else {
-    window.addEventListener('load', boot);
-  }
-  // Extra safety: always run on window load regardless
-  window.addEventListener('load', () => {
-    setTimeout(checkReveal, 200);
-    setTimeout(checkReveal, 600);
-  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
+  else window.addEventListener('load', boot);
+  window.addEventListener('load', () => { setTimeout(checkReveal, 300); });
 })();

@@ -162,7 +162,7 @@ section { position: relative; }
 /* ============================================================
    HERO — STATEMENT VARIANT (animated "what I do")
    ============================================================ */
-.hero-statement { padding: clamp(108px, 15vh, 184px) 0 0; position: relative; overflow: hidden; }
+.hero-statement { padding: clamp(108px, 15vh, 184px) 0 0; position: relative; overflow-x: clip; }
 .hero-statement .glow {
   position: absolute; right: -10%; top: 8%; width: 64vw; height: 70vh; pointer-events: none;
   background: radial-gradient(closest-side, rgba(248,127,35,0.22), rgba(204,55,17,0.08) 52%, transparent 78%);

@@ -413,9 +413,8 @@
   function boot() {
     heroType();
     $$('.scramble.onload').forEach(s => { s.dataset.text = s.textContent; });
-    // Reveal hero elements immediately — they're always above the fold
-    // and their parent has overflow which can confuse IntersectionObserver
-    $$('.hero-statement .r, .hero .r, .ab-hero .r').forEach(triggerReveal);
+    // Reveal any .r elements already in the viewport on load
+    $$('.ab-hero .r').forEach(triggerReveal);
     checkReveal();
     requestAnimationFrame(checkReveal);
     setTimeout(checkReveal, 100);

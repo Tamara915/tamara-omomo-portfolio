@@ -163,6 +163,16 @@ section { position: relative; }
    HERO — STATEMENT VARIANT (animated "what I do")
    ============================================================ */
 .hero-statement { padding: clamp(108px, 15vh, 184px) 0 0; position: relative; overflow-x: clip; }
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hs-anim    { animation: heroFadeUp 0.85s cubic-bezier(.16,1,.3,1) 0.15s both; }
+.hs-anim-d1 { animation: heroFadeUp 0.85s cubic-bezier(.16,1,.3,1) 0.35s both; }
+@media (prefers-reduced-motion: reduce) {
+  .hs-anim, .hs-anim-d1 { animation: none; }
+}
 .hero-statement .glow {
   position: absolute; right: -10%; top: 8%; width: 64vw; height: 70vh; pointer-events: none;
   background: radial-gradient(closest-side, rgba(248,127,35,0.22), rgba(204,55,17,0.08) 52%, transparent 78%);

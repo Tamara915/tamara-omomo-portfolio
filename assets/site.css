@@ -577,3 +577,69 @@ section { position: relative; }
 .cb-col h4 { margin: 0 0 12px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ember); padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .cb-col p { margin: 0; font-family: var(--font-g); font-weight: 300; font-size: clamp(14.5px, 1.4vw, 16.5px); line-height: 1.6; color: var(--muted); }
 .cb-col p b { color: var(--cream-dim); font-weight: 500; }
+
+/* ============================================================
+   MOBILE — catch-all fixes for small viewports
+   ============================================================ */
+
+/* Hero headline: allow wrapping on narrow screens so "That Drives Revenue" doesn't overflow */
+@media (max-width: 480px) {
+  .hs-head-a .l { white-space: normal; }
+  .hs-head-a { font-size: clamp(32px, 9vw, 48px); line-height: 0.95; }
+  .hero-statement { padding-top: 96px; }
+  .hs-sub { margin-top: 28px; padding-top: 18px; }
+}
+
+/* Logo tiles: slightly smaller on phones so more are visible in the marquee */
+@media (max-width: 600px) {
+  .logo-tile { width: 64px; height: 64px; border-radius: 14px; }
+  .logo-tile img { width: 36px; height: 36px; }
+  .lmark { width: 36px; height: 36px; font-size: 14px; border-radius: 9px; }
+  .lname { font-size: 10px; }
+  .logo-track { gap: 14px; }
+}
+
+/* Work page hero: scale down Anton headline on phones */
+@media (max-width: 480px) {
+  .wk-head { font-size: clamp(48px, 13vw, 80px); }
+  .wk-intro { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
+/* About page: tighten paragraph font on narrow screens */
+@media (max-width: 480px) {
+  .ab-p { font-size: clamp(15px, 4vw, 17px); }
+  .ab-head.np { font-size: clamp(38px, 11vw, 80px); }
+}
+
+/* Stat grid: single column below 400px */
+@media (max-width: 400px) {
+  .stats { grid-template-columns: 1fr; }
+  .stat .num { font-size: 40px; }
+}
+
+/* Case study head: tighten metric on mobile */
+@media (max-width: 480px) {
+  .case-metric .cm-num { font-size: 38px; }
+}
+
+/* Quote section: smaller font on mobile */
+@media (max-width: 600px) {
+  .quote blockquote { font-size: clamp(22px, 6.5vw, 34px); }
+}
+
+/* Footer: stack on mobile */
+@media (max-width: 560px) {
+  .footer { flex-direction: column; gap: 6px; text-align: center; }
+}
+
+/* Contact: tighter padding */
+@media (max-width: 480px) {
+  .contact .inner { padding-block: clamp(64px, 12vh, 100px); }
+  .socials { gap: 14px; flex-wrap: wrap; justify-content: center; }
+}
+
+/* Nav: ensure CTA pill is usable on small screens */
+@media (max-width: 380px) {
+  .nav { padding: 14px 16px; }
+  .cta span:first-child { display: none; }
+}

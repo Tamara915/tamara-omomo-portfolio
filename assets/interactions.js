@@ -22,7 +22,7 @@
     for (const ch of text) {
       const s = document.createElement('span');
       s.className = 'char' + (ch === ' ' ? ' space' : '');
-      s.textContent = ch === ' ' ? '\u00A0' : ch;
+      s.textContent = ch === ' ' ? ' ' : ch;
       s.style.setProperty('--w', 400);
       wrap.appendChild(s);
     }
@@ -39,10 +39,6 @@
     lines.forEach(l => { chars = chars.concat(splitChars(l)); });
     h1.classList.add('live');
 
-    // entrance: rAF-driven (this environment freezes the CSS clock). Letters fade
-    // in while a bright ember fill-sweep travels across them, then settle to their
-    // hollow outline rest state. Inline styles are cleared at the end so the giant
-    // name stays capture-clean (no inline transform).
     const restChar = (c) => { c.style.opacity = ''; c.style.color = ''; c.style.webkitTextStrokeColor = ''; c.style.setProperty('--w', 400); };
     if (!reduced) {
       chars.forEach(c => { c.style.opacity = '0'; c.style.setProperty('--w', 320); });
@@ -54,7 +50,6 @@
           const appear = clamp(local / cdur, 0, 1);
           const e = 1 - Math.pow(1 - appear, 3);
           c.style.opacity = String(e);
-          // travelling highlight: fills bright as the letter lands, then drains to outline
           const pulse = clamp(1 - Math.abs(local - cdur * 0.55) / (cdur * 0.95), 0, 1);
           c.style.color = `rgba(248,127,35,${pulse.toFixed(3)})`;
           c.style.webkitTextStrokeColor = `rgba(240,223,203,${(0.5 * (1 - pulse * 0.7)).toFixed(3)})`;
@@ -63,13 +58,12 @@
         if (el < total) requestAnimationFrame(entr);
         else chars.forEach(restChar);
       })(performance.now());
-      // safety net in case rAF is interrupted
       setTimeout(() => chars.forEach(restChar), total + 300);
     }
 
     if (reduced || !finePointer) return;
     let mx = -9999, my = -9999, raf = null;
-    const RANGE = 260;          // px radius of influence
+    const RANGE = 260;
     const positions = () => chars.map(c => { const r = c.getBoundingClientRect(); return { c, x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
     let pts = positions();
     const reflow = () => { pts = positions(); };
@@ -80,13 +74,12 @@
       for (const p of pts) {
         const dx = p.x - mx, dy = p.y - my;
         const d = Math.sqrt(dx * dx + dy * dy);
-        const t = clamp(1 - d / RANGE, 0, 1);          // 1 near cursor → 0 far
+        const t = clamp(1 - d / RANGE, 0, 1);
         const ease = t * t * (3 - 2 * t);
-        if (ease < 0.01) {                              // rest = hollow outline (capture-clean)
+        if (ease < 0.01) {
           p.c.style.setProperty('--w', 400); p.c.style.color = ''; p.c.style.webkitTextStrokeColor = '';
           continue;
         }
-        // fill the outline with solid ember + bloom the weight as the cursor nears
         p.c.style.color = `rgba(248,127,35,${ease.toFixed(3)})`;
         p.c.style.webkitTextStrokeColor = `rgba(240,223,203,${(0.5 * (1 - ease)).toFixed(3)})`;
         p.c.style.setProperty('--w', Math.round(lerp(400, 680, ease)));
@@ -125,7 +118,8 @@
     }
     requestAnimationFrame(tick);
   }
-  /* -------------------------------------------------- gentle word swap (calm fade+slide; replaces the glitchy scramble) */
+
+  /* -------------------------------------------------- gentle word swap */
   function softSwap(el, text) {
     if (reduced) { el.textContent = text; el.dataset.text = text; return; }
     const outDur = 190, inDur = 300, t0 = performance.now();
@@ -165,11 +159,13 @@
     requestAnimationFrame(tick);
   }
 
-  /* -------------------------------------------------- scroll reveal + triggers */
-  // Scroll-driven (more reliable than IO under programmatic scroll + exports):
-  // reveals any element whose top crosses 88% of the viewport, once.
+  /* -------------------------------------------------- scroll reveal
+     Uses IntersectionObserver (reliable on mobile) with a scroll fallback.
+     Elements with .r start hidden (.js .r:not(.in) { opacity:0 }) and
+     get revealed as they enter the viewport.                           */
   const revealEls = $$('.r, .scramble, [data-count], .quote');
   const done = new WeakSet();
+
   function triggerReveal(el) {
     if (done.has(el)) return;
     done.add(el);
@@ -182,16 +178,31 @@
         el.style.opacity = String(e);
         el.style.transform = 'translateY(' + ((1 - e) * 24).toFixed(1) + 'px)';
         if (tt < 1) requestAnimationFrame(step);
-        else { el.style.opacity = ''; el.style.transform = ''; }   // rest = capture-clean
+        else { el.style.opacity = ''; el.style.transform = ''; }
       })(performance.now());
-      // safety: guarantee the final visible/clean state even if rAF is interrupted
       setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, dur + 300);
     }
     $$('[data-count]', el).forEach(countUp);
     if (el.hasAttribute('data-count')) countUp(el);
   }
+
+  // IntersectionObserver: fires correctly on mobile even before scroll
+  let observer;
+  if ('IntersectionObserver' in window) {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          triggerReveal(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  }
+
+  // Scroll fallback for older browsers
   function checkReveal() {
-    const trigger = window.innerHeight * 0.88;
+    const trigger = window.innerHeight * 0.92;
     for (const el of revealEls) {
       if (done.has(el)) continue;
       if (el.getBoundingClientRect().top < trigger) triggerReveal(el);
@@ -227,7 +238,7 @@
     loop();
   })();
 
-  /* -------------------------------------------------- vertical rail (rAF: scrolls the side name-strip downward) */
+  /* -------------------------------------------------- vertical rail */
   (function verticalRail() {
     const track = $('.hs-rail-track');
     if (!track || reduced) return;
@@ -235,7 +246,7 @@
     window.addEventListener('resize', () => half = track.scrollHeight / 2);
     function loop() {
       if (!half) half = track.scrollHeight / 2;
-      off += 0.45;                       // moves downward
+      off += 0.45;
       if (half && off >= half) off -= half;
       track.style.transform = `translateY(${(off - half).toFixed(2)}px)`;
       requestAnimationFrame(loop);
@@ -243,7 +254,7 @@
     loop();
   })();
 
-  /* -------------------------------------------------- GTM architecture flow pulse (timer-driven; reliable) */
+  /* -------------------------------------------------- GTM architecture flow pulse */
   (function archFlow() {
     const arrows = $$('.arch-arrow');
     if (!arrows.length || reduced) return;
@@ -255,17 +266,22 @@
     }, 520);
   })();
 
-  /* -------------------------------------------------- full-stack logo marquee (rAF translateX, clones for seamless loop) */
+  /* -------------------------------------------------- full-stack logo marquee */
   (function logoMarquee() {
     const track = $('#logoTrack');
     if (!track) return;
-    track.innerHTML += track.innerHTML;   // duplicate set for a seamless wrap
+    // Only clone once
+    if (!track.dataset.cloned) {
+      track.innerHTML += track.innerHTML;
+      track.dataset.cloned = '1';
+    }
     if (reduced) return;
     let off = 0, half = track.scrollWidth / 2, paused = false;
-    window.addEventListener('resize', () => half = track.scrollWidth / 2);
+    window.addEventListener('resize', () => { half = track.scrollWidth / 2; });
     const wrap = track.parentElement;
-    wrap.addEventListener('mouseenter', () => paused = true);
-    wrap.addEventListener('mouseleave', () => paused = false);
+    // pointerenter/leave works for both mouse and touch
+    wrap.addEventListener('pointerenter', () => { paused = true; });
+    wrap.addEventListener('pointerleave', () => { paused = false; });
     function loop() {
       if (!half) half = track.scrollWidth / 2;
       if (!paused) { off -= 1.1; if (half && off <= -half) off += half; }
@@ -275,7 +291,7 @@
     loop();
   })();
 
-  /* -------------------------------------------------- magnetic buttons */
+  /* -------------------------------------------------- magnetic buttons (desktop only) */
   if (finePointer && !reduced) {
     $$('.mag').forEach(m => {
       const strength = parseFloat(m.dataset.mag || 0.4);
@@ -288,7 +304,7 @@
     });
   }
 
-  /* -------------------------------------------------- custom cursor */
+  /* -------------------------------------------------- custom cursor (desktop only) */
   if (finePointer && !reduced) {
     document.body.classList.add('cursor-on');
     const cur = document.createElement('div');
@@ -313,31 +329,33 @@
     });
   }
 
-  /* -------------------------------------------------- work row cursor-follow preview */
-  (function workPeek() {
-    const peek = $('#workPeek');
-    if (!peek) return;
-    const rows = $$('.work-row');
-    let tx = 0, ty = 0, x = 0, y = 0, active = false;
-    rows.forEach(row => {
-      row.addEventListener('mouseenter', () => {
-        active = true;
-        const ph = peek.querySelector('.ph');
-        ph.style.background = row.dataset.color || '#cc3711';
-        ph.textContent = row.dataset.peek || 'Case study';
-        peek.classList.add('show');
+  /* -------------------------------------------------- work row cursor-follow preview (desktop only) */
+  if (finePointer) {
+    (function workPeek() {
+      const peek = $('#workPeek');
+      if (!peek) return;
+      const rows = $$('.work-row');
+      let tx = 0, ty = 0, x = 0, y = 0, active = false;
+      rows.forEach(row => {
+        row.addEventListener('mouseenter', () => {
+          active = true;
+          const ph = peek.querySelector('.ph');
+          ph.style.background = row.dataset.color || '#cc3711';
+          ph.textContent = row.dataset.peek || 'Case study';
+          peek.classList.add('show');
+        });
+        row.addEventListener('mouseleave', () => { active = false; peek.classList.remove('show'); });
       });
-      row.addEventListener('mouseleave', () => { active = false; peek.classList.remove('show'); });
-    });
-    window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-    (function loop() {
-      x = lerp(x, tx, 0.14); y = lerp(y, ty, 0.14);
-      if (active) { peek.style.left = x + 'px'; peek.style.top = y + 'px'; }
-      requestAnimationFrame(loop);
+      window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+      (function loop() {
+        x = lerp(x, tx, 0.14); y = lerp(y, ty, 0.14);
+        if (active) { peek.style.left = x + 'px'; peek.style.top = y + 'px'; }
+        requestAnimationFrame(loop);
+      })();
     })();
-  })();
+  }
 
-  /* -------------------------------------------------- rotating / scrambling words */
+  /* -------------------------------------------------- rotating words */
   (function rotators() {
     $$('[data-words]').forEach(el => {
       const words = (el.dataset.words || '').split('|');
@@ -359,11 +377,23 @@
   /* -------------------------------------------------- kick off */
   function boot() {
     heroType();
-    // decode the hero meta labels + nav on load
     $$('.scramble.onload').forEach((s) => { s.dataset.text = s.textContent; });
+    // Run reveal immediately and at staggered delays to handle mobile layout shifts
     checkReveal();
     requestAnimationFrame(checkReveal);
+    setTimeout(checkReveal, 150);
+    setTimeout(checkReveal, 400);
+    setTimeout(checkReveal, 800);
   }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
-  else window.addEventListener('load', boot);
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(boot);
+  } else {
+    window.addEventListener('load', boot);
+  }
+  // Extra safety: always run on window load regardless
+  window.addEventListener('load', () => {
+    setTimeout(checkReveal, 200);
+    setTimeout(checkReveal, 600);
+  });
 })();

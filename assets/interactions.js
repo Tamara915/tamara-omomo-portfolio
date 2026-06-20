@@ -174,18 +174,7 @@
     if (done.has(el)) return;
     done.add(el);
     el.classList.add('in');
-    if (!reduced) {
-      const t0 = performance.now(), dur = 750;
-      (function step(now) {
-        const tt = clamp((now - t0) / dur, 0, 1);
-        const e = 1 - Math.pow(1 - tt, 3);
-        el.style.opacity = String(e);
-        el.style.transform = 'translateY(' + ((1 - e) * 20).toFixed(1) + 'px)';
-        if (tt < 1) requestAnimationFrame(step);
-        else { el.style.opacity = ''; el.style.transform = ''; }
-      })(performance.now());
-      setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, dur + 200);
-    }
+    // CSS keyframe handles the visual animation; JS just fires countUp
     $$('[data-count]', el).forEach(countUp);
     if (el.hasAttribute('data-count')) countUp(el);
   }

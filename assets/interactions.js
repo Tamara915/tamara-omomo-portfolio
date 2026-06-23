@@ -41,6 +41,33 @@
     return $$('.char', wrap);
   }
 
+  /* -------------------------------------------------- hero headline — per-line reveal */
+  function heroLines() {
+    const h1 = $('.hs-head-a');
+    if (!h1) return;
+    const lines = $$('.l', h1);
+    if (!lines.length) return;
+
+    if (reduced) return;
+
+    lines.forEach((l, i) => {
+      // Wrap each line in overflow:hidden so the slide-up is clipped
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;line-height:inherit;';
+      l.parentNode.insertBefore(wrap, l);
+      wrap.appendChild(l);
+
+      // Start each line below its clip boundary
+      l.style.transform = 'translateY(106%)';
+
+      // Stagger upward slide per line
+      setTimeout(() => {
+        l.style.transition = 'transform 0.95s cubic-bezier(.16,1,.3,1)';
+        l.style.transform = 'translateY(0)';
+      }, 80 + i * 130);
+    });
+  }
+
   /* -------------------------------------------------- hero: variable-weight wave + magnetic */
   function heroType() {
     const h1 = $('#heroName');
@@ -414,6 +441,7 @@
 
   /* -------------------------------------------------- boot */
   function boot() {
+    heroLines();
     heroType();
     $$('.scramble.onload').forEach(s => { s.dataset.text = s.textContent; });
     // Immediately reveal hero elements (above the fold, won't trigger IO on mobile)

@@ -138,6 +138,9 @@
     window.addEventListener('resize', reflow);
     window.addEventListener('scroll', reflow, { passive: true });
 
+    // Recalculate after reveal animation settles (h1 starts with translateY(20px) before .in)
+    setTimeout(reflow, 900);
+
     function rest(o) { o.c.style.transform = ''; o.c.style.color = ''; }
     function frame() {
       const rect = h1.getBoundingClientRect();
@@ -411,12 +414,13 @@
     cur.className = 'cur dotmode';
     cur.innerHTML = '<span class="vlabel">View</span>';
     document.body.appendChild(cur);
-    let cx = -100, cy = -100, tx = cx, ty = cy;
-    window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-    (function ring() { cx = lerp(cx, tx, 0.22); cy = lerp(cy, ty, 0.22); cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(ring); })();
+    window.addEventListener('mousemove', e => {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top = e.clientY + 'px';
+    }, { passive: true });
     const setMode = m => { cur.className = 'cur ' + m; };
-    $$('a, button, .cta').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
-    $$('.work-row').forEach(el => { el.addEventListener('mouseenter', () => setMode('view')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
+    $$('a, button, .cta, .chip').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
+    $$('.work-row').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
   }
 
   /* -------------------------------------------------- rotating words */

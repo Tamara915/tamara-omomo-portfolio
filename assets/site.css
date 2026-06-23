@@ -356,7 +356,8 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 .logo:hover .logo-tile { transform: translateY(-5px); border-color: var(--line-2); }
 .lmark { width: 46px; height: 46px; border-radius: 12px; background: var(--c, #888); color: #fff; display: grid; place-items: center; font-family: var(--font-g); font-weight: 700; font-size: 17px; letter-spacing: -0.02em; box-shadow: 0 5px 16px rgba(0,0,0,0.4); }
 .lmark.ink { color: var(--on-ember); }
-.logo-tile img { width: 46px; height: 46px; object-fit: contain; display: block; border-radius: 9px; }
+.limg { width: 46px; height: 46px; object-fit: contain; display: block; }
+.limg[data-filter="invert"] { filter: invert(1) brightness(1.8); }
 .lname { font-family: var(--font-m); font-size: 11.5px; letter-spacing: 0.03em; color: var(--cream-dim); white-space: nowrap; }
 
 /* ============================================================
@@ -391,6 +392,10 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 .work-row::after { content: ""; position: absolute; left: 0; top: 12%; bottom: 12%; width: 3px; border-radius: 4px; background: var(--g, var(--ember)); transform: scaleY(0); transform-origin: 50% 100%; opacity: 0; transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .3s; }
 .work-row:hover::after { transform: scaleY(1); opacity: 1; }
 .work-row:hover .wt { transform: translateX(10px); }
+.wview { display: inline-flex; align-items: center; gap: 9px; margin-top: 18px; font-family: var(--font-m); font-size: clamp(14px, 1.5vw, 17px); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .45s cubic-bezier(.16,1,.3,1); }
+.work-row:hover .wview, .work-row:focus-within .wview { opacity: 1; transform: translateY(0); }
+.wview .wv-arr { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--ember); font-size: 14px; transition: transform .35s cubic-bezier(.16,1,.3,1), background .3s, color .3s; }
+.work-row:hover .wview .wv-arr { background: var(--ember); color: var(--on-ember); transform: rotate(45deg); }
 
 /* ============================================================
    STACK

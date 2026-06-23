@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-  <rect width="40" height="40" rx="8" fill="#2563EB"/>
-  <text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="white">HR</text>
+  <rect width="40" height="40" rx="10" fill="#2563EB"/>
+  <circle cx="15" cy="20" r="7" fill="none" stroke="white" stroke-width="3"/>
+  <circle cx="25" cy="20" r="7" fill="none" stroke="white" stroke-width="3"/>
 </svg>

@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-  <circle cx="20" cy="20" r="17" fill="#5951FF"/>
-  <text x="20" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="20" fill="white">O</text>
+  <rect width="40" height="40" rx="10" fill="#5951FF"/>
+  <circle cx="20" cy="20" r="9" fill="none" stroke="white" stroke-width="3.5"/>
+  <circle cx="20" cy="11" r="2.5" fill="white"/>
 </svg>

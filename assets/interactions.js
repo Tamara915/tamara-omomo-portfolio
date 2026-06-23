@@ -41,34 +41,7 @@
     return $$('.char', wrap);
   }
 
-  /* -------------------------------------------------- hero headline — per-line reveal */
-  function heroLines() {
-    const h1 = $('.hs-head-a');
-    if (!h1) return;
-    const lines = $$('.l', h1);
-    if (!lines.length) return;
-
-    if (reduced) return;
-
-    lines.forEach((l, i) => {
-      // Wrap each line in overflow:hidden so the slide-up is clipped
-      const wrap = document.createElement('div');
-      wrap.style.cssText = 'overflow:hidden;display:block;line-height:inherit;';
-      l.parentNode.insertBefore(wrap, l);
-      wrap.appendChild(l);
-
-      // Start each line below its clip boundary
-      l.style.transform = 'translateY(106%)';
-
-      // Stagger upward slide per line
-      setTimeout(() => {
-        l.style.transition = 'transform 0.95s cubic-bezier(.16,1,.3,1)';
-        l.style.transform = 'translateY(0)';
-      }, 80 + i * 130);
-    });
-  }
-
-  /* -------------------------------------------------- hero: variable-weight wave + magnetic */
+  /* -------------------------------------------------- hero: variable-weight wave + magnetic (for #heroName variant) */
   function heroType() {
     const h1 = $('#heroName');
     if (!h1) return;
@@ -106,7 +79,6 @@
     let pts = positions();
     window.addEventListener('resize', () => { pts = positions(); });
     window.addEventListener('scroll', () => { pts = positions(); }, { passive: true });
-
     function frame() {
       for (const p of pts) {
         const dx = p.x - mx, dy = p.y - my;
@@ -121,6 +93,69 @@
       raf = null;
     }
     window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(frame); });
+    document.addEventListener('mouseleave', () => { mx = my = -9999; if (!raf) raf = requestAnimationFrame(frame); });
+  }
+
+  /* -------------------------------------------------- statement headline: cursor-reactive per-char lift + colour swap */
+  function statementHeadline() {
+    const h1 = $('.hs-head');
+    if (!h1 || h1.dataset.react) return;
+    h1.dataset.react = '1';
+
+    // split each line into per-char spans, preserving the .hs-em (ember) wrapper
+    const mkChar = (ch, em) => {
+      const s = document.createElement('span');
+      s.className = 'hchar' + (em ? ' em' : '') + (ch === ' ' ? ' space' : '');
+      s.textContent = ch === ' ' ? ' ' : ch;
+      return s;
+    };
+    const chars = [];
+    $$('.l', h1).forEach(line => {
+      const frag = document.createDocumentFragment();
+      Array.from(line.childNodes).forEach(node => {
+        if (node.nodeType === 3) {
+          for (const ch of node.textContent) frag.appendChild(mkChar(ch, false));
+        } else {
+          const em = document.createElement('span');
+          em.className = node.className;
+          for (const ch of node.textContent) em.appendChild(mkChar(ch, true));
+          frag.appendChild(em);
+        }
+      });
+      line.textContent = '';
+      line.appendChild(frag);
+      $$('.hchar', line).forEach(c => chars.push({ c, em: c.classList.contains('em') }));
+    });
+
+    if (reduced || !finePointer) return;
+
+    const CREAM = [240, 223, 203], EMBER = [248, 127, 35];
+    const mix = (a, b, t) => `rgb(${Math.round(lerp(a[0], b[0], t))},${Math.round(lerp(a[1], b[1], t))},${Math.round(lerp(a[2], b[2], t))})`;
+    const RANGE = 200, PAD = 70;
+    let mx = -9999, my = -9999, raf = null, pts = [];
+    const reflow = () => { pts = chars.map(o => { const r = o.c.getBoundingClientRect(); return { o, x: r.left + r.width / 2, y: r.top + r.height / 2 }; }); };
+    reflow();
+    window.addEventListener('resize', reflow);
+    window.addEventListener('scroll', reflow, { passive: true });
+
+    function rest(o) { o.c.style.transform = ''; o.c.style.color = ''; }
+    function frame() {
+      const rect = h1.getBoundingClientRect();
+      const inside = mx > rect.left - PAD && mx < rect.right + PAD && my > rect.top - PAD && my < rect.bottom + PAD;
+      for (const p of pts) {
+        let ease = 0;
+        if (inside) {
+          const dx = p.x - mx, dy = p.y - my, d = Math.sqrt(dx * dx + dy * dy);
+          const t = clamp(1 - d / RANGE, 0, 1);
+          ease = t * t * (3 - 2 * t);
+        }
+        if (ease < 0.01) { rest(p.o); continue; }
+        p.o.c.style.transform = `translateY(${(-ease * 9).toFixed(1)}px) scale(${(1 + ease * 0.07).toFixed(3)})`;
+        p.o.c.style.color = p.o.em ? mix(EMBER, CREAM, ease) : mix(CREAM, EMBER, ease);
+      }
+      raf = null;
+    }
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(frame); }, { passive: true });
     document.addEventListener('mouseleave', () => { mx = my = -9999; if (!raf) raf = requestAnimationFrame(frame); });
   }
 
@@ -191,9 +226,8 @@
   }
 
   /* -------------------------------------------------- scroll reveal
-     Primary: IntersectionObserver (reliable on mobile, fires on load)
-     Fallback: scroll-event check + staggered timers
-     Nuclear: after 1.5s, force-reveal anything still hidden            */
+     CSS keyframe animation (reliable on mobile); JS adds .in class.
+     Nuclear fallback: after 1.5s force-reveal anything still hidden.  */
   const revealEls = $$('.r, .scramble, [data-count], .quote');
   const done = new WeakSet();
 
@@ -201,12 +235,10 @@
     if (done.has(el)) return;
     done.add(el);
     el.classList.add('in');
-    // CSS keyframe handles the visual animation; JS just fires countUp
     $$('[data-count]', el).forEach(countUp);
     if (el.hasAttribute('data-count')) countUp(el);
   }
 
-  // IntersectionObserver: fires for elements already in viewport on load
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { triggerReveal(e.target); io.unobserve(e.target); } });
@@ -214,7 +246,6 @@
     revealEls.forEach(el => io.observe(el));
   }
 
-  // Scroll fallback
   function checkReveal() {
     const limit = window.innerHeight * 0.98;
     for (const el of revealEls) {
@@ -224,7 +255,7 @@
   window.addEventListener('scroll', checkReveal, { passive: true });
   window.addEventListener('resize', checkReveal);
 
-  // Nuclear fallback: reveal everything that's still hidden after 1.5s
+  // Nuclear fallback: force-reveal anything still hidden after 1.5s
   setTimeout(() => { revealEls.forEach(el => { if (!done.has(el)) triggerReveal(el); }); }, 1500);
 
   /* -------------------------------------------------- nav scrolled state */
@@ -236,29 +267,22 @@
   /* -------------------------------------------------- mobile nav */
   (function mobileNav() {
     if (!nav) return;
-
-    // Build hamburger button
     const btn = document.createElement('button');
     btn.className = 'mob-menu-btn';
     btn.setAttribute('aria-label', 'Open menu');
     btn.innerHTML = '<span></span><span></span><span></span>';
     nav.appendChild(btn);
 
-    // Build overlay menu
     const overlay = document.createElement('div');
     overlay.className = 'mob-menu';
     overlay.setAttribute('aria-hidden', 'true');
 
-    // Determine which page we're on to build correct links
     const isHome = !window.location.pathname.includes('about') && !window.location.pathname.includes('work');
-    const isAbout = window.location.pathname.includes('about');
-    const isWork = window.location.pathname.includes('work');
-
     const links = [
       { href: isHome ? '#top' : 'index.html', label: 'Home' },
       { href: isHome ? '#work' : 'work.html', label: 'Work' },
       { href: 'about.html', label: 'About' },
-      { href: isHome ? '#contact' : (isWork ? '#contact' : '#contact'), label: 'Contact' },
+      { href: '#contact', label: 'Contact' },
     ];
 
     overlay.innerHTML = `
@@ -267,7 +291,7 @@
           ${links.map((l, i) => `<a href="${l.href}" class="mob-link" style="--i:${i}">${l.label}</a>`).join('')}
         </nav>
         <div class="mob-socials">
-          <a href="https://www.linkedin.com/in/tamara-omomo-940379129/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack</a>
           <a href="mailto:omomo.oj@gmail.com">Email</a>
         </div>
@@ -282,15 +306,8 @@
       overlay.setAttribute('aria-hidden', String(!open));
       document.body.style.overflow = open ? 'hidden' : '';
     }
-
     btn.addEventListener('click', () => toggleMenu());
-
-    // Close on link tap
-    overlay.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => toggleMenu(false));
-    });
-
-    // Close on backdrop tap
+    overlay.querySelectorAll('a').forEach(a => { a.addEventListener('click', () => toggleMenu(false)); });
     overlay.addEventListener('click', e => { if (e.target === overlay) toggleMenu(false); });
   })();
 
@@ -362,6 +379,19 @@
     loop();
   })();
 
+  /* -------------------------------------------------- work rows: accent-rail colour + "View case" CTA */
+  (function workRows() {
+    $$('.work-row').forEach(row => {
+      if (row.dataset.color) row.style.setProperty('--g', row.dataset.color);
+      if (!$('.wview', row)) {
+        const v = document.createElement('span');
+        v.className = 'wview';
+        v.innerHTML = 'View case <span class="wv-arr" aria-hidden="true">→</span>';
+        ($('.wmeta', row) || row).appendChild(v);
+      }
+    });
+  })();
+
   /* -------------------------------------------------- magnetic buttons (desktop only) */
   if (finePointer && !reduced) {
     $$('.mag').forEach(m => {
@@ -385,29 +415,8 @@
     window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
     (function ring() { cx = lerp(cx, tx, 0.22); cy = lerp(cy, ty, 0.22); cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(ring); })();
     const setMode = m => { cur.className = 'cur ' + m; };
-    $$('a, button, .cta, .chip').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
+    $$('a, button, .cta').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
     $$('.work-row').forEach(el => { el.addEventListener('mouseenter', () => setMode('view')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
-  }
-
-  /* -------------------------------------------------- work row preview (desktop only) */
-  if (finePointer) {
-    const peek = $('#workPeek');
-    if (peek) {
-      const rows = $$('.work-row');
-      let tx = 0, ty = 0, x = 0, y = 0, active = false;
-      rows.forEach(row => {
-        row.addEventListener('mouseenter', () => {
-          active = true;
-          const ph = peek.querySelector('.ph');
-          ph.style.background = row.dataset.color || '#cc3711';
-          ph.textContent = row.dataset.peek || 'Case study';
-          peek.classList.add('show');
-        });
-        row.addEventListener('mouseleave', () => { active = false; peek.classList.remove('show'); });
-      });
-      window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-      (function loop() { x = lerp(x, tx, 0.14); y = lerp(y, ty, 0.14); if (active) { peek.style.left = x + 'px'; peek.style.top = y + 'px'; } requestAnimationFrame(loop); })();
-    }
   }
 
   /* -------------------------------------------------- rotating words */
@@ -425,26 +434,12 @@
     });
   })();
 
-  /* -------------------------------------------------- theme switch */
-  (function themeSwitch() {
-    const btn = $('.theme-switch');
-    if (!btn) return;
-    const stored = localStorage.getItem('theme');
-    if (stored) document.documentElement.setAttribute('data-theme', stored);
-    btn.addEventListener('click', () => {
-      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      if (next === 'dark') document.documentElement.removeAttribute('data-theme');
-      else document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-    });
-  })();
-
   /* -------------------------------------------------- boot */
   function boot() {
-    heroLines();
     heroType();
+    statementHeadline();
     $$('.scramble.onload').forEach(s => { s.dataset.text = s.textContent; });
-    // Immediately reveal hero elements (above the fold, won't trigger IO on mobile)
+    // Immediately reveal above-the-fold hero elements (mobile IntersectionObserver may miss them)
     $$('.hero-statement .r, .ab-hero .r').forEach(triggerReveal);
     checkReveal();
     requestAnimationFrame(checkReveal);

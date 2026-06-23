@@ -398,12 +398,26 @@
     });
   })();
 
+  /* -------------------------------------------------- theme switch */
+  (function themeSwitch() {
+    const btn = $('.theme-switch');
+    if (!btn) return;
+    const stored = localStorage.getItem('theme');
+    if (stored) document.documentElement.setAttribute('data-theme', stored);
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      if (next === 'dark') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  })();
+
   /* -------------------------------------------------- boot */
   function boot() {
     heroType();
     $$('.scramble.onload').forEach(s => { s.dataset.text = s.textContent; });
-    // Reveal any .r elements already in the viewport on load
-    $$('.ab-hero .r').forEach(triggerReveal);
+    // Immediately reveal hero elements (above the fold, won't trigger IO on mobile)
+    $$('.hero-statement .r, .ab-hero .r').forEach(triggerReveal);
     checkReveal();
     requestAnimationFrame(checkReveal);
     setTimeout(checkReveal, 100);

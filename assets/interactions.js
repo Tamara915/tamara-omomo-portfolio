@@ -283,10 +283,10 @@
     overlay.className = 'mob-menu';
     overlay.setAttribute('aria-hidden', 'true');
 
-    const isHome = !window.location.pathname.includes('about') && !window.location.pathname.includes('work');
     const links = [
-      { href: isHome ? '#top' : 'index.html', label: 'Home' },
-      { href: isHome ? '#work' : 'work.html', label: 'Work' },
+      { href: 'index.html', label: 'Home' },
+      { href: 'builds.html', label: 'Builds' },
+      { href: 'writing.html', label: 'Writing' },
       { href: 'about.html', label: 'About' },
       { href: '#contact', label: 'Contact' },
     ];
@@ -400,6 +400,23 @@
         v.innerHTML = 'View case <span class="wv-arr" aria-hidden="true">→</span>';
         ($('.wmeta', row) || row).appendChild(v);
       }
+    });
+  })();
+
+  /* -------------------------------------------------- flip cards (builds grid) */
+  (function flipCards() {
+    $$('.bcard').forEach(card => {
+      const toggle = () => {
+        const flipped = card.classList.toggle('flipped');
+        card.setAttribute('aria-expanded', String(flipped));
+      };
+      card.addEventListener('click', e => {
+        if (e.target.closest('a')) return; // let the View build link navigate
+        toggle();
+      });
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
     });
   })();
 

@@ -5,11 +5,27 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tamaraomomo.com/work.html</loc>
+    <loc>https://tamaraomomo.com/builds.html</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tamaraomomo.com/about.html</loc>
+    <loc>https://tamaraomomo.com/writing.html</loc>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tamaraomomo.com/about.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tamaraomomo.com/gtm-engineering</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tamaraomomo.com/ai-gtm</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tamaraomomo.com/revenue-systems</loc>
+    <priority>0.6</priority>
   </url>
 </urlset>

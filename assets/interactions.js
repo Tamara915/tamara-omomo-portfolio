@@ -130,6 +130,21 @@
       $$('.hchar', line).forEach(c => chars.push({ c, em: c.classList.contains('em') }));
     });
 
+    // entrance: characters cascade up on load (runs on touch devices too)
+    if (!reduced) {
+      chars.forEach((o, i) => {
+        o.c.style.opacity = '0';
+        o.c.style.transform = 'translateY(16px)';
+        setTimeout(() => {
+          o.c.style.transition = 'opacity .5s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1)';
+          o.c.style.opacity = '';
+          o.c.style.transform = '';
+        }, 180 + i * 16);
+      });
+      // clear inline transitions so the cursor-reactive frame() can take over cleanly
+      setTimeout(() => chars.forEach(o => { o.c.style.transition = ''; }), 180 + chars.length * 16 + 750);
+    }
+
     if (reduced || !finePointer) return;
 
     const CREAM = [240, 223, 203], EMBER = [248, 127, 35];
@@ -243,6 +258,7 @@
     el.classList.add('in');
     $$('[data-count]', el).forEach(countUp);
     if (el.hasAttribute('data-count')) countUp(el);
+    if (el.classList.contains('scramble') && !el.classList.contains('onload') && !reduced) scramble(el);
   }
 
   if ('IntersectionObserver' in window) {
@@ -432,9 +448,31 @@
     });
   })();
 
+  /* -------------------------------------------------- scroll progress bar */
+  (function progressBar() {
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+    let raf = null;
+    const upd = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      bar.style.transform = `scaleX(${max > 0 ? (window.scrollY / max).toFixed(4) : 0})`;
+      raf = null;
+    };
+    window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(upd); }, { passive: true });
+    window.addEventListener('resize', upd);
+    upd();
+  })();
+
   /* -------------------------------------------------- flip cards (builds grid) */
   (function flipCards() {
     $$('.bcard').forEach(card => {
+      if (!finePointer) {
+        const hint = $('.bflip', card);
+        if (hint) hint.innerHTML = '<span class="ico">↻</span> Tap for the story';
+      }
       const toggle = () => {
         const flipped = card.classList.toggle('flipped');
         card.setAttribute('aria-expanded', String(flipped));

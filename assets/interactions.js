@@ -403,6 +403,35 @@
     });
   })();
 
+  /* -------------------------------------------------- workflow live runs
+     Animates each .flow diagram like a running system: the signal travels
+     node → arrow → node while the diagram is in view. */
+  (function flowRunner() {
+    const flows = $$('.flow');
+    if (!flows.length || reduced) return;
+    flows.forEach(flow => {
+      const steps = $$('.fnode, .farr', flow);
+      if (steps.length < 3) return;
+      let i = -1, timer = null;
+      const tick = () => {
+        steps.forEach(s => s.classList.remove('run'));
+        i = (i + 1) % (steps.length + 3); // 3-beat rest between runs
+        if (i < steps.length) {
+          steps[i].classList.add('run');
+          // keep the previous node lit while its arrow fires
+          if (steps[i].classList.contains('farr') && steps[i - 1]) steps[i - 1].classList.add('run');
+        }
+      };
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { if (!timer) timer = setInterval(tick, 520); }
+          else { clearInterval(timer); timer = null; i = -1; steps.forEach(s => s.classList.remove('run')); }
+        });
+      }, { threshold: 0.35 });
+      io.observe(flow);
+    });
+  })();
+
   /* -------------------------------------------------- flip cards (builds grid) */
   (function flipCards() {
     $$('.bcard').forEach(card => {

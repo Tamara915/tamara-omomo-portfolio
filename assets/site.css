@@ -778,9 +778,18 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 .flow .fnode {
   font-family: var(--font-m); font-size: 12px; letter-spacing: 0.04em; color: var(--cream-dim);
   border: 1px solid var(--line-2); border-radius: 9px; padding: 9px 13px; background: var(--ink-2); white-space: nowrap;
+  transition: background .35s, color .35s, border-color .35s, box-shadow .35s, transform .35s;
 }
 .flow .fnode.hot { color: var(--ember); border-color: rgba(248,127,35,0.45); }
-.flow .farr { color: var(--ember); font-size: 14px; }
+.flow .fnode.run {
+  color: var(--on-ember); background: var(--ember); border-color: var(--ember);
+  box-shadow: 0 0 24px rgba(248,127,35,0.4); transform: translateY(-2px);
+}
+.flow .farr { color: var(--ember); font-size: 14px; opacity: 0.55; transition: opacity .35s, text-shadow .35s; }
+.flow .farr.run { opacity: 1; text-shadow: 0 0 12px rgba(248,127,35,0.8); }
+.cf-live { display: inline-flex; align-items: center; gap: 7px; margin-left: 14px; color: var(--ember); }
+.cf-live .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--ember); animation: labpulse 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .cf-live .pulse { animation: none; } }
 .case-tech { margin-top: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .case-tech .ct-lab { font-family: var(--font-m); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
 

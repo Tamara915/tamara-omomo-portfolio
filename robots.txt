@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /chats/
+Disallow: /project/
+Disallow: /standalone.html
+
+Sitemap: https://tamaraomomo.com/sitemap.xml

@@ -1,0 +1,4 @@
+# Working files that live in the repo but should not be publicly reachable
+/chats/*          /404.html   404!
+/project/*        /404.html   404!
+/standalone.html  /404.html   404!

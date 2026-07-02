@@ -624,7 +624,7 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 .wk-intro p b { color: var(--cream); font-weight: 500; }
 .wk-intro .count-lbl { font-family: var(--font-m); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 .cases { padding-block: clamp(40px, 6vh, 80px) clamp(70px, 10vh, 130px); }
-.case { padding-block: clamp(44px, 7vh, 90px); border-top: 1px solid var(--line); }
+.case { padding-block: clamp(44px, 7vh, 90px); border-top: 1px solid var(--line); scroll-margin-top: 96px; }
 .case:first-child { border-top: none; }
 .case-head { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(20px, 3vw, 52px); align-items: start; }
 @media (max-width: 760px) { .case-head { grid-template-columns: 1fr; gap: 18px; } }

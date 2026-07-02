@@ -101,6 +101,8 @@
     const h1 = $('.hs-head');
     if (!h1 || h1.dataset.react) return;
     h1.dataset.react = '1';
+    // screen readers get the intact sentence; the split chars below are decorative
+    h1.setAttribute('aria-label', h1.textContent.replace(/\s+/g, ' ').trim());
 
     // split each line into per-char spans, preserving the .hs-em (ember) wrapper
     const mkChar = (ch, em) => {
@@ -124,6 +126,7 @@
       });
       line.textContent = '';
       line.appendChild(frag);
+      line.setAttribute('aria-hidden', 'true');
       $$('.hchar', line).forEach(c => chars.push({ c, em: c.classList.contains('em') }));
     });
 
@@ -364,7 +367,12 @@
   (function logoMarquee() {
     const track = $('#logoTrack');
     if (!track) return;
-    if (!track.dataset.cloned) { track.innerHTML += track.innerHTML; track.dataset.cloned = '1'; }
+    if (!track.dataset.cloned) {
+      track.innerHTML += track.innerHTML;
+      track.dataset.cloned = '1';
+      // the cloned half exists only for the seamless loop — hide it from screen readers
+      Array.from(track.children).slice(track.children.length / 2).forEach(el => el.setAttribute('aria-hidden', 'true'));
+    }
     if (reduced) return;
     let off = 0, half = 0, paused = false;
     function getHalf() { return track.scrollWidth / 2; }

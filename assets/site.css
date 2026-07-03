@@ -279,9 +279,15 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
   display: flex; flex-wrap: wrap; gap: 28px 40px; align-items: flex-end; justify-content: space-between;
   margin-top: clamp(36px, 6vh, 64px); padding-top: 26px; border-top: 1px solid var(--line);
 }
+.hs-copy { display: flex; flex-direction: column; gap: 16px; }
 .hs-now { margin: 0; font-family: var(--font-m); font-size: clamp(13px, 1.3vw, 15.5px); letter-spacing: 0.02em; line-height: 1.7; color: var(--muted); max-width: 56ch; }
 .hs-now b { color: var(--cream-dim); font-weight: 500; }
 .hs-now .rot2 { color: var(--ember); display: inline-block; }
+.hs-building { margin: 0; font-family: var(--font-m); font-size: clamp(12.5px, 1.25vw, 15px); letter-spacing: 0.03em; color: var(--cream-dim); display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+.hs-building .hb-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ember); box-shadow: 0 0 10px rgba(248,127,35,0.7); align-self: center; flex-shrink: 0; animation: labpulse 1.8s ease-in-out infinite; }
+.hs-building .hb-lab { color: var(--faint); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.86em; }
+.hs-building .rot2 { color: var(--ember); display: inline-block; font-weight: 500; }
+@media (prefers-reduced-motion: reduce) { .hs-building .hb-dot { animation: none; } }
 
 /* vertical scrolling name-strip */
 .hs-rail {

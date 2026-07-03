@@ -470,16 +470,30 @@
      Desktop: hovering flips the card, clicking it opens the build.
      Touch: tap flips, tapping the View-build link navigates. */
   (function flipCards() {
-    $$('.bcard').forEach(card => {
+    const cards = $$('.bcard');
+    let current = null; // only one card is ever flipped at a time
+
+    const flip = (card, on) => {
+      if (on === card.classList.contains('flipped')) return;
+      // promote to its own layer only while animating, then release it
+      card.classList.add('flipping');
+      const inner = $('.bc-inner', card);
+      if (inner) {
+        const clear = () => { card.classList.remove('flipping'); inner.removeEventListener('transitionend', clear); };
+        inner.addEventListener('transitionend', clear);
+      }
+      card.classList.toggle('flipped', on);
+      card.setAttribute('aria-expanded', String(on));
+    };
+    const show = card => { if (current && current !== card) flip(current, false); flip(card, true); current = card; };
+    const hideAll = () => { if (current) { flip(current, false); current = null; } };
+
+    cards.forEach(card => {
       const hint = $('.bflip', card);
-      const set = flipped => {
-        card.classList.toggle('flipped', flipped);
-        card.setAttribute('aria-expanded', String(flipped));
-      };
       if (finePointer && !reduced) {
         if (hint) hint.innerHTML = '<span class="ico">↻</span> Hover to flip · click to open';
-        card.addEventListener('mouseenter', () => set(true));
-        card.addEventListener('mouseleave', () => set(false));
+        card.addEventListener('mouseenter', () => show(card));
+        card.addEventListener('mouseleave', () => { flip(card, false); if (current === card) current = null; });
         card.addEventListener('click', e => {
           if (e.target.closest('a')) return;
           const link = $('.bview', card);
@@ -489,11 +503,11 @@
         if (hint) hint.innerHTML = '<span class="ico">↻</span> Tap for the story';
         card.addEventListener('click', e => {
           if (e.target.closest('a')) return; // let the View build link navigate
-          set(!card.classList.contains('flipped'));
+          card.classList.contains('flipped') ? hideAll() : show(card);
         });
       }
       card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(!card.classList.contains('flipped')); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.contains('flipped') ? hideAll() : show(card); }
       });
     });
   })();
@@ -517,9 +531,13 @@
     cur.className = 'cur dotmode';
     cur.innerHTML = '<span class="vlabel">View</span>';
     document.body.appendChild(cur);
+    // Position via transform (compositor-only) so the cursor stays smooth even
+    // while cards are running their 3D flip; left/top would thrash layout each frame.
+    let cxRaw = -100, cyRaw = -100, curRaf = null;
+    const paint = () => { cur.style.transform = `translate3d(${cxRaw}px, ${cyRaw}px, 0)`; curRaf = null; };
     window.addEventListener('mousemove', e => {
-      cur.style.left = e.clientX + 'px';
-      cur.style.top = e.clientY + 'px';
+      cxRaw = e.clientX; cyRaw = e.clientY;
+      if (!curRaf) curRaf = requestAnimationFrame(paint);
     }, { passive: true });
     const setMode = m => { cur.className = 'cur ' + m; };
     $$('a, button, .cta, .chip').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });

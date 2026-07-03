@@ -466,23 +466,34 @@
     upd();
   })();
 
-  /* -------------------------------------------------- flip cards (builds grid) */
+  /* -------------------------------------------------- flip cards (builds grid)
+     Desktop: hovering flips the card, clicking it opens the build.
+     Touch: tap flips, tapping the View-build link navigates. */
   (function flipCards() {
     $$('.bcard').forEach(card => {
-      if (!finePointer) {
-        const hint = $('.bflip', card);
-        if (hint) hint.innerHTML = '<span class="ico">↻</span> Tap for the story';
-      }
-      const toggle = () => {
-        const flipped = card.classList.toggle('flipped');
+      const hint = $('.bflip', card);
+      const set = flipped => {
+        card.classList.toggle('flipped', flipped);
         card.setAttribute('aria-expanded', String(flipped));
       };
-      card.addEventListener('click', e => {
-        if (e.target.closest('a')) return; // let the View build link navigate
-        toggle();
-      });
+      if (finePointer && !reduced) {
+        if (hint) hint.innerHTML = '<span class="ico">↻</span> Hover to flip · click to open';
+        card.addEventListener('mouseenter', () => set(true));
+        card.addEventListener('mouseleave', () => set(false));
+        card.addEventListener('click', e => {
+          if (e.target.closest('a')) return;
+          const link = $('.bview', card);
+          if (link) window.location.href = link.getAttribute('href');
+        });
+      } else {
+        if (hint) hint.innerHTML = '<span class="ico">↻</span> Tap for the story';
+        card.addEventListener('click', e => {
+          if (e.target.closest('a')) return; // let the View build link navigate
+          set(!card.classList.contains('flipped'));
+        });
+      }
       card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(!card.classList.contains('flipped')); }
       });
     });
   })();

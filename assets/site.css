@@ -690,7 +690,6 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 }
 .bcard.flipped .bc-inner { transform: rotateY(180deg); }
 @media (hover: hover) and (pointer: fine) {
-  .bcard:not(.flipped):hover .bc-inner { transform: rotateY(-8deg) rotateX(2deg) translateY(-5px); }
   .bcard:hover .bc-face { border-color: var(--line-2); box-shadow: 0 18px 44px rgba(0,0,0,0.35); }
 }
 .bcard:active .bc-inner { transition-duration: .55s; }

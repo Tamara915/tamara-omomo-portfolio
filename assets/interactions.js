@@ -301,7 +301,7 @@
 
     const links = [
       { href: 'index.html', label: 'Home' },
-      { href: 'builds.html', label: 'Builds' },
+      { href: 'builds.html', label: 'Case Studies' },
       { href: 'writing.html', label: 'Writing' },
       { href: 'about.html', label: 'About' },
       { href: '#contact', label: 'Contact' },

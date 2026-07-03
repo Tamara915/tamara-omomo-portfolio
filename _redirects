@@ -3,6 +3,7 @@
 /work             /builds.html  301!
 
 # Pretty URLs for topic + section pages
+/case-studies     /builds.html           200
 /builds           /builds.html           200
 /writing          /writing.html          200
 /about            /about.html            200

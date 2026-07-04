@@ -302,7 +302,7 @@
     const links = [
       { href: 'index.html', label: 'Home' },
       { href: 'builds.html', label: 'Case Studies' },
-      { href: 'writing.html', label: 'Writing' },
+      { href: 'writing.html', label: 'Thoughts' },
       { href: 'about.html', label: 'About' },
       { href: '#contact', label: 'Contact' },
     ];
@@ -510,6 +510,97 @@
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.contains('flipped') ? hideAll() : show(card); }
       });
     });
+  })();
+
+  /* -------------------------------------------------- branded preloader (home only) */
+  (function preloader() {
+    const pl = document.getElementById('preloader');
+    if (!pl) return;
+    // arrived via an internal page transition → skip the intro, let the curtain reveal
+    if (sessionStorage.getItem('pt')) { pl.remove(); return; }
+    const finish = () => { pl.classList.add('done'); setTimeout(() => pl.remove(), 700); };
+    if (reduced) { finish(); return; }
+    const count = $('.pl-count', pl);
+    const dur = 1050, t0 = performance.now();
+    (function tick(now) {
+      const t = clamp((now - t0) / dur, 0, 1);
+      const e = 1 - Math.pow(1 - t, 2);
+      if (count) count.textContent = Math.round(e * 100);
+      if (t < 1) requestAnimationFrame(tick); else finish();
+    })(performance.now());
+    setTimeout(() => { if (document.body.contains(pl)) finish(); }, 2600); // safety net
+  })();
+
+  /* -------------------------------------------------- page-transition curtain */
+  (function pageTransition() {
+    if (reduced) return;
+    const curtain = document.createElement('div');
+    curtain.id = 'curtain';
+    curtain.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(curtain);
+
+    // reveal on arrival if we came through a transition
+    if (sessionStorage.getItem('pt')) {
+      sessionStorage.removeItem('pt');
+      curtain.classList.add('cover');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        curtain.classList.remove('cover');
+        curtain.classList.add('uncover');
+        setTimeout(() => curtain.classList.remove('uncover'), 700);
+      }));
+    }
+
+    const internal = (a) => {
+      const href = a.getAttribute('href');
+      if (!href) return false;
+      if (a.target === '_blank' || a.hasAttribute('download')) return false;
+      if (/^(mailto:|tel:|https?:|\/\/|#)/i.test(href)) return false; // external, mail, or in-page anchor
+      return /\.html(\?|#|$)|^\/(case-studies|thoughts|builds|writing|about|ai-gtm|gtm-engineering|revenue-systems)/i.test(href);
+    };
+    document.addEventListener('click', (e) => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest('a');
+      if (!a || !internal(a)) return;
+      e.preventDefault();
+      const href = a.getAttribute('href');
+      sessionStorage.setItem('pt', '1');
+      curtain.classList.remove('uncover');
+      curtain.classList.add('covering');
+      setTimeout(() => { window.location.href = href; }, 470);
+    });
+    // restore on bfcache back/forward
+    window.addEventListener('pageshow', (e) => { if (e.persisted) curtain.className = ''; });
+  })();
+
+  /* -------------------------------------------------- hero cursor spotlight (desktop) */
+  (function heroSpotlight() {
+    const hero = $('.hero-statement');
+    const spot = hero && $('.hero-spotlight', hero);
+    if (!hero || !spot || !finePointer || reduced) return;
+    let mx = 0, my = 0, raf = null;
+    hero.addEventListener('pointerenter', () => hero.classList.add('spot-on'));
+    hero.addEventListener('pointerleave', () => hero.classList.remove('spot-on'));
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      mx = e.clientX - r.left; my = e.clientY - r.top;
+      if (!raf) raf = requestAnimationFrame(() => { spot.style.setProperty('--sx', mx + 'px'); spot.style.setProperty('--sy', my + 'px'); raf = null; });
+    }, { passive: true });
+  })();
+
+  /* -------------------------------------------------- live Berlin clock (footer) */
+  (function berlinClock() {
+    const footer = $('.footer');
+    if (!footer) return;
+    const chip = document.createElement('span');
+    chip.className = 'footer-time';
+    footer.appendChild(chip);
+    const tick = () => {
+      try {
+        const t = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date());
+        chip.innerHTML = '<span class="ft-dot"></span>Berlin · ' + t;
+      } catch (e) { chip.textContent = ''; }
+    };
+    tick(); setInterval(tick, 1000);
   })();
 
   /* -------------------------------------------------- magnetic buttons (desktop only) */

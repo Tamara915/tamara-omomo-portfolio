@@ -10,6 +10,12 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, t) => a + (b - a) * t;
+  // sessionStorage throws in some mobile contexts (Safari private tabs, in-app
+  // browsers like Instagram/LinkedIn webviews) — never let that take the page down.
+  const safeStorage = {
+    get(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } },
+    set(key, val) { try { sessionStorage.setItem(key, val); } catch (e) { /* ignore */ } },
+  };
 
   /* -------------------------------------------------- logo image fallback (global — called from onerror) */
   window.logoFallback = function (img) {
@@ -145,12 +151,12 @@
       setTimeout(() => chars.forEach(o => { o.c.style.transition = ''; }), 180 + chars.length * 16 + 750);
     }
 
-    if (reduced || !finePointer) return;
+    if (reduced) return;
 
     const CREAM = [240, 223, 203], EMBER = [248, 127, 35];
     const mix = (a, b, t) => `rgb(${Math.round(lerp(a[0], b[0], t))},${Math.round(lerp(a[1], b[1], t))},${Math.round(lerp(a[2], b[2], t))})`;
     const RANGE = 200, PAD = 70;
-    let mx = -9999, my = -9999, raf = null, pts = [];
+    let pts = [];
     const reflow = () => { pts = chars.map(o => { const r = o.c.getBoundingClientRect(); return { o, x: r.left + r.width / 2, y: r.top + r.height / 2 }; }); };
     reflow();
     window.addEventListener('resize', reflow);
@@ -160,13 +166,12 @@
     setTimeout(reflow, 900);
 
     function rest(o) { o.c.style.transform = ''; o.c.style.color = ''; }
-    function frame() {
-      const rect = h1.getBoundingClientRect();
-      const inside = mx > rect.left - PAD && mx < rect.right + PAD && my > rect.top - PAD && my < rect.bottom + PAD;
+    function paint(sx, sy) {
+      const inside = sx !== null;
       for (const p of pts) {
         let ease = 0;
         if (inside) {
-          const dx = p.x - mx, dy = p.y - my, d = Math.sqrt(dx * dx + dy * dy);
+          const dx = p.x - sx, dy = p.y - sy, d = Math.sqrt(dx * dx + dy * dy);
           const t = clamp(1 - d / RANGE, 0, 1);
           ease = t * t * (3 - 2 * t);
         }
@@ -174,10 +179,46 @@
         p.o.c.style.transform = `translateY(${(-ease * 9).toFixed(1)}px) scale(${(1 + ease * 0.07).toFixed(3)})`;
         p.o.c.style.color = p.o.em ? mix(EMBER, CREAM, ease) : mix(CREAM, EMBER, ease);
       }
-      raf = null;
     }
-    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(frame); }, { passive: true });
-    document.addEventListener('mouseleave', () => { mx = my = -9999; if (!raf) raf = requestAnimationFrame(frame); });
+
+    if (finePointer) {
+      // desktop: the swirl follows the real cursor
+      let mx = -9999, my = -9999, raf = null;
+      function frame() {
+        const rect = h1.getBoundingClientRect();
+        const inside = mx > rect.left - PAD && mx < rect.right + PAD && my > rect.top - PAD && my < rect.bottom + PAD;
+        paint(inside ? mx : null, my);
+        raf = null;
+      }
+      window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(frame); }, { passive: true });
+      document.addEventListener('mouseleave', () => { mx = my = -9999; if (!raf) raf = requestAnimationFrame(frame); });
+    } else {
+      // touch devices: no cursor to react to, so auto-sweep the same lift+colour
+      // effect across the headline on a loop, only while it's on screen.
+      const SWEEP_MS = 2600, PAUSE_MS = 1500, CYCLE = SWEEP_MS + PAUSE_MS;
+      let visible = false, raf = null, t0 = null;
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { visible = e.isIntersecting; });
+        if (visible && !raf) raf = requestAnimationFrame(tick);
+        if (!visible) chars.forEach(o => rest(o));
+      }, { threshold: 0.25 });
+      io.observe(h1);
+      function tick(now) {
+        if (!visible) { raf = null; return; }
+        if (t0 === null) t0 = now;
+        const elapsed = (now - t0) % CYCLE;
+        if (elapsed <= SWEEP_MS) {
+          const rect = h1.getBoundingClientRect();
+          const e = clamp(elapsed / SWEEP_MS, 0, 1);
+          const ease = e * e * (3 - 2 * e);
+          const sx = lerp(rect.left - PAD, rect.right + PAD, ease);
+          paint(sx, rect.top + rect.height / 2);
+        } else {
+          paint(null, 0);
+        }
+        raf = requestAnimationFrame(tick);
+      }
+    }
   }
 
   /* -------------------------------------------------- scramble */
@@ -517,32 +558,42 @@
      The site's entrance animations wait for the click (gateWait). */
   let gateWait = Promise.resolve();
   (function entryGate() {
-    const pl = document.getElementById('preloader');
-    if (!pl) return;
-    // show the gate once per session
-    if (sessionStorage.getItem('entered')) { pl.remove(); return; }
-    const finish = () => { pl.classList.add('done'); setTimeout(() => pl.remove(), 700); };
-    if (reduced) { finish(); return; }
-    let release;
-    gateWait = new Promise(res => { release = res; });
-    const count = $('.pl-count', pl);
-    const btn = $('.pl-enter', pl);
-    const dur = 1400, t0 = performance.now();
-    (function tick(now) {
-      const t = clamp((now - t0) / dur, 0, 1);
-      const e = 1 - Math.pow(1 - t, 2);
-      if (count) count.textContent = Math.round(e * 100);
-      if (t < 1) requestAnimationFrame(tick);
-      else { pl.classList.add('ready'); if (btn) btn.focus({ preventScroll: true }); }
-    })(performance.now());
-    const enter = () => {
-      if (!pl.classList.contains('ready')) return;
-      sessionStorage.setItem('entered', '1');
-      finish(); release();
-    };
-    if (btn) btn.addEventListener('click', e => { e.stopPropagation(); enter(); });
-    pl.addEventListener('click', enter); // the whole screen is clickable once ready
-    pl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); } });
+    let release = null;
+    try {
+      const pl = document.getElementById('preloader');
+      if (!pl) return;
+      // show the gate once per session
+      if (safeStorage.get('entered')) { pl.remove(); return; }
+      const finish = () => { pl.classList.add('done'); setTimeout(() => pl.remove(), 700); };
+      if (reduced) { finish(); return; }
+      gateWait = new Promise(res => { release = res; });
+      // safety net: never let a broken gate permanently block the rest of the page
+      const failSafe = setTimeout(() => { try { finish(); } catch (e) {} release(); }, 8000);
+      const count = $('.pl-count', pl);
+      const btn = $('.pl-enter', pl);
+      const dur = 1400, t0 = performance.now();
+      (function tick(now) {
+        const t = clamp((now - t0) / dur, 0, 1);
+        const e = 1 - Math.pow(1 - t, 2);
+        if (count) count.textContent = Math.round(e * 100);
+        if (t < 1) requestAnimationFrame(tick);
+        else { pl.classList.add('ready'); if (btn) btn.focus({ preventScroll: true }); }
+      })(performance.now());
+      const enter = () => {
+        if (!pl.classList.contains('ready')) return;
+        clearTimeout(failSafe);
+        safeStorage.set('entered', '1');
+        finish(); release();
+      };
+      if (btn) btn.addEventListener('click', e => { e.stopPropagation(); enter(); });
+      pl.addEventListener('click', enter); // the whole screen is clickable once ready
+      pl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); } });
+    } catch (err) {
+      // whatever went wrong, never let it block the rest of the page from loading
+      const pl = document.getElementById('preloader');
+      if (pl) pl.remove();
+      if (typeof release === 'function') release();
+    }
   })();
 
   /* -------------------------------------------------- hero cursor spotlight (desktop) */

@@ -521,14 +521,14 @@
     const finish = () => { pl.classList.add('done'); setTimeout(() => pl.remove(), 700); };
     if (reduced) { finish(); return; }
     const count = $('.pl-count', pl);
-    const dur = 1050, t0 = performance.now();
+    const dur = 1900, hold = 450, t0 = performance.now();
     (function tick(now) {
       const t = clamp((now - t0) / dur, 0, 1);
       const e = 1 - Math.pow(1 - t, 2);
       if (count) count.textContent = Math.round(e * 100);
-      if (t < 1) requestAnimationFrame(tick); else finish();
+      if (t < 1) requestAnimationFrame(tick); else setTimeout(finish, hold); // linger at 100%
     })(performance.now());
-    setTimeout(() => { if (document.body.contains(pl)) finish(); }, 2600); // safety net
+    setTimeout(() => { if (document.body.contains(pl)) finish(); }, 4200); // safety net
   })();
 
   /* -------------------------------------------------- page-transition curtain */

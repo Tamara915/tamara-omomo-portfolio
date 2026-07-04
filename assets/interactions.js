@@ -16,6 +16,12 @@
     get(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } },
     set(key, val) { try { sessionStorage.setItem(key, val); } catch (e) { /* ignore */ } },
   };
+  // Every effect below runs as sequential top-level code in one wrapper function —
+  // an uncaught error in any single one (a quirky mobile webview, an unsupported
+  // API) must never be able to silently kill everything defined after it.
+  function safeRun(name, fn) {
+    try { fn(); } catch (e) { console.error('[interactions] ' + name + ' failed:', e); }
+  }
 
   /* -------------------------------------------------- logo image fallback (global — called from onerror) */
   window.logoFallback = function (img) {
@@ -328,7 +334,7 @@
   window.addEventListener('scroll', onScrollNav, { passive: true });
 
   /* -------------------------------------------------- mobile nav */
-  (function mobileNav() {
+  safeRun('mobileNav', function mobileNav() {
     if (!nav) return;
     const btn = document.createElement('button');
     btn.className = 'mob-menu-btn';
@@ -372,10 +378,10 @@
     btn.addEventListener('click', () => toggleMenu());
     overlay.querySelectorAll('a').forEach(a => { a.addEventListener('click', () => toggleMenu(false)); });
     overlay.addEventListener('click', e => { if (e.target === overlay) toggleMenu(false); });
-  })();
+  });
 
   /* -------------------------------------------------- marquee */
-  (function marquee() {
+  safeRun('marquee', function marquee() {
     const tracks = $$('.marquee .track');
     if (!tracks.length || reduced) return;
     const state = tracks.map(t => ({ t, off: 0, half: t.scrollWidth / 2 }));
@@ -394,10 +400,10 @@
       requestAnimationFrame(loop);
     }
     loop();
-  })();
+  });
 
   /* -------------------------------------------------- vertical rail */
-  (function verticalRail() {
+  safeRun('verticalRail', function verticalRail() {
     const track = $('.hs-rail-track');
     if (!track || reduced) return;
     let off = 0, half = track.scrollHeight / 2;
@@ -410,18 +416,18 @@
       requestAnimationFrame(loop);
     }
     loop();
-  })();
+  });
 
   /* -------------------------------------------------- GTM architecture flow pulse */
-  (function archFlow() {
+  safeRun('archFlow', function archFlow() {
     const arrows = $$('.arch-arrow');
     if (!arrows.length || reduced) return;
     let i = 0;
     setInterval(() => { arrows.forEach(a => a.classList.remove('flow')); arrows[i].classList.add('flow'); i = (i + 1) % arrows.length; }, 520);
-  })();
+  });
 
   /* -------------------------------------------------- logo marquee */
-  (function logoMarquee() {
+  safeRun('logoMarquee', function logoMarquee() {
     const track = $('#logoTrack');
     if (!track) return;
     if (!track.dataset.cloned) {
@@ -445,10 +451,10 @@
       requestAnimationFrame(loop);
     }
     loop();
-  })();
+  });
 
   /* -------------------------------------------------- work rows: accent-rail colour + "View case" CTA */
-  (function workRows() {
+  safeRun('workRows', function workRows() {
     $$('.work-row').forEach(row => {
       if (row.dataset.color) row.style.setProperty('--g', row.dataset.color);
       if (!$('.wview', row)) {
@@ -458,12 +464,12 @@
         ($('.wmeta', row) || row).appendChild(v);
       }
     });
-  })();
+  });
 
   /* -------------------------------------------------- workflow live runs
      Animates each .flow diagram like a running system: the signal travels
      node → arrow → node while the diagram is in view. */
-  (function flowRunner() {
+  safeRun('flowRunner', function flowRunner() {
     const flows = $$('.flow');
     if (!flows.length || reduced) return;
     flows.forEach(flow => {
@@ -487,10 +493,10 @@
       }, { threshold: 0.35 });
       io.observe(flow);
     });
-  })();
+  });
 
   /* -------------------------------------------------- scroll progress bar */
-  (function progressBar() {
+  safeRun('progressBar', function progressBar() {
     const bar = document.createElement('div');
     bar.className = 'scroll-progress';
     bar.setAttribute('aria-hidden', 'true');
@@ -505,12 +511,12 @@
     window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(upd); }, { passive: true });
     window.addEventListener('resize', upd);
     upd();
-  })();
+  });
 
   /* -------------------------------------------------- flip cards (builds grid)
      Desktop: hovering flips the card, clicking it opens the build.
      Touch: tap flips, tapping the View-build link navigates. */
-  (function flipCards() {
+  safeRun('flipCards', function flipCards() {
     const cards = $$('.bcard');
     let current = null; // only one card is ever flipped at a time
 
@@ -582,7 +588,7 @@
         peekIO.observe(firstCard);
       }
     }
-  })();
+  });
 
   /* -------------------------------------------------- entry gate (home only)
      Shows the mark + a counter; when it reaches 100 an Enter button appears.
@@ -628,7 +634,7 @@
   })();
 
   /* -------------------------------------------------- hero cursor spotlight (desktop) */
-  (function heroSpotlight() {
+  safeRun('heroSpotlight', function heroSpotlight() {
     const hero = $('.hero-statement');
     const spot = hero && $('.hero-spotlight', hero);
     if (!hero || !spot || !finePointer || reduced) return;
@@ -640,10 +646,10 @@
       mx = e.clientX - r.left; my = e.clientY - r.top;
       if (!raf) raf = requestAnimationFrame(() => { spot.style.setProperty('--sx', mx + 'px'); spot.style.setProperty('--sy', my + 'px'); raf = null; });
     }, { passive: true });
-  })();
+  });
 
   /* -------------------------------------------------- live Berlin clock (footer) */
-  (function berlinClock() {
+  safeRun('berlinClock', function berlinClock() {
     const footer = $('.footer');
     if (!footer) return;
     const chip = document.createElement('span');
@@ -656,10 +662,10 @@
       } catch (e) { chip.textContent = ''; }
     };
     tick(); setInterval(tick, 1000);
-  })();
+  });
 
   /* -------------------------------------------------- magnetic buttons (desktop only) */
-  if (finePointer && !reduced) {
+  if (finePointer && !reduced) safeRun('magneticButtons', function () {
     $$('.mag').forEach(m => {
       const strength = parseFloat(m.dataset.mag || 0.4);
       m.addEventListener('mousemove', e => {
@@ -668,10 +674,10 @@
       });
       m.addEventListener('mouseleave', () => { m.style.transform = ''; });
     });
-  }
+  });
 
   /* -------------------------------------------------- custom cursor (desktop only) */
-  if (finePointer && !reduced) {
+  if (finePointer && !reduced) safeRun('customCursor', function () {
     document.body.classList.add('cursor-on');
     const cur = document.createElement('div');
     cur.className = 'cur dotmode';
@@ -688,10 +694,10 @@
     const setMode = m => { cur.className = 'cur ' + m; };
     $$('a, button, .cta, .chip').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
     $$('.work-row').forEach(el => { el.addEventListener('mouseenter', () => setMode('ring')); el.addEventListener('mouseleave', () => setMode('dotmode')); });
-  }
+  });
 
   /* -------------------------------------------------- rotating words */
-  (function rotators() {
+  safeRun('rotators', function rotators() {
     $$('[data-words]').forEach(el => {
       const words = (el.dataset.words || '').split('|');
       if (!words.length) return;
@@ -703,12 +709,12 @@
       const interval = parseInt(el.dataset.interval || '2600', 10);
       setTimeout(() => setInterval(() => { i = (i + 1) % words.length; softSwap(el, words[i]); }, interval), parseInt(el.dataset.delay || '0', 10));
     });
-  })();
+  });
 
   /* -------------------------------------------------- boot */
   function boot() {
-    heroType();
-    statementHeadline();
+    safeRun('heroType', heroType);
+    safeRun('statementHeadline', statementHeadline);
     $$('.scramble.onload').forEach(s => { s.dataset.text = s.textContent; });
     // Immediately reveal above-the-fold hero elements (mobile IntersectionObserver may miss them)
     $$('.hero-statement .r, .ab-hero .r').forEach(triggerReveal);
@@ -721,13 +727,13 @@
   const fontsReady = (document.fonts && document.fonts.ready)
     ? document.fonts.ready
     : new Promise(res => window.addEventListener('load', res));
-  Promise.all([fontsReady, gateWait]).then(boot); // hold the entrance until the gate is clicked
+  Promise.all([fontsReady, gateWait]).then(() => safeRun('boot', boot)); // hold the entrance until the gate is clicked
   window.addEventListener('load', () => { setTimeout(checkReveal, 300); });
 
   /* -------------------------------------------------- first-party analytics beacon
      No cookies, no third party. Logs a pageview + a few key clicks to
      /.netlify/functions/track, which a private /admin dashboard reads back. */
-  (function analytics() {
+  safeRun('analytics', function analytics() {
     if (/admin/i.test(location.pathname)) return; // don't track visits to the dashboard itself
     if (navigator.doNotTrack === '1') return;
 
@@ -756,5 +762,5 @@
       else if (el.matches('.cta')) label = 'cta: ' + el.textContent.trim();
       if (label) send('click', label.slice(0, 120));
     }, { passive: true });
-  })();
+  });
 })();

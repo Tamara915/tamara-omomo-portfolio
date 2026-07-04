@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Analytics — Tamara Omomo</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#15100d" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #15100d; --ink-2: #1d1611; --ink-deep: #100b09;
+    --line: #2c2620; --line-2: #3a322a;
+    --cream: #f0dfcb; --cream-dim: #c4b8a4; --muted: #8c8170; --faint: #5d5447;
+    --ember: #f87f23; --on-ember: #15100d;
+    --font-g: "Space Grotesk", sans-serif; --font-m: "JetBrains Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ink); color: var(--cream); font-family: var(--font-g); min-height: 100vh; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: clamp(28px, 5vw, 64px) 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-m); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 40px; }
+  .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); }
+
+  /* login */
+  #login { max-width: 340px; margin: 12vh auto 0; text-align: center; }
+  #login h1 { font-size: 20px; font-weight: 500; margin-bottom: 22px; }
+  #login input {
+    width: 100%; padding: 13px 16px; border-radius: 10px; border: 1px solid var(--line-2);
+    background: var(--ink-2); color: var(--cream); font-family: var(--font-m); font-size: 14px; margin-bottom: 14px;
+  }
+  #login input:focus { outline: none; border-color: var(--ember); }
+  #login button {
+    width: 100%; padding: 13px; border-radius: 10px; border: none; background: var(--ember); color: var(--on-ember);
+    font-family: var(--font-m); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  }
+  #login .err { color: var(--ember); font-size: 13px; margin-top: 14px; min-height: 18px; }
+
+  /* dashboard */
+  #dash { display: none; }
+  .dash-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+  .dash-head h1 { font-size: 22px; font-weight: 500; margin: 0; }
+  .range-btns { display: flex; gap: 8px; }
+  .range-btns button {
+    font-family: var(--font-m); font-size: 12px; padding: 8px 14px; border-radius: 100px; cursor: pointer;
+    border: 1px solid var(--line-2); background: transparent; color: var(--cream-dim);
+  }
+  .range-btns button.active { background: var(--ember); border-color: var(--ember); color: var(--on-ember); font-weight: 700; }
+  #logout { font-family: var(--font-m); font-size: 12px; color: var(--faint); text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+
+  .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 34px; }
+  .tile { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; background: var(--ink-2); }
+  .tile .n { font-size: 34px; font-weight: 600; letter-spacing: -0.02em; color: var(--ember); }
+  .tile .l { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-top: 6px; }
+
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .panel { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; background: var(--ink-2); }
+  .panel h2 { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin: 0 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; font-size: 13.5px; }
+  .row .k { color: var(--cream-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row .v { font-family: var(--font-m); color: var(--ember); flex-shrink: 0; }
+  .empty { color: var(--faint); font-size: 13px; padding: 6px 0; }
+
+  .daily { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; background: var(--ink-2); }
+  .daily h2 { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin: 0 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .daily table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .daily th { text-align: left; font-family: var(--font-m); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); padding: 6px 4px; }
+  .daily td { padding: 6px 4px; border-top: 1px solid var(--line); color: var(--cream-dim); }
+  .daily td.n { font-family: var(--font-m); color: var(--ember); }
+
+  @media (max-width: 640px) { .panels, .tiles { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="brand"><span class="dot"></span>Tamara Omomo — private analytics</div>
+
+  <div id="login">
+    <h1>Enter password</h1>
+    <input type="password" id="pw" placeholder="Password" autofocus />
+    <button id="loginBtn" type="button">View stats</button>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div id="dash">
+    <div class="dash-head">
+      <h1>Analytics</h1>
+      <div style="display:flex; align-items:center; gap:18px;">
+        <div class="range-btns">
+          <button data-days="7">7d</button>
+          <button data-days="30" class="active">30d</button>
+          <button data-days="90">90d</button>
+        </div>
+        <button id="logout">Log out</button>
+      </div>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><div class="n" id="tPageviews">–</div><div class="l">Pageviews</div></div>
+      <div class="tile"><div class="n" id="tClicks">–</div><div class="l">Clicks</div></div>
+    </div>
+
+    <div class="panels">
+      <div class="panel"><h2>Top pages</h2><div id="topPages"></div></div>
+      <div class="panel"><h2>Top clicks</h2><div id="topClicks"></div></div>
+    </div>
+    <div class="panels">
+      <div class="panel" style="grid-column: 1 / -1;"><h2>Top referrers</h2><div id="topReferrers"></div></div>
+    </div>
+
+    <div class="daily">
+      <h2>Daily</h2>
+      <table>
+        <thead><tr><th>Date</th><th>Pageviews</th><th>Clicks</th></tr></thead>
+        <tbody id="dailyBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const loginBox = $('#login'), dash = $('#dash'), errBox = $('#err');
+  let currentDays = 30;
+
+  function renderRows(el, items, formatKey) {
+    el.innerHTML = '';
+    if (!items || !items.length) { el.innerHTML = '<div class="empty">No data yet</div>'; return; }
+    items.forEach(({ key, count }) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = '<span class="k">' + (formatKey ? formatKey(key) : escapeHtml(key)) + '</span><span class="v">' + count + '</span>';
+      el.appendChild(row);
+    });
+  }
+
+  function escapeHtml(s) {
+    const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+  }
+
+  async function loadStats(password, days) {
+    errBox.textContent = '';
+    const res = await fetch('/.netlify/functions/stats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, days }),
+    });
+    const data = await res.json();
+    if (!res.ok) { throw new Error(data.error || 'Failed to load'); }
+    return data;
+  }
+
+  function renderStats(data) {
+    $('#tPageviews').textContent = data.totalPageviews;
+    $('#tClicks').textContent = data.totalClicks;
+    renderRows($('#topPages'), data.topPages);
+    renderRows($('#topClicks'), data.topClicks);
+    renderRows($('#topReferrers'), data.topReferrers);
+    const body = $('#dailyBody');
+    body.innerHTML = '';
+    [...data.perDay].reverse().forEach((d) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + d.date + '</td><td class="n">' + d.pageviews + '</td><td class="n">' + d.clicks + '</td>';
+      body.appendChild(tr);
+    });
+  }
+
+  async function attempt(password) {
+    try {
+      const data = await loadStats(password, currentDays);
+      sessionStorage.setItem('admin_pw', password);
+      loginBox.style.display = 'none';
+      dash.style.display = 'block';
+      renderStats(data);
+    } catch (e) {
+      errBox.textContent = e.message;
+    }
+  }
+
+  $('#loginBtn').addEventListener('click', () => attempt($('#pw').value));
+  $('#pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') attempt($('#pw').value); });
+
+  document.querySelectorAll('.range-btns button').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      document.querySelectorAll('.range-btns button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentDays = parseInt(btn.dataset.days, 10);
+      const pw = sessionStorage.getItem('admin_pw');
+      if (pw) { try { renderStats(await loadStats(pw, currentDays)); } catch (e) { errBox.textContent = e.message; } }
+    });
+  });
+
+  $('#logout').addEventListener('click', () => {
+    sessionStorage.removeItem('admin_pw');
+    dash.style.display = 'none';
+    loginBox.style.display = 'block';
+    $('#pw').value = '';
+  });
+
+  const saved = sessionStorage.getItem('admin_pw');
+  if (saved) attempt(saved);
+})();
+</script>
+</body>
+</html>

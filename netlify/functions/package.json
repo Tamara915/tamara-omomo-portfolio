@@ -1,0 +1,8 @@
+{
+  "name": "tamaraomomo-functions",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "*"
+  }
+}

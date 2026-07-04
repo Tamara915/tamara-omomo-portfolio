@@ -3,5 +3,7 @@ Allow: /
 Disallow: /chats/
 Disallow: /project/
 Disallow: /standalone.html
+Disallow: /admin.html
+Disallow: /admin
 
 Sitemap: https://tamaraomomo.com/sitemap.xml

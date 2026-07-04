@@ -11,6 +11,7 @@
 /gtm-engineering  /gtm-engineering.html  200
 /ai-gtm           /ai-gtm.html           200
 /revenue-systems  /revenue-systems.html  200
+/admin            /admin.html            200
 
 # Working files that live in the repo but should not be publicly reachable
 /chats/*          /404.html   404!

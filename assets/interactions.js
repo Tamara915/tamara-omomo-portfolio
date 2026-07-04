@@ -641,4 +641,38 @@
     : new Promise(res => window.addEventListener('load', res));
   Promise.all([fontsReady, gateWait]).then(boot); // hold the entrance until the gate is clicked
   window.addEventListener('load', () => { setTimeout(checkReveal, 300); });
+
+  /* -------------------------------------------------- first-party analytics beacon
+     No cookies, no third party. Logs a pageview + a few key clicks to
+     /.netlify/functions/track, which a private /admin dashboard reads back. */
+  (function analytics() {
+    if (/admin/i.test(location.pathname)) return; // don't track visits to the dashboard itself
+    if (navigator.doNotTrack === '1') return;
+
+    const send = (type, label) => {
+      try {
+        const payload = JSON.stringify({ type, path: location.pathname, label: label || '', ref: document.referrer });
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('/.netlify/functions/track', new Blob([payload], { type: 'application/json' }));
+        } else {
+          fetch('/.netlify/functions/track', { method: 'POST', body: payload, keepalive: true });
+        }
+      } catch (e) { /* analytics must never break the page */ }
+    };
+
+    send('pageview');
+
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('a, button');
+      if (!el) return;
+      let label = '';
+      if (el.href && el.href.includes('calendly.com')) label = 'book-call';
+      else if (el.href && el.href.startsWith('mailto:')) label = 'email-click';
+      else if (el.closest('.socials')) label = 'social: ' + el.textContent.trim();
+      else if (el.matches('.bview')) label = 'case-read: ' + (el.closest('.bcard')?.querySelector('.bt')?.textContent.trim() || '');
+      else if (el.matches('.wview') || el.classList.contains('feat-link')) label = 'work-view';
+      else if (el.matches('.cta')) label = 'cta: ' + el.textContent.trim();
+      if (label) send('click', label.slice(0, 120));
+    }, { passive: true });
+  })();
 })();

@@ -154,13 +154,26 @@
 
   async function loadStats(password, days) {
     errBox.textContent = '';
-    const res = await fetch('/.netlify/functions/stats', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password, days }),
-    });
-    const data = await res.json();
-    if (!res.ok) { throw new Error(data.error || 'Failed to load'); }
+    let res;
+    try {
+      res = await fetch('/.netlify/functions/stats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, days }),
+      });
+    } catch (netErr) {
+      throw new Error('Network error reaching the function: ' + netErr.message);
+    }
+    const text = await res.text();
+    let data = null;
+    try { data = JSON.parse(text); } catch { /* not JSON */ }
+    if (!res.ok) {
+      const detail = (data && (data.error || data.errorMessage)) || text.slice(0, 300) || '(empty response)';
+      throw new Error('HTTP ' + res.status + ': ' + detail);
+    }
+    if (!data) {
+      throw new Error('Response was not JSON (HTTP ' + res.status + '): ' + text.slice(0, 300));
+    }
     return data;
   }
 

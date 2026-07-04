@@ -512,64 +512,37 @@
     });
   })();
 
-  /* -------------------------------------------------- branded preloader (home only) */
-  (function preloader() {
+  /* -------------------------------------------------- entry gate (home only)
+     Shows the mark + a counter; when it reaches 100 an Enter button appears.
+     The site's entrance animations wait for the click (gateWait). */
+  let gateWait = Promise.resolve();
+  (function entryGate() {
     const pl = document.getElementById('preloader');
     if (!pl) return;
-    // arrived via an internal page transition → skip the intro, let the curtain reveal
-    if (sessionStorage.getItem('pt')) { pl.remove(); return; }
+    // show the gate once per session
+    if (sessionStorage.getItem('entered')) { pl.remove(); return; }
     const finish = () => { pl.classList.add('done'); setTimeout(() => pl.remove(), 700); };
     if (reduced) { finish(); return; }
+    let release;
+    gateWait = new Promise(res => { release = res; });
     const count = $('.pl-count', pl);
-    const dur = 1900, hold = 450, t0 = performance.now();
+    const btn = $('.pl-enter', pl);
+    const dur = 1400, t0 = performance.now();
     (function tick(now) {
       const t = clamp((now - t0) / dur, 0, 1);
       const e = 1 - Math.pow(1 - t, 2);
       if (count) count.textContent = Math.round(e * 100);
-      if (t < 1) requestAnimationFrame(tick); else setTimeout(finish, hold); // linger at 100%
+      if (t < 1) requestAnimationFrame(tick);
+      else { pl.classList.add('ready'); if (btn) btn.focus({ preventScroll: true }); }
     })(performance.now());
-    setTimeout(() => { if (document.body.contains(pl)) finish(); }, 4200); // safety net
-  })();
-
-  /* -------------------------------------------------- page-transition curtain */
-  (function pageTransition() {
-    if (reduced) return;
-    const curtain = document.createElement('div');
-    curtain.id = 'curtain';
-    curtain.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(curtain);
-
-    // reveal on arrival if we came through a transition
-    if (sessionStorage.getItem('pt')) {
-      sessionStorage.removeItem('pt');
-      curtain.classList.add('cover');
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        curtain.classList.remove('cover');
-        curtain.classList.add('uncover');
-        setTimeout(() => curtain.classList.remove('uncover'), 700);
-      }));
-    }
-
-    const internal = (a) => {
-      const href = a.getAttribute('href');
-      if (!href) return false;
-      if (a.target === '_blank' || a.hasAttribute('download')) return false;
-      if (/^(mailto:|tel:|https?:|\/\/|#)/i.test(href)) return false; // external, mail, or in-page anchor
-      return /\.html(\?|#|$)|^\/(case-studies|thoughts|builds|writing|about|ai-gtm|gtm-engineering|revenue-systems)/i.test(href);
+    const enter = () => {
+      if (!pl.classList.contains('ready')) return;
+      sessionStorage.setItem('entered', '1');
+      finish(); release();
     };
-    document.addEventListener('click', (e) => {
-      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      const a = e.target.closest('a');
-      if (!a || !internal(a)) return;
-      e.preventDefault();
-      const href = a.getAttribute('href');
-      sessionStorage.setItem('pt', '1');
-      curtain.classList.remove('uncover');
-      curtain.classList.add('covering');
-      setTimeout(() => { window.location.href = href; }, 470);
-    });
-    // restore on bfcache back/forward
-    window.addEventListener('pageshow', (e) => { if (e.persisted) curtain.className = ''; });
+    if (btn) btn.addEventListener('click', e => { e.stopPropagation(); enter(); });
+    pl.addEventListener('click', enter); // the whole screen is clickable once ready
+    pl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); } });
   })();
 
   /* -------------------------------------------------- hero cursor spotlight (desktop) */
@@ -663,7 +636,9 @@
     setTimeout(checkReveal, 400);
   }
 
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
-  else window.addEventListener('load', boot);
+  const fontsReady = (document.fonts && document.fonts.ready)
+    ? document.fonts.ready
+    : new Promise(res => window.addEventListener('load', res));
+  Promise.all([fontsReady, gateWait]).then(boot); // hold the entrance until the gate is clicked
   window.addEventListener('load', () => { setTimeout(checkReveal, 300); });
 })();

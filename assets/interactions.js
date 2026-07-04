@@ -551,6 +551,37 @@
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.contains('flipped') ? hideAll() : show(card); }
       });
     });
+
+    // touch devices have no hover, so a card's flip side is invisible until someone
+    // taps it — demo the mechanic once by auto-peeking the first two cards as the
+    // grid scrolls into view, then get out of the way of real taps.
+    if (!finePointer && !reduced && cards.length) {
+      let userActed = false;
+      cards.forEach(card => card.addEventListener('click', () => { userActed = true; }, { once: true }));
+      // watch the first card itself, not the whole (much taller) grid — a tall
+      // grid's total area can never clear a percentage threshold on one screenful
+      const firstCard = cards[0];
+      if (firstCard) {
+        const peekIO = new IntersectionObserver((entries, obs) => {
+          entries.forEach(e => {
+            if (!e.isIntersecting || userActed) return;
+            obs.disconnect();
+            const toPeek = cards.slice(0, 2);
+            let i = 0;
+            const step = () => {
+              if (userActed || i >= toPeek.length) return;
+              const card = toPeek[i];
+              flip(card, true);
+              setTimeout(() => { if (!userActed) flip(card, false); }, 900);
+              i++;
+              setTimeout(step, 1300);
+            };
+            setTimeout(step, 350);
+          });
+        }, { threshold: 0.4 });
+        peekIO.observe(firstCard);
+      }
+    }
   })();
 
   /* -------------------------------------------------- entry gate (home only)

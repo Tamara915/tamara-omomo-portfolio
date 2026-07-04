@@ -689,7 +689,7 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 /* ---- builds flip-card grid ---- */
 .builds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 26px); }
 @media (max-width: 980px) { .builds-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 620px) { .builds-grid { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .builds-grid { grid-template-columns: 1fr; gap: 14px; } }
 .bcard { perspective: 1600px; min-height: 384px; cursor: pointer; outline: none; transform: translateZ(0); }
 .bc-inner {
   position: relative; width: 100%; height: 100%; min-height: 384px;
@@ -732,6 +732,19 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 .bc-back .bview:hover .wv-arr { background: var(--ember); color: var(--on-ember); transform: rotate(45deg); }
 @media (prefers-reduced-motion: reduce) {
   .bc-inner, .bcard:not(.flipped):hover .bc-inner { transition: none; }
+}
+/* smaller cards on phones — this must stay below the base .bcard/.bc-inner
+   rules above so it actually wins the cascade at this breakpoint */
+@media (max-width: 620px) {
+  .bcard, .bc-inner { min-height: 220px; }
+  .bc-face { padding: 18px 20px; }
+  .bc-front .bstat { font-size: 32px; margin-bottom: 8px; }
+  .bc-front .bt { font-size: 18px; margin-bottom: 10px; }
+  .bc-front .bn { font-size: 11px; }
+  .bc-front .bflip { font-size: 10px; }
+  .bc-back { gap: 8px; }
+  .bc-back h5 { font-size: 9.5px; }
+  .bc-back p { font-size: 12.5px; line-height: 1.45; }
 }
 
 /* ---- latest writing ---- */

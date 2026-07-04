@@ -27,12 +27,19 @@
   /* login */
   #login { max-width: 340px; margin: 12vh auto 0; text-align: center; }
   #login h1 { font-size: 20px; font-weight: 500; margin-bottom: 22px; }
-  #login input {
-    width: 100%; padding: 13px 16px; border-radius: 10px; border: 1px solid var(--line-2);
-    background: var(--ink-2); color: var(--cream); font-family: var(--font-m); font-size: 14px; margin-bottom: 14px;
+  .pw-field { position: relative; margin-bottom: 14px; }
+  .pw-field input {
+    width: 100%; padding: 13px 60px 13px 16px; border-radius: 10px; border: 1px solid var(--line-2);
+    background: var(--ink-2); color: var(--cream); font-family: var(--font-m); font-size: 14px;
   }
-  #login input:focus { outline: none; border-color: var(--ember); }
-  #login button {
+  .pw-field input:focus { outline: none; border-color: var(--ember); }
+  .pw-field #pwToggle {
+    position: absolute; top: 50%; right: 6px; transform: translateY(-50%);
+    background: none; border: none; color: var(--faint); font-family: var(--font-m); font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; padding: 8px 10px; width: auto;
+  }
+  .pw-field #pwToggle:hover { color: var(--cream-dim); }
+  #login button:not(#pwToggle) {
     width: 100%; padding: 13px; border-radius: 10px; border: none; background: var(--ember); color: var(--on-ember);
     font-family: var(--font-m); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
   }
@@ -80,7 +87,10 @@
 
   <div id="login">
     <h1>Enter password</h1>
-    <input type="password" id="pw" placeholder="Password" autofocus />
+    <div class="pw-field">
+      <input type="password" id="pw" placeholder="Password" autofocus autocomplete="current-password" />
+      <button type="button" id="pwToggle" aria-label="Show password">Show</button>
+    </div>
     <button id="loginBtn" type="button">View stats</button>
     <div class="err" id="err"></div>
   </div>
@@ -183,6 +193,14 @@
 
   $('#loginBtn').addEventListener('click', () => attempt($('#pw').value));
   $('#pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') attempt($('#pw').value); });
+
+  $('#pwToggle').addEventListener('click', () => {
+    const pw = $('#pw');
+    const shown = pw.type === 'text';
+    pw.type = shown ? 'password' : 'text';
+    $('#pwToggle').textContent = shown ? 'Show' : 'Hide';
+    $('#pwToggle').setAttribute('aria-label', shown ? 'Show password' : 'Hide password');
+  });
 
   document.querySelectorAll('.range-btns button').forEach((btn) => {
     btn.addEventListener('click', async () => {

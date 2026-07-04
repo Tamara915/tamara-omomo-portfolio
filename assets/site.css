@@ -941,4 +941,17 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 /* ---- live Berlin clock chip (footer) ---- */
 .footer-time { font-variant-numeric: tabular-nums; color: var(--cream-dim); }
 .footer-time .ft-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ember); box-shadow: 0 0 8px rgba(248,127,35,0.7); margin-right: 8px; vertical-align: middle; animation: labpulse 1.8s ease-in-out infinite; }
+
+/* ---- lighten text density on phones ----
+   these override earlier base rules, so this block must stay last in the
+   file to actually win the cascade at this breakpoint. */
+@media (max-width: 700px) {
+  /* metric captions: keep the number + short label, drop the sentence */
+  .metric .m-cap { display: none; }
+  .metric .m-i { font-size: 11px; }
+
+  /* latest case study: teaser only — full detail lives one tap away */
+  .feat-desc { -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 20px; }
+  .feat-cols, .case-flow { display: none; }
+}
 @media (prefers-reduced-motion: reduce) { .footer-time .ft-dot { animation: none; } }

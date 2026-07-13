@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Case Study Access — Tamara Omomo</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#15100d" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Instrument+Serif:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css?v=20260705b" />
+<style>
+  .gate-wrap { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 60px 20px; }
+  .gate-card { max-width: 400px; width: 100%; text-align: center; }
+  .gate-card .label { display: block; margin-bottom: 18px; }
+  .gate-card h1 { font-family: var(--font-g); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(24px, 4vw, 30px); margin: 0 0 12px; color: var(--cream); }
+  .gate-card .sub { font-size: 14px; color: var(--cream-dim); line-height: 1.6; margin: 0 0 28px; }
+  .gate-field { position: relative; margin-bottom: 14px; }
+  .gate-field input {
+    width: 100%; padding: 13px 16px; border-radius: 10px; border: 1px solid var(--line-2, #3a322a);
+    background: var(--ink-2, #1d1611); color: var(--cream); font-family: var(--font-m); font-size: 14px;
+    box-sizing: border-box;
+  }
+  .gate-field input:focus { outline: none; border-color: var(--ember); }
+  .gate-card button {
+    width: 100%; padding: 13px; border-radius: 10px; border: none; background: var(--ember); color: var(--on-ember, #15100d);
+    font-family: var(--font-m); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  }
+  .gate-card button:disabled { opacity: 0.6; cursor: default; }
+  .gate-msg { font-size: 13px; margin-top: 16px; min-height: 18px; color: var(--cream-dim); }
+  .gate-msg.err { color: var(--ember); }
+  .gate-msg.ok { color: var(--cream); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html#top">
+    <span class="dot"></span>
+    <span class="glitchable dx">Tamara Omomo</span>
+  </a>
+  <nav class="links">
+    <a href="builds.html" class="dx">Case Studies</a>
+    <a href="writing.html" class="dx">Thoughts</a>
+    <a href="about.html" class="dx">About</a>
+    <a href="#contact" class="dx">Contact</a>
+  </nav>
+  <a href="#contact" class="cta ghost mag" data-mag="0.3"><span>Let's talk</span><span class="arr">→</span></a>
+</header>
+
+<main id="top">
+  <section class="gate-wrap">
+    <div class="gate-card">
+      <span class="label">( Gated case study )</span>
+      <h1>Request access</h1>
+      <p class="sub">This case study covers client-confidential detail — architecture, prompts and internal process — so it's shared with approved readers only. Enter your email and I'll send you a one-time link if you're on the list.</p>
+
+      <div id="form">
+        <div class="gate-field">
+          <input type="email" id="email" placeholder="you@company.com" autocomplete="email" autofocus />
+        </div>
+        <button id="submitBtn" type="button">Request access link</button>
+      </div>
+      <div class="gate-msg" id="msg"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>© 2026 Tamara Omomo</span>
+  <span>AI GTM Engineer — Designed &amp; coded in the browser</span>
+  <span>Berlin → Remote</span>
+</footer>
+
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const emailInput = $('#email');
+  const btn = $('#submitBtn');
+  const msg = $('#msg');
+
+  const params = new URLSearchParams(window.location.search);
+  const error = params.get('error');
+  if (error === 'expired') {
+    msg.textContent = 'That link expired or was already used — request a new one below.';
+    msg.className = 'gate-msg err';
+  } else if (error === 'missing_token') {
+    msg.textContent = 'That link was invalid — request a new one below.';
+    msg.className = 'gate-msg err';
+  }
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  async function submit() {
+    const email = emailInput.value.trim();
+    if (!isValidEmail(email)) {
+      msg.textContent = 'Enter a valid email address.';
+      msg.className = 'gate-msg err';
+      return;
+    }
+    btn.disabled = true;
+    msg.textContent = '';
+    try {
+      await fetch('/.netlify/functions/request-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      msg.textContent = 'If that email is approved, a one-time link is on its way — check your inbox.';
+      msg.className = 'gate-msg ok';
+    } catch (e) {
+      msg.textContent = 'Network error — try again in a moment.';
+      msg.className = 'gate-msg err';
+      btn.disabled = false;
+      return;
+    }
+    btn.disabled = false;
+  }
+
+  btn.addEventListener('click', submit);
+  emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+})();
+</script>
+<script src="assets/interactions.js?v=20260705b"></script>
+</body>
+</html>

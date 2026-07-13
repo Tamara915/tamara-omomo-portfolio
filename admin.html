@@ -77,6 +77,12 @@
   .daily td { padding: 6px 4px; border-top: 1px solid var(--line); color: var(--cream-dim); }
   .daily td.n { font-family: var(--font-m); color: var(--ember); }
 
+  .btn-ember {
+    padding: 10px 18px; border-radius: 8px; border: none; background: var(--ember); color: var(--on-ember);
+    font-family: var(--font-m); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+  }
+  .btn-ember:hover { opacity: 0.9; }
+
   @media (max-width: 640px) { .panels, .tiles { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -127,6 +133,16 @@
         <thead><tr><th>Date</th><th>Pageviews</th><th>Clicks</th></tr></thead>
         <tbody id="dailyBody"></tbody>
       </table>
+    </div>
+
+    <div class="daily" style="margin-top: 20px;">
+      <h2>Case study access allowlist</h2>
+      <div class="pw-field" style="max-width: 320px; margin-bottom: 10px;">
+        <input type="email" id="allowEmail" placeholder="email@example.com" autocomplete="off" />
+      </div>
+      <button type="button" id="allowAddBtn" class="btn-ember" style="margin-bottom:16px;">Add</button>
+      <div id="allowList"></div>
+      <div class="err" id="allowErr"></div>
     </div>
   </div>
 </div>
@@ -199,10 +215,72 @@
       loginBox.style.display = 'none';
       dash.style.display = 'block';
       renderStats(data);
+      loadAllowlist();
     } catch (e) {
       errBox.textContent = e.message;
     }
   }
+
+  async function callAllowlist(action, email) {
+    const password = sessionStorage.getItem('admin_pw');
+    const res = await fetch('/.netlify/functions/manage-allowlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, action, email }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+    return data;
+  }
+
+  function renderAllowlist(emails) {
+    const el = $('#allowList');
+    el.innerHTML = '';
+    if (!emails || !emails.length) { el.innerHTML = '<div class="empty">No approved emails yet</div>'; return; }
+    emails.forEach((email) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      const span = document.createElement('span');
+      span.className = 'k';
+      span.textContent = email;
+      const rm = document.createElement('button');
+      rm.textContent = 'Remove';
+      rm.style.cssText = 'width:auto; padding:5px 12px; font-size:11px; background:transparent; border:1px solid var(--line-2); color:var(--cream-dim); border-radius:6px; cursor:pointer;';
+      rm.addEventListener('click', async () => {
+        try {
+          const data = await callAllowlist('remove', email);
+          renderAllowlist(data.allowlist);
+        } catch (e) { $('#allowErr').textContent = e.message; }
+      });
+      row.appendChild(span);
+      row.appendChild(rm);
+      el.appendChild(row);
+    });
+  }
+
+  async function loadAllowlist() {
+    try {
+      const data = await callAllowlist('list');
+      renderAllowlist(data.allowlist);
+    } catch (e) {
+      $('#allowErr').textContent = e.message;
+    }
+  }
+
+  $('#allowAddBtn').addEventListener('click', async () => {
+    const input = $('#allowEmail');
+    const email = input.value.trim();
+    $('#allowErr').textContent = '';
+    if (!email) return;
+    try {
+      const data = await callAllowlist('add', email);
+      renderAllowlist(data.allowlist);
+      input.value = '';
+    } catch (e) {
+      $('#allowErr').textContent = e.message;
+    }
+  });
+  $('#allowEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#allowAddBtn').click(); });
 
   $('#loginBtn').addEventListener('click', () => attempt($('#pw').value));
   $('#pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') attempt($('#pw').value); });

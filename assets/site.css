@@ -819,6 +819,9 @@ html[data-theme="light"] .theme-switch .ts-knob { animation: ts-sunglow 4.5s eas
 @media (prefers-reduced-motion: reduce) { .cf-live .pulse { animation: none; } }
 .case-tech { margin-top: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .case-tech .ct-lab { font-family: var(--font-m); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
+.case-deep { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.case-deep a { font-family: var(--font-m); font-size: 12.5px; letter-spacing: 0.04em; color: var(--ember); text-decoration: none; }
+.case-deep a:hover { text-decoration: underline; }
 
 /* ---- topic / SEO pages ---- */
 .topic-hero { padding: clamp(120px, 17vh, 200px) 0 clamp(40px, 6vh, 70px); position: relative; }

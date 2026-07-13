@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Everphone AI GTM System — Full Case Study — Tamara Omomo</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#15100d" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Instrument+Serif:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css?v=20260705b" />
+<style>
+  .cs-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); border: 1px solid var(--ember); border-radius: 100px; padding: 6px 14px; margin-bottom: 22px; }
+  .cs-meta { display: flex; flex-wrap: wrap; gap: 24px; margin: 28px 0 0; font-family: var(--font-m); font-size: 12.5px; color: var(--cream-dim); }
+  .cs-meta div span { display: block; }
+  .cs-meta .k { color: var(--faint); text-transform: uppercase; letter-spacing: 0.1em; font-size: 10.5px; margin-bottom: 4px; }
+  .cs-meta .v { color: var(--cream); font-size: 14px; }
+
+  .cs-tldr { background: var(--ink-2, #1d1611); border: 1px solid var(--line, #2c2620); border-radius: 16px; padding: 26px 28px; margin: 0 0 60px; }
+  .cs-tldr h3 { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ember); margin: 0 0 14px; }
+  .cs-tldr ul { margin: 0; padding-left: 20px; color: var(--cream-dim); line-height: 1.7; font-size: 14.5px; }
+  .cs-tldr li { margin-bottom: 6px; }
+
+  .cs-section { max-width: 780px; margin: 0 auto 76px; }
+  .cs-section h2 { font-family: var(--font-g); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(24px, 3vw, 30px); color: var(--cream); margin: 0 0 8px; }
+  .cs-section .cs-num { color: var(--ember); font-family: var(--font-m); font-size: 13px; letter-spacing: 0.08em; margin-bottom: 8px; display: block; }
+  .cs-section p { color: var(--cream-dim); line-height: 1.75; font-size: 15.5px; margin: 0 0 18px; }
+  .cs-section p b { color: var(--cream); font-weight: 600; }
+  .cs-section p i { font-family: var(--font-s); font-style: italic; color: var(--cream); }
+  .cs-section h4 { font-family: var(--font-g); font-weight: 600; font-size: 16.5px; color: var(--cream); margin: 28px 0 10px; }
+  .cs-section ul, .cs-section ol { color: var(--cream-dim); line-height: 1.75; font-size: 15px; padding-left: 22px; margin: 0 0 18px; }
+  .cs-section li { margin-bottom: 8px; }
+  .cs-section li b { color: var(--cream); }
+
+  .cs-flow { background: var(--ink-2, #1d1611); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; margin: 22px 0 26px; }
+  .cs-flow .cf-lab { font-family: var(--font-m); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+
+  .cs-callout { border-left: 3px solid var(--ember); padding: 4px 0 4px 18px; margin: 20px 0 26px; }
+  .cs-callout p { margin: 0; color: var(--cream); font-size: 14.5px; line-height: 1.7; }
+  .cs-callout .lab { display: block; font-family: var(--font-m); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember); margin-bottom: 6px; }
+
+  .cs-table { width: 100%; border-collapse: collapse; margin: 18px 0 26px; font-size: 13.5px; }
+  .cs-table th { text-align: left; font-family: var(--font-m); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); padding: 8px 10px; border-bottom: 1px solid var(--line-2); }
+  .cs-table td { padding: 9px 10px; border-bottom: 1px solid var(--line); color: var(--cream-dim); vertical-align: top; }
+  .cs-table td b { color: var(--cream); }
+
+  .cs-divider { max-width: 780px; margin: 0 auto 76px; border: none; border-top: 1px solid var(--line); }
+
+  .cs-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 0; }
+  .cs-tags span { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--line-2); border-radius: 100px; padding: 6px 12px; white-space: nowrap; }
+
+  .cs-shot { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 24px 0 30px; }
+  .cs-shot img { display: block; width: 100%; height: auto; }
+  .cs-shot .fig-cap { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); padding: 12px 16px; background: var(--ink-2, #1d1611); border-top: 1px solid var(--line); text-align: center; }
+
+  .cs-fig { background: var(--ink-2, #1d1611); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin: 24px 0 30px; overflow-x: auto; }
+  .cs-fig svg { display: block; width: 100%; height: auto; min-width: 560px; }
+  .cs-fig .fig-cap { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-top: 14px; text-align: center; }
+
+  @media (max-width: 640px) { .cs-meta { gap: 16px; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html#top">
+    <span class="dot"></span>
+    <span class="glitchable dx">Tamara Omomo</span>
+  </a>
+  <nav class="links">
+    <a href="builds.html" class="dx" aria-current="page">Case Studies</a>
+    <a href="writing.html" class="dx">Thoughts</a>
+    <a href="about.html" class="dx">About</a>
+    <a href="#contact" class="dx">Contact</a>
+  </nav>
+  <a href="#contact" class="cta ghost mag" data-mag="0.3"><span>Let's talk</span><span class="arr">→</span></a>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="wk-hero">
+    <div class="glow"></div>
+    <div class="shell">
+      <span class="cs-badge">🔒 Gated — shared with approved readers only</span>
+      <div class="wk-eyebrow">
+        <span class="label">( GTM engineering case study )</span>
+        <span class="label">Tamara Omomo / AI GTM Engineer</span>
+      </div>
+      <h1 class="wk-head r">Everbound: the AI-native<br><span class="em">GTM system for Everphone.</span></h1>
+      <div class="wk-intro">
+        <p class="r d1">This is the long version of cases <b>01</b> and <b>07</b> from the public page: how I turned one team's sales knowledge into a revenue system — one that captures buying intent, personalizes outbound at scale, and tells sellers when to move on strategic accounts. The thinking, the rollout, and where it goes next.</p>
+      </div>
+      <div class="cs-meta r d2">
+        <div><span class="k">Client</span><span class="v">Everphone — device-as-a-service (BMW, Ernst &amp; Young, Siemens run on it)</span></div>
+        <div><span class="k">Role</span><span class="v">GTM engineering lead — strategy, build, rollout, adoption</span></div>
+        <div><span class="k">Scope</span><span class="v">Inbound intent · outbound engine · signal-based ABM</span></div>
+        <div><span class="k">Status</span><span class="v">Live in production, actively extended</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell">
+    <div class="cs-tldr r">
+      <h3>TL;DR</h3>
+      <ul>
+        <li>Replaced a patchwork of individually-run campaigns with one revenue system: three motions — intent capture, persona-driven outbound, signal-based ABM — feeding one pipeline under one set of guardrails, across a mapped 67,837-company market.</li>
+        <li>Buyer personas are built from real sales conversations and refresh automatically as new calls happen. Four revisions shipped without a single engineering request.</li>
+        <li>Nothing reaches a prospect unreviewed: every message passes automated quality checks, a human approval, and a test send before anything scales.</li>
+        <li>AEs get alerted the moment one of their strategic accounts shows a buying signal (ABM Hub), and the enterprise market is swept for signals that become campaigns (Account Radar). A person always presses send — no scraping, no auto-posting.</li>
+        <li>Shipped in six phases, each with its own proof point, after a plan that survived three independent reviews.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 1. PROBLEM -->
+  <section class="cs-section r">
+    <span class="cs-num">01 — The problem</span>
+    <h2>No system — just scattered campaigns</h2>
+    <p>There was no outbound <i>system</i> — different people ran their own Lemlist campaigns with their own lists and their own copy. No shared structure, no shared learnings, no single view of who had been contacted or what worked. Each campaign took days of manual copywriting and still read generic, and nobody could say which message was winning or why.</p>
+    <p>And the knowledge to fix it already existed. The AEs and SDRs knew exactly what makes a CIO reply and what makes a CFO reply. It sat in their heads and in old call recordings, and none of it reached the emails prospects actually got.</p>
+    <p>Meanwhile, pipeline was leaking in three places. An addressable market of <b>67,837 companies</b> sat <b>99.3% untouched</b>. Companies with live buying intent visited the website and left without a trace. And nobody was watching the strategic accounts, so funding rounds, leadership changes and other perfect reasons to reach out went unnoticed.</p>
+    <p>So the job was: replace the patchwork with one governed system, get the sales team's knowledge into it, keep a human approving everything that goes out, and build it so it keeps learning instead of going stale after launch.</p>
+  </section>
+
+  <!-- 2. SYSTEM OVERVIEW -->
+  <section class="cs-section r">
+    <span class="cs-num">02 — The operating system</span>
+    <h2>Three motions, one source of truth</h2>
+    <p>I didn't want three tools with three versions of the truth, which is where the old setup was heading. So inbound, outbound and ABM run as one system: same account and contact data, same compliance guardrails, same delivery pipeline. Each motion owns its own records and can't touch the others', but a signal found in one place is usable everywhere. One system also means one place to measure — every campaign, every signal, every send is on the same books.</p>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-dashboard.webp" alt="Everbound dashboard: 8 campaigns, 71 leads to review, 439 new signals, 63 accounts on radar; Campaign Studio launcher and active persona list" loading="lazy" />
+      <div class="fig-cap">The live dashboard — campaigns, review queue, signal feed and radar watchlist at a glance; active personas on the right.</div>
+    </div>
+
+    <div class="cs-fig">
+      <svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="System architecture: three motions over one shared spine">
+        <style>
+          .bx { fill:#100b09; stroke:#3a322a; rx:8; }
+          .bxh { fill:#100b09; stroke:#f87f23; rx:8; }
+          .t { font-family:'JetBrains Mono',monospace; font-size:12px; fill:#c4b8a4; }
+          .th { font-family:'JetBrains Mono',monospace; font-size:12px; fill:#f87f23; }
+          .tl { font-family:'JetBrains Mono',monospace; font-size:10px; fill:#8c8170; letter-spacing:1px; }
+          .ar { stroke:#f87f23; stroke-width:1.4; opacity:0.7; marker-end:url(#ah); }
+        </style>
+        <defs>
+          <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 z" fill="#f87f23" opacity="0.8"/>
+          </marker>
+        </defs>
+        <text x="140" y="26" class="tl" text-anchor="middle">A · INBOUND INTENT</text>
+        <rect x="40" y="40" width="200" height="38" class="bx"/><text x="140" y="64" class="t" text-anchor="middle">Website visitor</text>
+        <line x1="140" y1="78" x2="140" y2="98" class="ar"/>
+        <rect x="40" y="100" width="200" height="38" class="bx"/><text x="140" y="124" class="t" text-anchor="middle">Company + contacts</text>
+        <line x1="140" y1="138" x2="140" y2="158" class="ar"/>
+        <rect x="40" y="160" width="200" height="38" class="bxh"/><text x="140" y="184" class="th" text-anchor="middle">Segment sequence</text>
+        <line x1="140" y1="198" x2="140" y2="218" class="ar"/>
+        <rect x="40" y="220" width="200" height="38" class="bx"/><text x="140" y="244" class="t" text-anchor="middle">Human approval</text>
+        <text x="450" y="26" class="tl" text-anchor="middle">B · CAMPAIGN STUDIO</text>
+        <rect x="350" y="40" width="200" height="38" class="bx"/><text x="450" y="64" class="t" text-anchor="middle">Sales-call knowledge</text>
+        <line x1="450" y1="78" x2="450" y2="98" class="ar"/>
+        <rect x="350" y="100" width="200" height="38" class="bxh"/><text x="450" y="124" class="th" text-anchor="middle">Persona distillation</text>
+        <line x1="450" y1="138" x2="450" y2="158" class="ar"/>
+        <rect x="350" y="160" width="200" height="38" class="bxh"/><text x="450" y="184" class="th" text-anchor="middle">Per-lead personalization</text>
+        <line x1="450" y1="198" x2="450" y2="218" class="ar"/>
+        <rect x="350" y="220" width="200" height="38" class="bx"/><text x="450" y="244" class="t" text-anchor="middle">Review · test send</text>
+        <text x="760" y="26" class="tl" text-anchor="middle">C · ABM HUB + RADAR</text>
+        <rect x="660" y="40" width="200" height="38" class="bx"/><text x="760" y="64" class="t" text-anchor="middle">Watchlist · committee</text>
+        <line x1="760" y1="78" x2="760" y2="98" class="ar"/>
+        <rect x="660" y="100" width="200" height="38" class="bxh"/><text x="760" y="124" class="th" text-anchor="middle">Continuous sweeps</text>
+        <line x1="760" y1="138" x2="760" y2="158" class="ar"/>
+        <rect x="660" y="160" width="200" height="38" class="bx"/><text x="760" y="184" class="t" text-anchor="middle">Signal feed · dedupe</text>
+        <line x1="760" y1="198" x2="760" y2="218" class="ar"/>
+        <rect x="660" y="220" width="200" height="38" class="bxh"/><text x="760" y="244" class="th" text-anchor="middle">Seller alert + draft</text>
+        <line x1="140" y1="258" x2="140" y2="300" class="ar"/>
+        <line x1="450" y1="258" x2="450" y2="300" class="ar"/>
+        <line x1="760" y1="258" x2="760" y2="300" class="ar"/>
+        <rect x="40" y="302" width="820" height="46" class="bx" style="stroke:#f87f23; stroke-dasharray:4 3;"/>
+        <text x="450" y="330" class="th" text-anchor="middle">SHARED SPINE — one source of truth · compliance guardrails · full audit trail</text>
+        <line x1="250" y1="348" x2="250" y2="382" class="ar"/>
+        <line x1="650" y1="348" x2="650" y2="382" class="ar"/>
+        <rect x="150" y="384" width="200" height="38" class="bx"/><text x="250" y="408" class="t" text-anchor="middle">Outreach delivery</text>
+        <rect x="550" y="384" width="200" height="38" class="bx"/><text x="650" y="408" class="t" text-anchor="middle">Team alerts</text>
+      </svg>
+      <div class="fig-cap">Fig. 1 — Three motions, one shared spine. Ember outline = AI-powered step.</div>
+    </div>
+
+    <h4>A. Always-on inbound intent</h4>
+    <div class="cs-flow">
+      <div class="cf-lab">Workflow</div>
+      <div class="flow">
+        <span class="fnode">Website visitor</span><span class="farr">→</span>
+        <span class="fnode">Company + contacts identified</span><span class="farr">→</span>
+        <span class="fnode hot">Segment-matched sequence</span><span class="farr">→</span>
+        <span class="fnode">Human approval</span><span class="farr">→</span>
+        <span class="fnode hot">Email + LinkedIn outreach</span>
+      </div>
+    </div>
+    <p>Companies visiting the website get identified, matched to the right people in their org, and queued with a ready-to-send sequence — reviewed and approved by a human before anything goes out. Finding "the right people" is its own engineered step: I built a <b>Clay agent that runs deep research on each account's buying committee</b> — who owns the budget, who runs the evaluation, who signs — so outreach lands with the actual decision-makers instead of whoever matched a title filter. This is the highest-volume motion in the system, and it's deliberately isolated: nothing downstream is allowed to alter its records. Timing is the whole advantage here. Reaching out while the interest is fresh is what makes this the account's best-performing campaign.</p>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-webintent.webp" alt="Website intent outbound pipeline: 15 pending review, 559 pushed, 0 rejected, with segment filters and batch push controls" loading="lazy" />
+      <div class="fig-cap">The web-intent pipeline — 559 contacts pushed so far, every one reviewed and approved by a human first.</div>
+    </div>
+
+    <h4>B. Persona-driven outbound</h4>
+    <div class="cs-flow">
+      <div class="cf-lab">Workflow</div>
+      <div class="flow">
+        <span class="fnode">Sales-call knowledge</span><span class="farr">→</span>
+        <span class="fnode hot">Persona distillation</span><span class="farr">→</span>
+        <span class="fnode">Contact list · match + enrich</span><span class="farr">→</span>
+        <span class="fnode hot">Per-lead sequences</span><span class="farr">→</span>
+        <span class="fnode">Review · test send</span><span class="farr">→</span>
+        <span class="fnode hot">Launch</span>
+      </div>
+    </div>
+    <p>The core engine: campaigns planned in minutes, every lead matched to a buyer persona and given a sequence written in that persona's language. Section 4 covers how it works end to end.</p>
+
+    <h4>C. Signal-based selling — ABM Hub + Account Radar</h4>
+    <div class="cs-flow">
+      <div class="cf-lab">Workflow</div>
+      <div class="flow">
+        <span class="fnode">Watchlist · buying committee</span><span class="farr">→</span>
+        <span class="fnode hot">Continuous sweeps</span><span class="farr">→</span>
+        <span class="fnode">Deduped signal feed</span><span class="farr">→</span>
+        <span class="fnode hot">Hot signal → seller alert</span><span class="farr">→</span>
+        <span class="fnode">Drafted outreach</span><span class="farr">→</span>
+        <span class="fnode hot">Human posts</span>
+      </div>
+    </div>
+    <p>Two signal motions, side by side: ABM Hub keeps every AE on top of their own strategic accounts with same-day hot-signal alerts, while Account Radar sweeps the enterprise segment of the TAM and turns what it finds into outbound campaigns. Section 5.</p>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-workspace.webp" alt="Everbound workspace: sidebar navigation with every module, language toggle, integrations status, compliance blocklist and agent status cards" loading="lazy" />
+      <div class="fig-cap">The full workspace — every motion one click away, in German and English, with compliance controls built in.</div>
+    </div>
+  </section>
+
+  <hr class="cs-divider" />
+
+  <!-- 3. PERSONA ENGINE -->
+  <section class="cs-section r">
+    <span class="cs-num">03 — The persona engine</span>
+    <h2>The ICP, codified from real sales calls</h2>
+    <p>My favorite part of the system, because it never goes stale. Every sales call the team runs becomes raw material automatically: meeting notes sync from the team's shared drive every hour, interview docs get picked out and indexed, searchable in German and English. Nobody has to remember to file anything. The knowledge base grows as a byproduct of selling.</p>
+    <p>On top of that sits <b>persona distillation</b>. AI reads across the full knowledge base — buyer interviews, internal strategy material, and measured campaign learnings — and rewrites the buyer personas: five core roles (IT Leadership, Procurement, CEO/Founder, CFO/Finance, HR/People), later joined by a sixth for Compliance &amp; Sustainability/ESG. Each persona holds priorities, pain points, objections, buying triggers, proof points, tone notes and a list of things not to say — and every line traces back to something a real buyer said on a real call. Distillation only ever produces drafts. A live persona never changes without someone reviewing the change, so one bad run can't quietly degrade active campaigns.</p>
+
+    <div class="cs-fig">
+      <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The persona feedback loop: every sales call sharpens the next campaign">
+        <style>
+          .bx2 { fill:#100b09; stroke:#3a322a; rx:8; }
+          .bxh2 { fill:#100b09; stroke:#f87f23; rx:8; }
+          .t2 { font-family:'JetBrains Mono',monospace; font-size:12px; fill:#c4b8a4; }
+          .th2 { font-family:'JetBrains Mono',monospace; font-size:12px; fill:#f87f23; }
+          .ar2 { stroke:#f87f23; stroke-width:1.4; opacity:0.7; fill:none; marker-end:url(#ah2); }
+        </style>
+        <defs>
+          <marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 z" fill="#f87f23" opacity="0.8"/>
+          </marker>
+        </defs>
+        <rect x="30" y="40" width="180" height="40" class="bx2"/><text x="120" y="65" class="t2" text-anchor="middle">Sales call happens</text>
+        <line x1="210" y1="60" x2="248" y2="60" class="ar2"/>
+        <rect x="250" y="40" width="180" height="40" class="bx2"/><text x="340" y="65" class="t2" text-anchor="middle">Notes land in Drive</text>
+        <line x1="430" y1="60" x2="468" y2="60" class="ar2"/>
+        <rect x="470" y="40" width="180" height="40" class="bx2"/><text x="560" y="65" class="t2" text-anchor="middle">Auto-sync · hourly</text>
+        <line x1="650" y1="60" x2="688" y2="60" class="ar2"/>
+        <rect x="690" y="40" width="180" height="40" class="bx2"/><text x="780" y="65" class="t2" text-anchor="middle">Indexed + searchable</text>
+        <line x1="780" y1="80" x2="780" y2="128" class="ar2"/>
+        <rect x="690" y="130" width="180" height="40" class="bxh2"/><text x="780" y="155" class="th2" text-anchor="middle">AI re-distills</text>
+        <line x1="690" y1="150" x2="652" y2="150" class="ar2"/>
+        <rect x="470" y="130" width="180" height="40" class="bx2"/><text x="560" y="155" class="t2" text-anchor="middle">Draft personas</text>
+        <line x1="470" y1="150" x2="432" y2="150" class="ar2"/>
+        <rect x="250" y="130" width="180" height="40" class="bx2"/><text x="340" y="155" class="t2" text-anchor="middle">Human review → live</text>
+        <line x1="250" y1="150" x2="212" y2="150" class="ar2"/>
+        <rect x="30" y="130" width="180" height="40" class="bxh2"/><text x="120" y="155" class="th2" text-anchor="middle">Sharper campaigns</text>
+        <path d="M 120 170 L 120 230 L 780 230 L 780 200" class="ar2" style="stroke-dasharray:4 3; marker-end:none;"/>
+        <text x="450" y="252" class="t2" text-anchor="middle" style="fill:#8c8170;">replies + new calls feed the next distillation</text>
+      </svg>
+      <div class="fig-cap">Fig. 2 — Every good sales call upgrades every future campaign, no engineering required.</div>
+    </div>
+
+    <div class="cs-callout">
+      <span class="lab">Why this mattered</span>
+      <p>The personas went through four revisions in a few weeks, and none of them needed engineering work. New interviews landed, the distillation picked them up, I reviewed the drafts. The IT persona learned that factories need rugged devices because one manufacturing interview mentioned it. That's the whole point of the setup: someone has a good sales call, and the next campaign gets better because of it.</p>
+    </div>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-persona-detail.webp" alt="IT Leadership persona detail: an illustrative example contact with quote, their world, what wins them over, numbered pain points, and matching rules for dozens of German and English job titles" loading="lazy" />
+      <div class="fig-cap">One persona in full — pain points traced to interviews, matching rules covering DE + EN job titles, and an illustrative example clearly labeled as not a real contact.</div>
+    </div>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-avoid.webp" alt="A persona's 'What to avoid' list: red warning cards such as don't lead with break-and-fix, never imply the model replaces the IT team, don't pitch MDM to enterprises that already have one" loading="lazy" />
+      <div class="fig-cap">Personas also encode what NOT to say — every avoid-rule comes from a real conversation where the wrong angle lost the room.</div>
+    </div>
+
+    <h4>Quality control</h4>
+    <p>Every message is assembled from four layers — brand voice, the persona profile, the campaign brief, and what we know about this specific person — and then checked before any human even sees it. Sequence structure has to match the campaign plan exactly. German emails must open with the formally correct salutation, computed by the system rather than trusted to a model, because getting Herr/Frau wrong once costs more credibility than a hundred good emails earn. Messages with broken personalization can't leave the building.</p>
+    <p>And when something changes later — say a contact's gender was recorded wrong — the fix is surgical: the salutation line updates, the approved message stays untouched. That principle let us correct thousands of existing contacts without re-reviewing content that was already good.</p>
+  </section>
+
+  <hr class="cs-divider" />
+
+  <!-- 4. CAMPAIGN STUDIO -->
+  <section class="cs-section r">
+    <span class="cs-num">04 — Campaign Studio, end to end</span>
+    <h2>From a contact list to a launched campaign in minutes</h2>
+    <p>The wizard has four steps: brief, template, contacts, generate. You start with a contact list and end up in a review queue that comfortably handles a couple hundred leads.</p>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-campaigns.webp" alt="Campaign Studio: campaign list with live progress bars — a 64-lead active LinkedIn campaign with 63 generated, and a 19-lead campaign in review" loading="lazy" />
+      <div class="fig-cap">Campaign Studio — each campaign shows its lead funnel live: imported, generated, pushed.</div>
+    </div>
+
+    <h4>Enrichment</h4>
+    <p>Every lead gets enriched with company context before personalization — size, industry, who else sits in the buying committee. The design principle: enrichment adds, it never blocks. A lead we can't enrich still gets a sequence, just with less context. Suggested colleagues ("who else should we talk to here?") are cached per company so large employers don't multiply costs — and every suggested colleague needs an email address entered by a person, because I wasn't going to let the system invent contact details. If the data isn't real, it doesn't enter the pipeline.</p>
+
+    <h4>The review queue</h4>
+    <p>Filter chips for every state, a full-screen mode with keyboard shortcuts for working through leads one by one, and per-step editing. If you change a lead's persona after generation, it gets marked stale until you regenerate, so nobody accidentally approves content written for the wrong buyer.</p>
+
+    <h4>The two gates before anything reaches a prospect's inbox</h4>
+    <ol>
+      <li><b>Compliance guards run twice.</b> Law firms, legal contacts and existing customers get filtered at import, then checked again at send time. If someone adds a customer to the blocklist while a campaign is mid-review, that lead still gets caught before anything sends. Emailing an existing customer with a cold pitch is the kind of mistake you only get to make once.</li>
+      <li><b>A test send before every launch.</b> One test lead with real generated content goes to your own inbox first. If the sending template and the generated content ever drift apart, a prospect would get a visibly broken email with no error raised anywhere — so the system proves the rendering on us before it touches the market.</li>
+    </ol>
+
+    <div class="cs-fig">
+      <svg viewBox="0 0 900 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lead pipeline with validation gate and failure paths">
+        <style>
+          .bx3 { fill:#100b09; stroke:#3a322a; rx:8; }
+          .bxh3 { fill:#100b09; stroke:#f87f23; rx:8; }
+          .bxf { fill:#100b09; stroke:#cc3711; rx:8; }
+          .t3 { font-family:'JetBrains Mono',monospace; font-size:12px; fill:#c4b8a4; }
+          .th3 { font-family:'JetBrains Mono',monospace; font-size:12px; fill:#f87f23; }
+          .tf { font-family:'JetBrains Mono',monospace; font-size:11px; fill:#cc3711; }
+          .ar3 { stroke:#f87f23; stroke-width:1.4; opacity:0.7; fill:none; marker-end:url(#ah3); }
+          .arf { stroke:#cc3711; stroke-width:1.2; opacity:0.8; fill:none; stroke-dasharray:4 3; marker-end:url(#ahf); }
+        </style>
+        <defs>
+          <marker id="ah3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#f87f23" opacity="0.8"/></marker>
+          <marker id="ahf" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#cc3711" opacity="0.9"/></marker>
+        </defs>
+        <rect x="30" y="30" width="150" height="40" class="bx3"/><text x="105" y="55" class="t3" text-anchor="middle">Import list</text>
+        <line x1="180" y1="50" x2="218" y2="50" class="ar3"/>
+        <rect x="220" y="30" width="170" height="40" class="bx3"/><text x="305" y="55" class="t3" text-anchor="middle">Compliance guards</text>
+        <line x1="390" y1="50" x2="428" y2="50" class="ar3"/>
+        <rect x="430" y="30" width="170" height="40" class="bx3"/><text x="515" y="55" class="t3" text-anchor="middle">Enrichment</text>
+        <line x1="600" y1="50" x2="638" y2="50" class="ar3"/>
+        <rect x="640" y="30" width="170" height="40" class="bxh3"/><text x="725" y="55" class="th3" text-anchor="middle">Persona match</text>
+        <line x1="725" y1="70" x2="725" y2="118" class="ar3"/>
+        <rect x="640" y="120" width="170" height="40" class="bxh3"/><text x="725" y="145" class="th3" text-anchor="middle">AI writes sequence</text>
+        <line x1="640" y1="140" x2="602" y2="140" class="ar3"/>
+        <rect x="380" y="112" width="220" height="56" class="bxh3" style="stroke-width:2;"/>
+        <text x="490" y="134" class="th3" text-anchor="middle">QUALITY GATE</text>
+        <text x="490" y="152" class="t3" text-anchor="middle" style="font-size:10px;">structure · salutation · personalization</text>
+        <path d="M 490 168 L 490 210 L 588 210" class="arf"/>
+        <text x="497" y="200" class="tf">fail → 1 retry, then flagged</text>
+        <rect x="590" y="190" width="180" height="40" class="bxf"/><text x="680" y="215" class="tf" text-anchor="middle">flagged for review</text>
+        <line x1="380" y1="140" x2="342" y2="140" class="ar3"/>
+        <rect x="160" y="120" width="180" height="40" class="bx3"/><text x="250" y="145" class="t3" text-anchor="middle">Human review queue</text>
+        <line x1="250" y1="160" x2="250" y2="208" class="ar3"/>
+        <rect x="160" y="210" width="180" height="40" class="bx3"/><text x="250" y="235" class="t3" text-anchor="middle">Test send · 1 lead</text>
+        <line x1="250" y1="250" x2="250" y2="268" class="ar3"/>
+        <rect x="160" y="270" width="180" height="34" class="bxh3"/><text x="250" y="292" class="th3" text-anchor="middle">Launch</text>
+        <text x="475" y="290" class="t3" style="font-size:10.5px; fill:#8c8170;">guards re-run at send time — blocklist race designed out</text>
+      </svg>
+      <div class="fig-cap">Fig. 3 — Quality checks before a human sees a draft, a test send before a prospect does.</div>
+    </div>
+
+    <h4>Pain routing</h4>
+    <p>Every first email leads with one specific pain angle, chosen by rules keyed on persona, industry and company size. When no rule matches, the system picks and records what it picked. Either way the choice is logged per lead, so once reply volume builds up, "which pain angle actually gets replies from a CFO in automotive" is a question the data answers — not something we argue about in a meeting.</p>
+  </section>
+
+  <hr class="cs-divider" />
+
+  <!-- 5. ACCOUNT RADAR -->
+  <section class="cs-section r">
+    <span class="cs-num">05 — Signal-based selling</span>
+    <h2>ABM Hub for the AEs, Account Radar for the market</h2>
+    <p>Two motions run on signals, and they do different jobs.</p>
+    <h4>ABM Hub — the AEs' cockpit</h4>
+    <p>These are named accounts with an assigned AE and a live deal already in play — which changes what "outreach" means. Nothing here is cold; the sweep looks for competitive-displacement and contract-cycle cues, pure intel for the owner. A <b>deep research agent continuously checks the web</b> for strategic news and LinkedIn activity around each account and its buying committee — the same committee intelligence the research agent builds. The moment a hot signal lands — a funding round, a new CIO, a relevant post — <b>the account's owner gets alerted directly</b>, with a drafted comment, DM or email grounded in that signal, ready to adapt and send. Each AE sees exactly their own accounts, nobody else's. This is the piece the AEs lean on hardest: it turns "check on your accounts when you get a chance" into a ping that arrives while the reason to reach out is still fresh.</p>
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-abmhub.webp" alt="ABM Hub: strategic account cards with owner filters, hot-signal counts, open-signal sweeps, role-gap chips for the buying committee, and per-account sweep controls — account names and people blurred for confidentiality" loading="lazy" />
+      <div class="fig-cap">ABM Hub — owned strategic accounts with hot-signal counts, buying-committee role gaps and one-click sweeps. Live customer data blurred.</div>
+    </div>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-nextactions.webp" alt="Suggested next actions on an account: LinkedIn DM and email actions ranked by signal priority, each with a Draft button — signal content blurred for confidentiality" loading="lazy" />
+      <div class="fig-cap">Inside an account: next actions ranked by signal priority, tagged by channel. "You still decide — click to draft." Signal content blurred.</div>
+    </div>
+
+    <p>The owner alerts rolled out carefully: silent at first, logging what they would have sent, live once we'd watched them be right for a while. If the first ping an AE ever gets is a bad one, they mute the channel and the whole feature is dead.</p>
+    <h4>Account Radar — watching the market itself</h4>
+    <p>The TAM universe is segmented into our three ICP bands, and Account Radar sweeps the enterprise segment — accounts nobody owns yet. Signals gathered by the watch agent become outbound: persona-scoped Hot Signal campaigns, crafted from what the agent found. Even cold enterprise outreach opens with a reason that's true this week, not a generic pitch.</p>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-tam.webp" alt="TAM universe: 67,837 companies segmented into 42,230 SMB, 18,086 mid-market and 5,781 enterprise, with coverage by company size and by industry" loading="lazy" />
+      <div class="fig-cap">The TAM universe Radar draws from — 67,837 companies in three ICP segments, coverage tracked live.</div>
+    </div>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-hotsignals.webp" alt="Hot Signal campaigns: persona-scoped draft campaigns created automatically by Account Radar for Procurement, CEO/Founder, Compliance/ESG, CFO/Finance, HR/People and IT Leadership" loading="lazy" />
+      <div class="fig-cap">Signals become campaigns — Account Radar spins up persona-scoped Hot Signal campaigns, one per buyer role.</div>
+    </div>
+
+    <div class="cs-shot">
+      <img src="assets/case-study/everbound-addtocampaign.webp" alt="Add to campaign widget: pick a signal to build on, pick a campaign, then add and generate the sequence — signal text blurred" loading="lazy" />
+      <div class="fig-cap">The handoff from signal to outreach: pick the signal, pick the campaign, generate the sequence. Signal text blurred.</div>
+    </div>
+
+    <p>One constraint shaped both motions: there's no legitimate way to automate engagement on other people's LinkedIn activity, and I wasn't going to build on a terms-of-service violation. So nothing touches LinkedIn directly. Sweeps run against public sources, every finding needs a source link or it gets dropped, duplicates are filtered out — and a person always presses send.</p>
+  </section>
+
+  <hr class="cs-divider" />
+
+  <!-- 6. PROCESS -->
+  <section class="cs-section r">
+    <span class="cs-num">06 — How it got built</span>
+    <h2>Plan first, then six phases</h2>
+    <p>The outbound engine was the risky piece: new data model, three external dependencies, and output quality that directly touches the brand. So I wrote the full plan first and had it stress-tested in three independent review passes before building anything. The reviews found real problems, and fixing them in a document cost an afternoon instead of a rebuild.</p>
+    <p>Then it shipped in six phases, each with a concrete way to prove it worked:</p>
+    <table class="cs-table">
+      <thead><tr><th>Phase</th><th>Scope</th><th>Proof</th></tr></thead>
+      <tbody>
+        <tr><td>1 · Foundation</td><td>Data model and shared plumbing</td><td>Everything already live keeps working</td></tr>
+        <tr><td>2 · Knowledge + personas</td><td>Knowledge base, persona library, distillation</td><td>A distill run on real interviews produces usable drafts</td></tr>
+        <tr><td>3 · Wizard + import</td><td>Campaign setup and list import with compliance guards</td><td>Import report correct, including excluded rows</td></tr>
+        <tr><td>4 · Enrichment + matching</td><td>Company context and persona matching</td><td>Leads carry the right persona in the queue</td></tr>
+        <tr><td>5 · Generation + review</td><td>Personalization engine and the full review experience</td><td>German + English sequences pass every check; review works at 200 leads</td></tr>
+        <tr><td>6 · Launch + measurement</td><td>Test sends, launch flow, performance reporting</td><td>A full campaign end to end, list in, live outreach out</td></tr>
+      </tbody>
+    </table>
+    <p>Two operating principles ran through all of it. Everything external is logged in one place, so when something misbehaves there's one place to look. And every long-running job is resumable — a closed laptop or a flaky connection never loses a campaign.</p>
+  </section>
+
+  <hr class="cs-divider" />
+
+  <!-- 7. RESULTS -->
+  <section class="cs-section r">
+    <span class="cs-num">07 — Impact</span>
+    <h2>Results so far</h2>
+
+    <table class="cs-table">
+      <thead><tr><th>&nbsp;</th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td><b>Outbound structure</b></td><td>Individually-run campaigns, no shared view</td><td>One system, one pipeline, 100% human-reviewed</td></tr>
+        <tr><td><b>Campaign prep</b></td><td>Days of manual copywriting</td><td>15-minute review</td></tr>
+        <tr><td><b>Coverage per run</b></td><td>A handful of hand-written contacts</td><td>500+ personalized contacts</td></tr>
+        <tr><td><b>Sales knowledge</b></td><td>In sellers' heads and old call recordings</td><td>A living knowledge base → 6 personas, 4 revisions shipped</td></tr>
+        <tr><td><b>Market visibility</b></td><td>No shared picture of the market</td><td>67,837 companies mapped, coverage tracked live</td></tr>
+        <tr><td><b>Web visitors with intent</b></td><td>Left anonymously</td><td>559 contacts reached, highest-performing campaign</td></tr>
+        <tr><td><b>Strategic-account signals</b></td><td>Unnoticed</td><td>439 signals across 63 accounts, sellers alerted same-day</td></tr>
+        <tr><td><b>Languages</b></td><td>Ad hoc</td><td>German + English, native-quality by contract</td></tr>
+      </tbody>
+    </table>
+
+    <ul>
+      <li><b>The website-intent campaign is the highest-performing campaign in the account.</b> Companies that were leaving the site anonymously now get identified, matched to the right contacts, and reached while the interest is fresh — and that timing shows up directly in reply and conversation rates.</li>
+      <li>Campaign prep went from <b>days of copywriting to a 15-minute review</b>, and one run covers <b>500+ contacts</b> instead of a handful.</li>
+      <li>The system runs at real volume: <b>8 live campaigns</b>, <b>559 contacts pushed</b> through the web-intent pipeline, <b>439 signals</b> surfaced across <b>63 accounts on radar</b> — the numbers on this page are a live snapshot, not a demo.</li>
+      <li>The whole German market is mapped: a <b>67,837-company TAM universe</b>, segmented by size and industry, with live coverage tracking. At 0.7% contacted, the pipeline ceiling is nowhere in sight.</li>
+      <li>First lines open with the recipient's actual role-specific pain. A CFO reads about budget predictability, a CIO about ticket volume. The wording comes from real calls, not guesses.</li>
+      <li>Full revenue attribution is the next build (see below), so the numbers here are directional rather than closed-won figures. What's already clear: warmer timing, sharper first lines, and a fraction of the prep time.</li>
+    </ul>
+
+  </section>
+
+  <hr class="cs-divider" />
+
+  <!-- 8. WHAT'S NEXT -->
+  <section class="cs-section r">
+    <span class="cs-num">08 — What's next</span>
+    <h2>Where it goes from here</h2>
+    <ul>
+      <li><b>Find the winning pain angle per buyer.</b> Every email already records which pain it opened with. Once reply volume builds, we'll know whether a CFO in automotive responds better to budget predictability or to dead capital, and campaigns get tuned on evidence instead of opinion.</li>
+      <li><b>Grow the persona library with the market.</b> Six personas today. As interviews keep landing, new roles and new industry angles get added the same way the Compliance/ESG persona did: from what real buyers actually say.</li>
+      <li><b>Expand beyond DACH.</b> The German/English setup is the template. New market, new language, same playbook: personas from local sales calls, outreach in the buyer's own words.</li>
+      <li><b>Close the loop with revenue.</b> Connect campaign and signal activity to pipeline and closed-won, so the system can answer the only question that matters: which conversations turned into deals.</li>
+    </ul>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="cs-section r">
+    <span class="cs-num">09 — Under the hood</span>
+    <h2>For the technically curious</h2>
+    <div class="cs-tags">
+      <span>TanStack Start</span><span>React 19</span><span>Supabase</span><span>Postgres RLS</span><span>Full-text search</span>
+      <span>Cloudflare Workers</span><span>Anthropic Claude</span><span>Bright Data</span><span>Lemlist</span>
+      <span>Clay</span><span>Slack</span><span>Google Apps Script</span><span>Zod</span><span>shadcn/ui</span><span>Vitest</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="glow"></div>
+    <div class="shell inner">
+      <span class="label">( Let's ship better GTM systems )</span>
+      <h2>Let's <span class="ital">ship</span>.</h2>
+      <a href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener" class="cta mag" data-mag="0.25"><span>Book a conversation</span><span class="arr">→</span></a>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener" class="dx">LinkedIn</a>
+        <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener" class="dx">Substack</a>
+        <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener" class="dx">Résumé / CV</a>
+        <a href="mailto:omomo.oj@gmail.com" class="dx">Email</a>
+      </div>
+    </div>
+    <div class="ghostmark"><span>OMOMO</span></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>© 2026 Tamara Omomo</span>
+  <span>AI GTM Engineer — Designed &amp; coded in the browser</span>
+  <span>Berlin → Remote</span>
+</footer>
+
+<script src="assets/interactions.js?v=20260705b"></script>
+</body>
+</html>

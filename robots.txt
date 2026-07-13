@@ -5,5 +5,7 @@ Disallow: /project/
 Disallow: /standalone.html
 Disallow: /admin.html
 Disallow: /admin
+Disallow: /case-study-login.html
+Disallow: /case-study-everphone.html
 
 Sitemap: https://tamaraomomo.com/sitemap.xml

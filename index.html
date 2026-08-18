@@ -1403,7 +1403,7 @@ body::before{
 }
 
 /* ---- typed welcome ---- */
-#boot .boot__log{gap:4px;min-height:11em;}
+#boot .boot__log{gap:2px;min-height:15em;}
 #boot .boot-big{
   font-family:var(--font-display);
   font-size:clamp(19px,3.4vw,30px);
@@ -1436,6 +1436,11 @@ body::before{
       <span id="boot-stamp">&mdash;&mdash;</span>
     </div>
     <div class="boot__log" id="boot-log"></div>
+    <div class="boot__meter">
+      <div class="boot__track"><i id="boot-bar"></i></div>
+      <div class="boot__pct"><span>loading gtm.core</span><span id="boot-pct">0%</span></div>
+    </div>
+    <p class="boot__ready" id="boot-ready"></p>
     <div class="boot__foot">
       <span class="odo">You are visitor <b id="odo"></b></span>
       <span class="boot__skip">press any key to continue</span>
@@ -1921,6 +1926,9 @@ body::before{
     if (!boot) return;
     var logEl = document.getElementById("boot-log");
     var stampEl = document.getElementById("boot-stamp");
+    var barEl = document.getElementById("boot-bar");
+    var pctEl = document.getElementById("boot-pct");
+    var readyEl = document.getElementById("boot-ready");
 
     var d = new Date();
     stampEl.textContent =
@@ -1929,11 +1937,15 @@ body::before{
 
 
     var LINES = [
-      { text: "welcome to tamara systems", cls: "big" },
-      { text: "ai gtm engineer \u00b7 berlin", cls: "sub" },
-      { text: "", cls: "" },
-      { text: "everything in here is a system that shipped.", cls: "sub" },
-      { text: "ready to explore", cls: "go" }
+      ["init  gtm.core", "ok"],
+      ["scan  revenue systems", "<b>7 units</b>"],
+      ["load  enrichment agents", "<b>51,204</b> accounts"],
+      ["mount ./builds", "7 case studies"],
+      ["test  pipeline channel", "<b>$3.6M</b> sourced"],
+      ["test  response latency", "<b>9 min</b> median"],
+      ["test  conversion lift", "<b>+32%</b> sql &rarr; opp"],
+      ["test  attribution model", "<b>$0.9M</b> reallocated"],
+      ["auth  tamara", "<i>ai gtm engineer</i>"]
     ];
 
     var timers = [];
@@ -1942,12 +1954,9 @@ body::before{
     var odo = document.getElementById("odo");
     if (odo) {
       var target = 98068 + (Math.floor(Date.now() / 86400000) % 400);
-      function paintOdo(n){
-        odo.innerHTML = String(n).padStart(6, "0").split("").map(function(c){
-          return "<i>" + c + "</i>";
-        }).join("");
-      }
-      paintOdo(target);
+      odo.innerHTML = String(target).padStart(6, "0").split("").map(function(c){
+        return "<i>" + c + "</i>";
+      }).join("");
     }
 
     function endBoot(){
@@ -1969,47 +1978,45 @@ body::before{
     document.addEventListener("keydown", endBoot);
     document.addEventListener("pointerdown", endBoot);
 
-    var CHAR = 44;
-    var GAP = 430;
+    /* the welcome types itself, then the self test runs */
+    var WELCOME = "welcome to tamara systems";
+    var hello = document.createElement("p");
+    hello.className = "boot-big";
+    var span = document.createElement("span");
+    var caret = document.createElement("i");
+    caret.className = "boot__cursor";
+    hello.appendChild(span);
+    hello.appendChild(caret);
+    logEl.appendChild(hello);
 
-    function typeLine(i){
-      if (i >= LINES.length || boot.hidden) return;
-      var spec = LINES[i];
-      var p = document.createElement("p");
-      if (spec.cls) p.className = "boot-" + spec.cls;
+    var n = 0;
+    (function typeStep(){
+      if (boot.hidden) return;
+      span.textContent = WELCOME.slice(0, ++n);
+      if (n < WELCOME.length) later(typeStep, 46);
+      else { caret.remove(); later(runTest, 420); }
+    })();
 
-      if (!spec.text) {
-        p.innerHTML = "&nbsp;";
-        logEl.appendChild(p);
-        later(function(){ typeLine(i + 1); }, 150);
-        return;
-      }
-
-      var span = document.createElement("span");
-      var caret = document.createElement("i");
-      caret.className = "boot__cursor";
-      p.appendChild(span);
-      p.appendChild(caret);
-      logEl.appendChild(p);
-
-      var n = 0;
-      (function step(){
-        if (boot.hidden) return;
-        span.textContent = spec.text.slice(0, ++n);
-        if (n < spec.text.length) {
-          later(step, CHAR);
-        } else {
-          if (i < LINES.length - 1) caret.remove();
-          later(function(){ typeLine(i + 1); }, GAP);
-        }
-      })();
+    var STEP = 460;
+    function runTest(){
+      LINES.forEach(function(pair, i){
+        later(function(){
+          if (boot.hidden) return;
+          var p = document.createElement("p");
+          var dots = ".".repeat(Math.max(3, 34 - pair[0].length));
+          p.innerHTML = "&gt; " + pair[0] + " " + dots + " " + pair[1];
+          logEl.appendChild(p);
+          var pct = Math.round(((i + 1) / LINES.length) * 100);
+          barEl.style.width = pct + "%";
+          pctEl.textContent = pct + "%";
+        }, STEP * i);
+      });
+      later(function(){
+        readyEl.innerHTML = "ready to explore<span class=\"boot__cursor\"></span>";
+        var skip = boot.querySelector(".boot__skip");
+        if (skip) skip.classList.add("is-armed");
+      }, STEP * LINES.length + 500);
     }
-
-    later(function(){ typeLine(0); }, 300);
-    later(function(){
-      var skip = boot.querySelector(".boot__skip");
-      if (skip) skip.classList.add("is-armed");
-    }, 4600);
 
     /* faint data rain behind the self test */
     var bc = document.getElementById("bootrain");

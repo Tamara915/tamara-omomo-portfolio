@@ -1497,6 +1497,42 @@ body::before{
   .contact-cta{width:100%;justify-content:center;text-align:center;}
 }
 
+/* ---- self-test lines: leader dots that flex instead of truncating ---- */
+#boot .boot-line{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  white-space:normal;
+}
+#boot .boot-line .k{flex:0 0 auto;white-space:pre;}
+#boot .boot-line .dots{
+  flex:1 1 auto;
+  min-width:14px;
+  align-self:center;
+  border-bottom:1px dotted currentColor;
+  opacity:.45;
+}
+#boot .boot-line .v{flex:0 0 auto;white-space:nowrap;}
+
+@media (max-width:700px){
+  #boot{padding:22px 16px;}
+  #boot .boot__log{font-size:11.5px;}
+  #boot .boot-line .k{font-size:11px;}
+  #boot .boot-line .v{font-size:11px;}
+  #boot .boot-big{font-size:clamp(17px,5.4vw,24px);}
+  .odo b i{width:14px;font-size:11px;}
+
+  /* nothing under ~10.5px on a phone */
+  .card{font-size:10px;}
+  .tagchip,.state{font-size:10px;}
+  .lbl,.pagehead__meta,.window__bar,.entry__go,.post__go,.contact-links{font-size:10.5px;}
+  .bay li{font-size:10px;}
+  .deskicon{font-size:10px;}
+  .colophon{font-size:10.5px;}
+  /* the ref subtitle just truncates on a phone — drop it and keep the name */
+  .window__ref{display:none;}
+}
+
 </style>
 </head>
 <body>
@@ -1984,8 +2020,10 @@ body::before{
         later(function(){
           if (boot.hidden) return;
           var p = document.createElement("p");
-          var dots = ".".repeat(Math.max(3, 34 - pair[0].length));
-          p.innerHTML = "&gt; " + pair[0] + " " + dots + " " + pair[1];
+          p.className = "boot-line";
+          p.innerHTML = '<span class="k">&gt; ' + pair[0] + '</span>' +
+                        '<i class="dots"></i>' +
+                        '<span class="v">' + pair[1] + '</span>';
           logEl.appendChild(p);
           var pct = Math.round(((i + 1) / LINES.length) * 100);
           barEl.style.width = pct + "%";

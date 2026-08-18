@@ -32,6 +32,10 @@
   --yellow:#FFD97A;
   --screen:#14120F;
   --screen-ink:#7C7568;
+  --desktop:#3B3D31;
+  --desktop-grid:rgba(255,253,246,.07);
+  --desktop-ink:#F2EDE3;
+  --desktop-dim:#B9B4A4;
   --chip1:#FFC93C;
   --chip2:#4FC2AC;
   --chip3:#7FB2F0;
@@ -62,6 +66,10 @@
     --yellow:#FFE099;
     --screen:#0D0B08;
     --screen-ink:#6A6458;
+    --desktop:#0E0F0B;
+    --desktop-grid:rgba(242,237,227,.05);
+    --desktop-ink:#EDE8DC;
+    --desktop-dim:#8E8A7C;
     --chip1:#FFC93C;
     --chip2:#4FC2AC;
     --chip3:#7FB2F0;
@@ -89,6 +97,10 @@
   --yellow:#FFE099;
   --screen:#0D0B08;
   --screen-ink:#6A6458;
+  --desktop:#0E0F0B;
+  --desktop-grid:rgba(242,237,227,.05);
+  --desktop-ink:#EDE8DC;
+  --desktop-dim:#8E8A7C;
   --chip1:#FFC93C;
   --chip2:#4FC2AC;
   --chip3:#7FB2F0;
@@ -105,7 +117,7 @@ body{
   margin:0;
   padding:0;
   min-height:100vh;
-  background:var(--bg);
+  background:var(--desktop);
   color:var(--ink);
   font-family:var(--font-mono);
   font-size:13px;
@@ -1037,8 +1049,8 @@ body::before{
   z-index:-1;
   pointer-events:none;
   background-image:
-    linear-gradient(var(--tel-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--tel-grid) 1px, transparent 1px);
+    linear-gradient(var(--desktop-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--desktop-grid) 1px, transparent 1px);
   background-size:64px 64px;
 }
 
@@ -1831,6 +1843,67 @@ body::before{
   .desk--float .deskicon .ico{width:44px;height:44px;}
 }
 
+/* ================= full desktop treatment ================= */
+
+.masthead{
+  background:transparent;
+  border-bottom:1px solid var(--desktop-grid);
+  color:var(--desktop-dim);
+}
+.masthead b{color:var(--desktop-ink);}
+
+.desk--float .deskicon{color:var(--desktop-ink);}
+.desk--float .deskicon span{text-shadow:1px 1px 0 rgba(0,0,0,.55);}
+
+.colophon{color:var(--desktop-dim);border-top:1px solid var(--desktop-grid);}
+.colophon a{color:var(--desktop-dim);}
+.colophon a:hover{color:var(--chip1);}
+
+.prompt-hint{color:var(--desktop-dim);}
+
+/* windows lift off the desktop */
+.window{
+  box-shadow:0 10px 0 -4px rgba(0,0,0,.22), 7px 7px 0 var(--line-hard);
+  margin-bottom:26px;
+}
+/* a slight stagger so they read as placed, not stacked */
+.stage > .window:nth-of-type(even){margin-left:22px;margin-right:-8px;}
+.stage > .window:nth-of-type(odd){margin-right:14px;}
+
+/* the page head moves inside a window */
+.headwin .window__body{padding:22px 22px 20px;}
+.headwin .pagehead,.headwin .open{padding:0;}
+
+@media (max-width:700px){
+  .stage > .window:nth-of-type(even),
+  .stage > .window:nth-of-type(odd){margin-left:0;margin-right:0;}
+  .window{box-shadow:0 6px 0 -3px rgba(0,0,0,.2), 4px 4px 0 var(--line-hard);}
+}
+
+/* ---- taskbar anchored to the desktop ---- */
+.dock{
+  background:var(--surface-2);
+  border-top:2px solid var(--line-hard);
+  box-shadow:0 -3px 0 rgba(0,0,0,.28);
+}
+.dock__inner{max-width:none;padding:10px 20px;}
+
+/* the desktop shows around the content column */
+.stage{max-width:1020px;padding-bottom:34px;}
+
+/* window bars get the classic three-button cluster */
+.winbtns{display:flex;gap:4px;margin-left:auto;flex:none;}
+.winbtns b{
+  width:17px;height:15px;
+  display:grid;place-items:center;
+  background:var(--surface);
+  border:1.5px solid var(--line-hard);
+  font:400 9px/1 var(--font-mono);
+  color:var(--ink);
+  cursor:default;
+}
+.window__bar .winbtns b:last-child{background:var(--chip1);}
+
 </style>
 </head>
 <body>
@@ -1999,7 +2072,15 @@ body::before{
 <main class="stage">
 
   <!-- ============ OPENING ============ -->
-  <section class="open" id="open">
+  <section class="window headwin">
+    <div class="window__bar">
+      <svg class="ico ico--crt" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="2" width="12" height="1" fill="var(--surface)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--surface)"/><rect x="3" y="3" width="10" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="8" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="3" height="1" fill="var(--lime)"/><rect x="8" y="5" width="3" height="1" fill="var(--cyan)"/><rect x="11" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="6" width="1" height="1" fill="var(--lime)"/><rect x="6" y="6" width="5" height="1" fill="var(--cyan)"/><rect x="11" y="6" width="1" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="var(--surface)"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="8" height="1" fill="var(--cyan)"/><rect x="12" y="7" width="1" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="var(--surface)"/><rect x="3" y="8" width="10" height="1" fill="currentColor"/><rect x="13" y="8" width="1" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="4" height="1" fill="var(--surface)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="7" y="9" width="6" height="1" fill="var(--surface)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/><rect x="6" y="11" width="4" height="1" fill="currentColor"/><rect x="6" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="2" height="1" fill="var(--surface)"/><rect x="9" y="12" width="1" height="1" fill="currentColor"/><rect x="3" y="13" width="10" height="1" fill="currentColor"/><rect x="3" y="14" width="1" height="1" fill="currentColor"/><rect x="4" y="14" width="8" height="1" fill="var(--surface)"/><rect x="12" y="14" width="1" height="1" fill="currentColor"/><rect x="3" y="15" width="10" height="1" fill="currentColor"/></svg>
+      <span class="window__name">tamara.sys</span>
+      <span class="window__ref">whoami</span>
+          <span class="winbtns"><b>_</b><b>&#9723;</b><b>&times;</b></span>
+    </div>
+    <div class="window__body">
+    <section class="open" id="open">
     <p class="lbl">tamara@gtm:~$ whoami</p>
     <h1>I build AI GTM systems that <em>drive revenue</em><span class="caret" aria-hidden="true"></span></h1>
     <p>I design AI workflows, agents and GTM systems that help modern revenue teams eliminate manual work, move faster and scale efficiently.</p>
@@ -2037,6 +2118,8 @@ body::before{
     <div class="prompt-hint">
       <svg width="13" height="13" viewBox="0 0 13 13" aria-hidden="true"><path d="M6.5 1v8M3 6l3.5 3.5L10 6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 12h11" stroke="currentColor" stroke-width="1.4"/></svg>
       Click a program &middot; pages in the bar below
+    </div>
+    </section>
     </div>
   </section>
 

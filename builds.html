@@ -1590,46 +1590,10 @@ body::before{
 .menubar span:hover{color:var(--ink);text-decoration:underline;}
 
 /* ---- numbered index ---- */
-.indexhead{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px 14px;
-  align-items:center;
-  justify-content:space-between;
-  padding-bottom:12px;
-  border-bottom:1px dashed var(--line);
-  margin-bottom:6px;
-}
+
 .btn-line--sm{padding:7px 12px;font-size:10px;background:var(--chip1);}
 
-.idx{list-style:none;margin:0;padding:0;display:grid;}
-.idx li{
-  display:flex;
-  align-items:baseline;
-  gap:14px;
-  padding:11px 2px;
-  border-bottom:1px dotted var(--line);
-  font-family:var(--font-mono);
-  font-size:13px;
-}
-.idx li:last-child{border-bottom:0;}
-.idx__no{flex:none;color:var(--faint);font-size:11px;}
-.idx a{
-  flex:1;
-  min-width:0;
-  color:var(--ink);
-  text-decoration:none;
-  border-bottom:1px solid transparent;
-}
-.idx a em{font-style:normal;color:var(--accent-text);}
-.idx a:hover,.idx a:focus-visible{border-bottom-color:var(--ink);outline:none;}
-.idx__meta{
-  flex:none;
-  font-size:9.5px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--faint);
-}
+
 .idx__count{
   margin:14px 0 0;
   font-family:var(--font-mono);
@@ -1637,11 +1601,7 @@ body::before{
   letter-spacing:.16em;
   color:var(--faint);
 }
-@media (max-width:700px){
-  .idx li{flex-wrap:wrap;gap:4px 10px;}
-  .idx a{flex:1 1 100%;order:2;}
-  .idx__meta{order:3;}
-}
+
 
 /* ---- resource explorer ---- */
 .explorer__head{
@@ -1757,38 +1717,7 @@ body::before{
 }
 
 /* ---- builds index rows ---- */
-.idx--builds li{gap:12px;}
-.idx__link{
-  flex:1;
-  min-width:0;
-  text-align:left;
-  background:none;
-  border:0;
-  padding:0;
-  font-family:var(--font-mono);
-  font-size:13px;
-  color:var(--ink);
-  border-bottom:1px solid transparent;
-  cursor:pointer;
-}
-.idx__link em{font-style:normal;color:var(--accent-text);}
-.idx__link:hover,.idx__link:focus-visible{border-bottom-color:var(--ink);outline:none;}
-.idx__flag{
-  flex:none;
-  background:var(--chip2);
-  border:1.5px solid var(--line-hard);
-  padding:2px 7px;
-  font-family:var(--font-mono);
-  font-size:8.5px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-}
-.idx__meta{font-variant-numeric:tabular-nums;}
-@media (max-width:700px){
-  .idx--builds li{flex-wrap:wrap;}
-  .idx__link{flex:1 1 100%;order:2;}
-  .idx__flag,.idx__meta{order:3;}
-}
+
 
 /* ---- floating program icons: bare objects on the desktop ---- */
 .desk--float{

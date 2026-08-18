@@ -1952,13 +1952,14 @@ a.deskicon[aria-current="page"]{
 .win--explorer .menubar u{text-underline-offset:2px;}
 
 /* manila folders, not yellow */
-.win--explorer .fold .ico{--yellow:#E3C88B;--cyan:#C9A961;}
+.win--explorer .fold .ico{--cyan:#8A8577;}
+.win--explorer .fold__name{font-size:10.5px;letter-spacing:.01em;}
 
 /* sunken status panel */
 .statusbar span:first-child{
   box-shadow:inset 1px 1px 0 rgba(20,18,15,.18);
 }
-.fold--lab .ico{--yellow:#F5C518;--lime:#8FCF14;}
+.fold--lab .ico{--cyan:var(--accent-text);}
 .fold__flag{margin-top:2px;}
 /* the folder whose window is open reads as selected */
 .fold.is-open{

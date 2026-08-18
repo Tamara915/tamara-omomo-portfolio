@@ -1932,6 +1932,40 @@ a.deskicon[aria-current="page"]{
   .addressbar{font-size:10px;}
 }
 
+/* ---- classic explorer window, per the reference ---- */
+
+.visually-hidden{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+.win--explorer{margin-top:6px;}
+.win--explorer > .window__bar{
+  background:#7E7E76;
+  border-bottom:2px solid var(--line-hard);
+  color:#FFFFFF;
+}
+.win--explorer > .window__bar .window__name{color:#FFFFFF;font-weight:700;letter-spacing:.1em;}
+.win--explorer > .window__bar .ico{filter:brightness(0) invert(1);}
+.win--explorer .winbtns b{background:var(--surface-2);}
+.win--explorer .menubar{background:var(--surface-2);color:var(--ink);}
+.win--explorer .menubar u{text-underline-offset:2px;}
+
+/* manila folders, not yellow */
+.win--explorer .fold .ico{--yellow:#E3C88B;--cyan:#C9A961;}
+
+/* sunken status panel */
+.statusbar span:first-child{
+  box-shadow:inset 1px 1px 0 rgba(20,18,15,.18);
+}
+.fold--lab .ico{--yellow:#F5C518;--lime:#8FCF14;}
+.fold__flag{margin-top:2px;}
+/* the folder whose window is open reads as selected */
+.fold.is-open{
+  background:color-mix(in srgb, var(--accent) 34%, transparent);
+  border-color:var(--line-hard);
+}
+
 </style>
 </head>
 <body>
@@ -2654,8 +2688,8 @@ a.deskicon[aria-current="page"]{
       });
       last = trigger || null;
       m.hidden = false;
-      document.querySelectorAll(".deskicon.is-open").forEach(function(d){ d.classList.remove("is-open"); });
-      if (trigger && trigger.classList.contains("deskicon")) trigger.classList.add("is-open");
+      document.querySelectorAll(".deskicon.is-open,.fold.is-open").forEach(function(d){ d.classList.remove("is-open"); });
+      if (trigger && (trigger.classList.contains("deskicon") || trigger.classList.contains("fold"))) trigger.classList.add("is-open");
       var first = m.querySelector("[data-modal-close]");
       if (first) first.focus();
     }
@@ -2663,7 +2697,7 @@ a.deskicon[aria-current="page"]{
       var m = document.getElementById(id);
       if (!m) return;
       m.hidden = true;
-      document.querySelectorAll(".deskicon.is-open").forEach(function(d){ d.classList.remove("is-open"); });
+      document.querySelectorAll(".deskicon.is-open,.fold.is-open").forEach(function(d){ d.classList.remove("is-open"); });
       if (last) last.focus();
     }
     openers.forEach(function(el){
@@ -2680,6 +2714,16 @@ a.deskicon[aria-current="page"]{
     }
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
+
+    // the explorer opens with its first folder already showing, like the reference
+    if (!location.hash) {
+      var host = document.querySelector("[data-open-default]");
+      if (host) {
+        var id = host.getAttribute("data-open-default");
+        var trigger = document.querySelector('[data-modal="' + id + '"]');
+        show(id, trigger);
+      }
+    }
 
     document.querySelectorAll(".scrim[id]").forEach(function(m){
       m.addEventListener("click", function(e){ if (e.target === m) hide(m.id); });

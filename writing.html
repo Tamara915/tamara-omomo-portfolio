@@ -1549,15 +1549,16 @@ body::before{
 
 .stickers{
   display:grid;
-  gap:14px;
-  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(228px,1fr));
 }
 .sticker{
   position:relative;
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-  gap:7px;
+  gap:6px;
+  min-height:250px;
   text-align:left;
   padding:14px 14px 12px;
   background:var(--surface);
@@ -1579,7 +1580,27 @@ body::before{
 }
 .sticker:active{transform:rotate(0deg) translate(2px,2px);box-shadow:1px 1px 0 var(--line-hard);}
 
-.sticker__top{display:flex;align-items:center;gap:9px;width:100%;}
+.sticker__top{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:2px;}
+
+/* the object sits on a colour chip, like the desktop programs */
+.sticker .ico{
+  padding:8px;
+  border:2px solid var(--line-hard);
+  background:var(--chip, var(--chip4));
+  box-shadow:3px 3px 0 var(--line-hard);
+  --accent:var(--line-hard);
+  --cyan:var(--line-hard);
+  --yellow:var(--line-hard);
+  --lime:var(--line-hard);
+  --surface:#FFFFFF;
+  transition:transform .12s steps(2), box-shadow .12s steps(2);
+}
+.sticker:nth-child(4n+1) .ico{--chip:var(--chip1);}
+.sticker:nth-child(4n+2) .ico{--chip:var(--chip2);}
+.sticker:nth-child(4n+3) .ico{--chip:var(--chip3);}
+.sticker:nth-child(4n+4) .ico{--chip:var(--chip1);}
+.sticker:hover .ico{transform:translate(-2px,-2px) rotate(-4deg);box-shadow:5px 5px 0 var(--line-hard);}
+
 .sticker__no{
   font-size:10px;
   letter-spacing:.18em;
@@ -1589,32 +1610,35 @@ body::before{
   margin-left:auto;
   background:var(--chip2);
   border:1.5px solid var(--line-hard);
-  padding:2px 7px;
+  padding:3px 8px;
   font-size:8.5px;
   letter-spacing:.16em;
   text-transform:uppercase;
 }
 .sticker__stat{
   font-family:var(--font-display);
-  font-size:27px;
-  line-height:1.05;
+  font-size:30px;
+  line-height:1.02;
   color:var(--accent-text);
 }
-.sticker__name{
-  font-size:12px;
-  line-height:1.4;
-  letter-spacing:.02em;
-}
 .sticker__sub{
-  font-size:9.5px;
+  font-size:9px;
   line-height:1.45;
-  letter-spacing:.12em;
+  letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--faint);
 }
+.sticker__name{
+  font-family:var(--font-display);
+  font-size:15px;
+  line-height:1.25;
+  letter-spacing:.005em;
+  color:var(--ink);
+  margin-top:3px;
+}
 .sticker__open{
-  margin-top:6px;
-  padding-top:8px;
+  margin-top:auto;
+  padding-top:9px;
   width:100%;
   border-top:1px dashed var(--line);
   font-size:9.5px;
@@ -1648,6 +1672,74 @@ body::before{
   .sticker{transform:none !important;}
   .casemodal{padding:12px 10px 30px;}
   .casewin .window__body{padding:15px;}
+}
+
+/* ---- menu bar, journal-style ---- */
+.menubar{
+  display:flex;
+  gap:16px;
+  padding:5px 11px;
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  color:var(--muted);
+}
+.menubar span{cursor:default;}
+.menubar span:hover{color:var(--ink);text-decoration:underline;}
+
+/* ---- numbered index ---- */
+.indexhead{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:12px;
+  border-bottom:1px dashed var(--line);
+  margin-bottom:6px;
+}
+.btn-line--sm{padding:7px 12px;font-size:10px;background:var(--chip1);}
+
+.idx{list-style:none;margin:0;padding:0;display:grid;}
+.idx li{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:11px 2px;
+  border-bottom:1px dotted var(--line);
+  font-family:var(--font-mono);
+  font-size:13px;
+}
+.idx li:last-child{border-bottom:0;}
+.idx__no{flex:none;color:var(--faint);font-size:11px;}
+.idx a{
+  flex:1;
+  min-width:0;
+  color:var(--ink);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+}
+.idx a em{font-style:normal;color:var(--accent-text);}
+.idx a:hover,.idx a:focus-visible{border-bottom-color:var(--ink);outline:none;}
+.idx__meta{
+  flex:none;
+  font-size:9.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.idx__count{
+  margin:14px 0 0;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.16em;
+  color:var(--faint);
+}
+@media (max-width:700px){
+  .idx li{flex-wrap:wrap;gap:4px 10px;}
+  .idx a{flex:1 1 100%;order:2;}
+  .idx__meta{order:3;}
 }
 
 </style>
@@ -1731,51 +1823,35 @@ body::before{
   <section class="window" id="posts">
     <div class="window__bar">
       <svg class="ico ico--cassette" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="2" width="12" height="1" fill="var(--surface)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--surface)"/><rect x="3" y="3" width="10" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="4" width="4" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="2" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="currentColor"/><rect x="11" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="6" width="4" height="1" fill="currentColor"/><rect x="10" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="var(--surface)"/><rect x="3" y="7" width="10" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="2" height="1" fill="var(--surface)"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="10" y="9" width="2" height="1" fill="var(--surface)"/><rect x="12" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg>
-      <span class="window__name">posts</span>
-      <span class="window__ref">newest first</span>
+      <span class="window__name">thoughts_index.txt</span>
+      <span class="window__ref">archived</span>
     </div>
+    <div class="menubar"><span>File</span><span>Edit</span><span>Format</span><span>Help</span></div>
     <div class="window__body">
-      <div class="posts">
-
-        <a class="post" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">
-          <div class="post__hd">
-            <svg class="ico ico--robot" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="1" width="2" height="1" fill="currentColor"/><rect x="10" y="1" width="2" height="1" fill="currentColor"/><rect x="6" y="2" width="2" height="1" fill="currentColor"/><rect x="10" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--accent)"/><rect x="5" y="5" width="5" height="1" fill="var(--surface)"/><rect x="10" y="5" width="2" height="1" fill="var(--accent)"/><rect x="12" y="5" width="2" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="2" height="1" fill="var(--accent)"/><rect x="5" y="6" width="5" height="1" fill="var(--surface)"/><rect x="10" y="6" width="2" height="1" fill="var(--accent)"/><rect x="12" y="6" width="2" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="2" height="1" fill="var(--surface)"/><rect x="4" y="8" width="8" height="1" fill="currentColor"/><rect x="12" y="8" width="2" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="3" y="11" width="2" height="1" fill="currentColor"/><rect x="11" y="11" width="2" height="1" fill="currentColor"/></svg>
-            <span class="post__cat">AI agents &middot; GTM</span>
-          </div>
-          <h2>What 60k-account research agents taught me about AI in GTM</h2>
-          <p>Where agents genuinely beat off-the-shelf enrichment &mdash; and where they quietly fail.</p>
-          <span class="post__go">Read on Substack <span aria-hidden="true">&rarr;</span></span>
-        </a>
-
-        <a class="post" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">
-          <div class="post__hd">
-            <svg class="ico ico--bolt" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="8" y="1" width="3" height="1" fill="currentColor"/><rect x="7" y="2" width="3" height="1" fill="currentColor"/><rect x="6" y="3" width="3" height="1" fill="currentColor"/><rect x="5" y="4" width="3" height="1" fill="currentColor"/><rect x="4" y="5" width="7" height="1" fill="currentColor"/><rect x="6" y="6" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="7" width="3" height="1" fill="var(--yellow)"/><rect x="4" y="8" width="3" height="1" fill="var(--yellow)"/><rect x="3" y="9" width="3" height="1" fill="var(--yellow)"/><rect x="2" y="10" width="3" height="1" fill="var(--yellow)"/></svg>
-            <span class="post__cat">Revenue systems</span>
-          </div>
-          <h2>Speed-to-lead is a systems problem, not a hustle problem</h2>
-          <p>How we took median response from 4 hours to 11 minutes without hiring anyone.</p>
-          <span class="post__go">Read on Substack <span aria-hidden="true">&rarr;</span></span>
-        </a>
-
-        <a class="post" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">
-          <div class="post__hd">
-            <svg class="ico ico--cassette" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="2" width="12" height="1" fill="var(--surface)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--surface)"/><rect x="3" y="3" width="10" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="4" width="4" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="2" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="currentColor"/><rect x="11" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="6" width="4" height="1" fill="currentColor"/><rect x="10" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="var(--surface)"/><rect x="3" y="7" width="10" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="2" height="1" fill="var(--surface)"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="10" y="9" width="2" height="1" fill="var(--surface)"/><rect x="12" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg>
-            <span class="post__cat">Attribution</span>
-          </div>
-          <h2>The $1.1M question: what actually closes your pipeline?</h2>
-          <p>Why last-touch is lying to you, and how a dbt model settled the marketing-vs-finance war.</p>
-          <span class="post__go">Read on Substack <span aria-hidden="true">&rarr;</span></span>
-        </a>
-
+      <div class="indexhead">
+        <span class="lbl">// archive &middot; currently writing on</span>
+        <a class="btn-line btn-line--sm" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack &rarr;</a>
       </div>
-
-      <div class="subscribe">
-        <p class="lbl"><svg class="ico ico--mail" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--accent)"/><rect x="3" y="4" width="10" height="1" fill="var(--surface)"/><rect x="13" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--accent)"/><rect x="5" y="5" width="6" height="1" fill="var(--surface)"/><rect x="11" y="5" width="2" height="1" fill="var(--accent)"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="3" height="1" fill="var(--surface)"/><rect x="5" y="6" width="2" height="1" fill="var(--accent)"/><rect x="7" y="6" width="2" height="1" fill="var(--surface)"/><rect x="9" y="6" width="2" height="1" fill="var(--accent)"/><rect x="11" y="6" width="3" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--surface)"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="5" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="3" height="1" fill="var(--surface)"/><rect x="5" y="8" width="2" height="1" fill="var(--accent)"/><rect x="7" y="8" width="2" height="1" fill="var(--surface)"/><rect x="9" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="3" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="2" height="1" fill="var(--accent)"/><rect x="5" y="9" width="6" height="1" fill="var(--surface)"/><rect x="11" y="9" width="2" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="3" y="10" width="10" height="1" fill="var(--surface)"/><rect x="13" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> new posts when there's something worth saying</p>
-        <a class="btn-line" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Subscribe on Substack <span aria-hidden="true">&rarr;</span></a>
-      </div>
+      <ol class="idx">
+        <li>
+          <span class="idx__no">001.</span>
+          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">What <em>60k-account</em> research agents taught me about AI in GTM</a>
+          <span class="idx__meta">AI agents</span>
+        </li>
+        <li>
+          <span class="idx__no">002.</span>
+          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Speed-to-lead is a <em>systems</em> problem, not a hustle problem</a>
+          <span class="idx__meta">Revenue systems</span>
+        </li>
+        <li>
+          <span class="idx__no">003.</span>
+          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">The <em>$1.1M</em> question: what actually closes your pipeline?</a>
+          <span class="idx__meta">Attribution</span>
+        </li>
+      </ol>
+      <p class="idx__count">// 3 entries</p>
     </div>
   </section>
-
 
 </main>
 

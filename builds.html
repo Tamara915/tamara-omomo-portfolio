@@ -1549,15 +1549,16 @@ body::before{
 
 .stickers{
   display:grid;
-  gap:14px;
-  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(228px,1fr));
 }
 .sticker{
   position:relative;
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-  gap:7px;
+  gap:6px;
+  min-height:250px;
   text-align:left;
   padding:14px 14px 12px;
   background:var(--surface);
@@ -1579,7 +1580,27 @@ body::before{
 }
 .sticker:active{transform:rotate(0deg) translate(2px,2px);box-shadow:1px 1px 0 var(--line-hard);}
 
-.sticker__top{display:flex;align-items:center;gap:9px;width:100%;}
+.sticker__top{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:2px;}
+
+/* the object sits on a colour chip, like the desktop programs */
+.sticker .ico{
+  padding:8px;
+  border:2px solid var(--line-hard);
+  background:var(--chip, var(--chip4));
+  box-shadow:3px 3px 0 var(--line-hard);
+  --accent:var(--line-hard);
+  --cyan:var(--line-hard);
+  --yellow:var(--line-hard);
+  --lime:var(--line-hard);
+  --surface:#FFFFFF;
+  transition:transform .12s steps(2), box-shadow .12s steps(2);
+}
+.sticker:nth-child(4n+1) .ico{--chip:var(--chip1);}
+.sticker:nth-child(4n+2) .ico{--chip:var(--chip2);}
+.sticker:nth-child(4n+3) .ico{--chip:var(--chip3);}
+.sticker:nth-child(4n+4) .ico{--chip:var(--chip1);}
+.sticker:hover .ico{transform:translate(-2px,-2px) rotate(-4deg);box-shadow:5px 5px 0 var(--line-hard);}
+
 .sticker__no{
   font-size:10px;
   letter-spacing:.18em;
@@ -1589,32 +1610,35 @@ body::before{
   margin-left:auto;
   background:var(--chip2);
   border:1.5px solid var(--line-hard);
-  padding:2px 7px;
+  padding:3px 8px;
   font-size:8.5px;
   letter-spacing:.16em;
   text-transform:uppercase;
 }
 .sticker__stat{
   font-family:var(--font-display);
-  font-size:27px;
-  line-height:1.05;
+  font-size:30px;
+  line-height:1.02;
   color:var(--accent-text);
 }
-.sticker__name{
-  font-size:12px;
-  line-height:1.4;
-  letter-spacing:.02em;
-}
 .sticker__sub{
-  font-size:9.5px;
+  font-size:9px;
   line-height:1.45;
-  letter-spacing:.12em;
+  letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--faint);
 }
+.sticker__name{
+  font-family:var(--font-display);
+  font-size:15px;
+  line-height:1.25;
+  letter-spacing:.005em;
+  color:var(--ink);
+  margin-top:3px;
+}
 .sticker__open{
-  margin-top:6px;
-  padding-top:8px;
+  margin-top:auto;
+  padding-top:9px;
   width:100%;
   border-top:1px dashed var(--line);
   font-size:9.5px;
@@ -1648,6 +1672,74 @@ body::before{
   .sticker{transform:none !important;}
   .casemodal{padding:12px 10px 30px;}
   .casewin .window__body{padding:15px;}
+}
+
+/* ---- menu bar, journal-style ---- */
+.menubar{
+  display:flex;
+  gap:16px;
+  padding:5px 11px;
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  color:var(--muted);
+}
+.menubar span{cursor:default;}
+.menubar span:hover{color:var(--ink);text-decoration:underline;}
+
+/* ---- numbered index ---- */
+.indexhead{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:12px;
+  border-bottom:1px dashed var(--line);
+  margin-bottom:6px;
+}
+.btn-line--sm{padding:7px 12px;font-size:10px;background:var(--chip1);}
+
+.idx{list-style:none;margin:0;padding:0;display:grid;}
+.idx li{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:11px 2px;
+  border-bottom:1px dotted var(--line);
+  font-family:var(--font-mono);
+  font-size:13px;
+}
+.idx li:last-child{border-bottom:0;}
+.idx__no{flex:none;color:var(--faint);font-size:11px;}
+.idx a{
+  flex:1;
+  min-width:0;
+  color:var(--ink);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+}
+.idx a em{font-style:normal;color:var(--accent-text);}
+.idx a:hover,.idx a:focus-visible{border-bottom-color:var(--ink);outline:none;}
+.idx__meta{
+  flex:none;
+  font-size:9.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.idx__count{
+  margin:14px 0 0;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.16em;
+  color:var(--faint);
+}
+@media (max-width:700px){
+  .idx li{flex-wrap:wrap;gap:4px 10px;}
+  .idx a{flex:1 1 100%;order:2;}
+  .idx__meta{order:3;}
 }
 
 </style>
@@ -1736,55 +1828,56 @@ body::before{
       <span class="window__name">builds</span>
       <span class="window__ref">click a card to open it</span>
     </div>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
     <div class="window__body">
       <div class="stickers">
         <button class="sticker" id="case-07" data-modal="m-case-07">
-          <span class="sticker__top"><svg class="ico ico--cassette" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="2" width="12" height="1" fill="var(--surface)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--surface)"/><rect x="3" y="3" width="10" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="4" width="4" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="2" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="currentColor"/><rect x="11" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="6" width="4" height="1" fill="currentColor"/><rect x="10" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="var(--surface)"/><rect x="3" y="7" width="10" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="2" height="1" fill="var(--surface)"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="10" y="9" width="2" height="1" fill="var(--surface)"/><rect x="12" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg><span class="sticker__no">07</span><span class="sticker__flag">latest</span></span>
+          <span class="sticker__top"><svg class="ico ico--cassette" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="2" width="12" height="1" fill="var(--surface)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--surface)"/><rect x="3" y="3" width="10" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="4" width="4" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="2" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="currentColor"/><rect x="11" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="6" width="4" height="1" fill="currentColor"/><rect x="10" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="var(--surface)"/><rect x="3" y="7" width="10" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="2" height="1" fill="var(--surface)"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="10" y="9" width="2" height="1" fill="var(--surface)"/><rect x="12" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg><span class="sticker__no">07</span><span class="sticker__flag">latest</span></span>
           <span class="sticker__stat">15min</span>
-          <span class="sticker__name">Synthetic-persona outbound engine</span>
           <span class="sticker__sub">per campaign, from days of copywriting</span>
+          <span class="sticker__name">Personas write the outbound</span>
           <span class="sticker__open">Open &rarr;</span>
         </button>
         <button class="sticker" id="case-01" data-modal="m-case-01">
-          <span class="sticker__top"><svg class="ico ico--modem" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="1" width="1" height="1" fill="currentColor"/><rect x="11" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--lime)"/><rect x="5" y="5" width="2" height="1" fill="var(--surface)"/><rect x="7" y="5" width="4" height="1" fill="currentColor"/><rect x="11" y="5" width="3" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="12" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="currentColor"/><rect x="11" y="8" width="2" height="1" fill="currentColor"/></svg><span class="sticker__no">01</span></span>
+          <span class="sticker__top"><svg class="ico ico--modem" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="1" width="1" height="1" fill="currentColor"/><rect x="11" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--lime)"/><rect x="5" y="5" width="2" height="1" fill="var(--surface)"/><rect x="7" y="5" width="4" height="1" fill="currentColor"/><rect x="11" y="5" width="3" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="12" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="currentColor"/><rect x="11" y="8" width="2" height="1" fill="currentColor"/></svg><span class="sticker__no">01</span></span>
           <span class="sticker__stat">Daily leads</span>
-          <span class="sticker__name">Always-on outbound engine</span>
           <span class="sticker__sub">new conversations every day, on autopilot</span>
+          <span class="sticker__name">Leads while you sleep</span>
           <span class="sticker__open">Open &rarr;</span>
         </button>
         <button class="sticker" id="case-02" data-modal="m-case-02">
-          <span class="sticker__top"><svg class="ico ico--bolt" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="8" y="1" width="3" height="1" fill="currentColor"/><rect x="7" y="2" width="3" height="1" fill="currentColor"/><rect x="6" y="3" width="3" height="1" fill="currentColor"/><rect x="5" y="4" width="3" height="1" fill="currentColor"/><rect x="4" y="5" width="7" height="1" fill="currentColor"/><rect x="6" y="6" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="7" width="3" height="1" fill="var(--yellow)"/><rect x="4" y="8" width="3" height="1" fill="var(--yellow)"/><rect x="3" y="9" width="3" height="1" fill="var(--yellow)"/><rect x="2" y="10" width="3" height="1" fill="var(--yellow)"/></svg><span class="sticker__no">02</span></span>
+          <span class="sticker__top"><svg class="ico ico--bolt" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="8" y="1" width="3" height="1" fill="currentColor"/><rect x="7" y="2" width="3" height="1" fill="currentColor"/><rect x="6" y="3" width="3" height="1" fill="currentColor"/><rect x="5" y="4" width="3" height="1" fill="currentColor"/><rect x="4" y="5" width="7" height="1" fill="currentColor"/><rect x="6" y="6" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="7" width="3" height="1" fill="var(--yellow)"/><rect x="4" y="8" width="3" height="1" fill="var(--yellow)"/><rect x="3" y="9" width="3" height="1" fill="var(--yellow)"/><rect x="2" y="10" width="3" height="1" fill="var(--yellow)"/></svg><span class="sticker__no">02</span></span>
           <span class="sticker__stat">11min</span>
-          <span class="sticker__name">Inbound routing engine</span>
           <span class="sticker__sub">median response, from 4 hours</span>
+          <span class="sticker__name">Hot leads stop going cold</span>
           <span class="sticker__open">Open &rarr;</span>
         </button>
         <button class="sticker" id="case-03" data-modal="m-case-03">
-          <span class="sticker__top"><svg class="ico ico--robot" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="1" width="2" height="1" fill="currentColor"/><rect x="10" y="1" width="2" height="1" fill="currentColor"/><rect x="6" y="2" width="2" height="1" fill="currentColor"/><rect x="10" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--accent)"/><rect x="5" y="5" width="5" height="1" fill="var(--surface)"/><rect x="10" y="5" width="2" height="1" fill="var(--accent)"/><rect x="12" y="5" width="2" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="2" height="1" fill="var(--accent)"/><rect x="5" y="6" width="5" height="1" fill="var(--surface)"/><rect x="10" y="6" width="2" height="1" fill="var(--accent)"/><rect x="12" y="6" width="2" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="2" height="1" fill="var(--surface)"/><rect x="4" y="8" width="8" height="1" fill="currentColor"/><rect x="12" y="8" width="2" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="3" y="11" width="2" height="1" fill="currentColor"/><rect x="11" y="11" width="2" height="1" fill="currentColor"/></svg><span class="sticker__no">03</span></span>
+          <span class="sticker__top"><svg class="ico ico--robot" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="1" width="2" height="1" fill="currentColor"/><rect x="10" y="1" width="2" height="1" fill="currentColor"/><rect x="6" y="2" width="2" height="1" fill="currentColor"/><rect x="10" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--accent)"/><rect x="5" y="5" width="5" height="1" fill="var(--surface)"/><rect x="10" y="5" width="2" height="1" fill="var(--accent)"/><rect x="12" y="5" width="2" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="2" height="1" fill="var(--accent)"/><rect x="5" y="6" width="5" height="1" fill="var(--surface)"/><rect x="10" y="6" width="2" height="1" fill="var(--accent)"/><rect x="12" y="6" width="2" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="2" height="1" fill="var(--surface)"/><rect x="4" y="8" width="8" height="1" fill="currentColor"/><rect x="12" y="8" width="2" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="3" y="11" width="2" height="1" fill="currentColor"/><rect x="11" y="11" width="2" height="1" fill="currentColor"/></svg><span class="sticker__no">03</span></span>
           <span class="sticker__stat">+38%</span>
-          <span class="sticker__name">AI research agents</span>
           <span class="sticker__sub">sql &rarr; opportunity conversion</span>
+          <span class="sticker__name">Agents that qualify like an SDR</span>
           <span class="sticker__open">Open &rarr;</span>
         </button>
         <button class="sticker" id="case-04" data-modal="m-case-04">
-          <span class="sticker__top"><svg class="ico ico--pager" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="1" width="10" height="1" fill="currentColor"/><rect x="3" y="2" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="8" height="1" fill="var(--surface)"/><rect x="12" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="1" height="1" fill="currentColor"/><rect x="4" y="3" width="1" height="1" fill="var(--surface)"/><rect x="5" y="3" width="6" height="1" fill="currentColor"/><rect x="11" y="3" width="1" height="1" fill="var(--surface)"/><rect x="12" y="3" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="1" height="1" fill="var(--surface)"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="4" width="1" height="1" fill="currentColor"/><rect x="11" y="4" width="1" height="1" fill="var(--surface)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--surface)"/><rect x="5" y="5" width="6" height="1" fill="currentColor"/><rect x="11" y="5" width="1" height="1" fill="var(--surface)"/><rect x="12" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="8" height="1" fill="var(--surface)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="1" height="1" fill="var(--surface)"/><rect x="5" y="7" width="2" height="1" fill="currentColor"/><rect x="7" y="7" width="1" height="1" fill="var(--surface)"/><rect x="8" y="7" width="2" height="1" fill="currentColor"/><rect x="10" y="7" width="2" height="1" fill="var(--surface)"/><rect x="12" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="8" height="1" fill="var(--surface)"/><rect x="12" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="10" height="1" fill="currentColor"/></svg><span class="sticker__no">04</span></span>
+          <span class="sticker__top"><svg class="ico ico--pager" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="1" width="10" height="1" fill="currentColor"/><rect x="3" y="2" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="8" height="1" fill="var(--surface)"/><rect x="12" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="1" height="1" fill="currentColor"/><rect x="4" y="3" width="1" height="1" fill="var(--surface)"/><rect x="5" y="3" width="6" height="1" fill="currentColor"/><rect x="11" y="3" width="1" height="1" fill="var(--surface)"/><rect x="12" y="3" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="1" height="1" fill="var(--surface)"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="4" width="1" height="1" fill="currentColor"/><rect x="11" y="4" width="1" height="1" fill="var(--surface)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--surface)"/><rect x="5" y="5" width="6" height="1" fill="currentColor"/><rect x="11" y="5" width="1" height="1" fill="var(--surface)"/><rect x="12" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="8" height="1" fill="var(--surface)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="1" height="1" fill="var(--surface)"/><rect x="5" y="7" width="2" height="1" fill="currentColor"/><rect x="7" y="7" width="1" height="1" fill="var(--surface)"/><rect x="8" y="7" width="2" height="1" fill="currentColor"/><rect x="10" y="7" width="2" height="1" fill="var(--surface)"/><rect x="12" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="8" height="1" fill="var(--surface)"/><rect x="12" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="10" height="1" fill="currentColor"/></svg><span class="sticker__no">04</span></span>
           <span class="sticker__stat">Pre-booked</span>
-          <span class="sticker__name">Event-driven campaigns</span>
           <span class="sticker__sub">exec calendars, filled before each event</span>
+          <span class="sticker__name">Calendars full before the doors open</span>
           <span class="sticker__open">Open &rarr;</span>
         </button>
         <button class="sticker" id="case-05" data-modal="m-case-05">
-          <span class="sticker__top"><svg class="ico ico--drive" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="2" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="11" width="10" height="1" fill="currentColor"/></svg><span class="sticker__no">05</span></span>
+          <span class="sticker__top"><svg class="ico ico--drive" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="2" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="11" width="10" height="1" fill="currentColor"/></svg><span class="sticker__no">05</span></span>
           <span class="sticker__stat">$1.1M</span>
-          <span class="sticker__name">Multi-touch attribution</span>
           <span class="sticker__sub">spend reallocated to what closes</span>
+          <span class="sticker__name">Budget arguments, settled</span>
           <span class="sticker__open">Open &rarr;</span>
         </button>
         <button class="sticker" id="case-06" data-modal="m-case-06">
-          <span class="sticker__top"><svg class="ico ico--keyboard" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="3" width="14" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="1" height="1" fill="var(--surface)"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="var(--surface)"/><rect x="7" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="4" width="1" height="1" fill="var(--surface)"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="10" y="4" width="1" height="1" fill="var(--surface)"/><rect x="11" y="4" width="1" height="1" fill="currentColor"/><rect x="12" y="4" width="1" height="1" fill="var(--surface)"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="14" y="4" width="1" height="1" fill="var(--surface)"/><rect x="15" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="12" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="var(--surface)"/><rect x="5" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="1" height="1" fill="var(--surface)"/><rect x="7" y="6" width="1" height="1" fill="currentColor"/><rect x="8" y="6" width="1" height="1" fill="var(--surface)"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="10" y="6" width="1" height="1" fill="var(--surface)"/><rect x="11" y="6" width="1" height="1" fill="currentColor"/><rect x="12" y="6" width="1" height="1" fill="var(--surface)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="var(--surface)"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="2" height="1" fill="var(--surface)"/><rect x="4" y="8" width="8" height="1" fill="currentColor"/><rect x="12" y="8" width="2" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="14" height="1" fill="currentColor"/></svg><span class="sticker__no">06</span></span>
+          <span class="sticker__top"><svg class="ico ico--keyboard" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="3" width="14" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="1" height="1" fill="var(--surface)"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="var(--surface)"/><rect x="7" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="4" width="1" height="1" fill="var(--surface)"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="10" y="4" width="1" height="1" fill="var(--surface)"/><rect x="11" y="4" width="1" height="1" fill="currentColor"/><rect x="12" y="4" width="1" height="1" fill="var(--surface)"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="14" y="4" width="1" height="1" fill="var(--surface)"/><rect x="15" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="12" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="var(--surface)"/><rect x="5" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="1" height="1" fill="var(--surface)"/><rect x="7" y="6" width="1" height="1" fill="currentColor"/><rect x="8" y="6" width="1" height="1" fill="var(--surface)"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="10" y="6" width="1" height="1" fill="var(--surface)"/><rect x="11" y="6" width="1" height="1" fill="currentColor"/><rect x="12" y="6" width="1" height="1" fill="var(--surface)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="var(--surface)"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="2" height="1" fill="var(--surface)"/><rect x="4" y="8" width="8" height="1" fill="currentColor"/><rect x="12" y="8" width="2" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="14" height="1" fill="currentColor"/></svg><span class="sticker__no">06</span></span>
           <span class="sticker__stat">Self-serve</span>
-          <span class="sticker__name">In-house tooling</span>
           <span class="sticker__sub">gtm team, off the ops backlog</span>
+          <span class="sticker__name">GTM off the ops backlog</span>
           <span class="sticker__open">Open &rarr;</span>
         </button>
       </div>
@@ -1798,6 +1891,7 @@ body::before{
       <span class="window__name">the lab</span>
       <span class="window__ref">currently building &middot; live experiments</span>
     </div>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
     <div class="window__body">
       <p class="lbl">tamara@gtm:~$ ps aux | grep experiment</p>
       <div class="lab">

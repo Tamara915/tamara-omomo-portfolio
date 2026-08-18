@@ -1,3 +1,8 @@
+[build.environment]
+  # @netlify/blobs v11 requires Node >= 22.12; without this the build image
+  # uses an older default and "Install dependencies" fails.
+  NODE_VERSION = "22"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"

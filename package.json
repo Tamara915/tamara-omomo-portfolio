@@ -1,8 +1,8 @@
 {
   "name": "tamaraomomo-portfolio",
   "private": true,
-  "description": "Static site — this package.json exists only so Netlify installs @netlify/blobs before bundling the serverless functions.",
+  "description": "Static site \u2014 this package.json exists only so Netlify installs @netlify/blobs before bundling the serverless functions.",
   "dependencies": {
-    "@netlify/blobs": "*"
+    "@netlify/blobs": "^11.0.1"
   }
 }

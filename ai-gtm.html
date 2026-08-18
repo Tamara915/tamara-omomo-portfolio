@@ -1255,153 +1255,6 @@ body::before{
   .ico{animation:none !important;}
 }
 
-/* ================= the vintage phone ================= */
-
-#stackmodal{overflow-y:auto;align-items:start;padding:26px 18px;}
-
-.phone{
-  position:relative;
-  width:100%;
-  max-width:392px;
-  margin:auto;
-  background:var(--chip4);
-  border:3px solid var(--line-hard);
-  border-radius:26px 26px 20px 20px;
-  box-shadow:8px 8px 0 var(--line-hard);
-  padding:16px 16px 20px;
-  display:grid;
-  gap:12px;
-}
-.phone__antenna{
-  position:absolute;
-  top:-30px;
-  right:26px;
-  width:13px;
-  height:32px;
-  background:var(--line-hard);
-  border-radius:6px 6px 0 0;
-}
-.phone__antenna::after{
-  content:"";
-  position:absolute;
-  inset:auto 2px 0 2px;
-  height:9px;
-  background:var(--chip1);
-}
-.phone__top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-.phone__brand{
-  font-family:var(--font-display);
-  font-size:14px;
-  letter-spacing:.12em;
-  color:var(--ink);
-}
-.phone__x{
-  width:26px;height:24px;
-  display:grid;place-items:center;
-  background:var(--chip1);
-  border:2px solid var(--line-hard);
-  box-shadow:2px 2px 0 var(--line-hard);
-  color:var(--ink);
-  font:inherit;
-  font-size:13px;
-  cursor:pointer;
-}
-.phone__x:hover{background:var(--accent);}
-.phone__x:active{transform:translate(2px,2px);box-shadow:0 0 0;}
-.phone__x:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-
-.phone__speaker{display:flex;gap:4px;justify-content:center;}
-.phone__speaker i{width:16px;height:5px;background:var(--line-hard);border-radius:3px;opacity:.75;}
-
-.phone__screen{
-  background:var(--surface);
-  border:3px solid var(--line-hard);
-  border-radius:5px;
-  box-shadow:inset 3px 3px 0 rgba(20,18,15,.12);
-  padding:0 0 10px;
-  overflow:hidden;
-}
-.phone__status{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:6px 9px;
-  border-bottom:2px solid var(--line-hard);
-  background:var(--chip2);
-  font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:.16em;
-  color:var(--ink);
-}
-.phone__apps{
-  max-height:min(46vh,340px);
-  overflow-y:auto;
-  padding:12px 10px 4px;
-}
-.phone__apps .bays{
-  display:grid;
-  gap:14px;
-  grid-template-columns:1fr;
-  background:none;
-  border:0;
-}
-.phone__apps .bay{background:none;border:0;padding:0;}
-.phone__apps .bay > h3{
-  margin:0 0 7px;
-  padding:0 0 5px;
-  background:none;
-  color:var(--accent-text);
-  border-bottom:1px dashed var(--line);
-  font-size:9px;
-  letter-spacing:.22em;
-}
-.phone__apps .bay ul{grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:2px;}
-.phone__apps .bay li{min-height:76px;padding:8px 2px 6px;font-size:8px;gap:6px;}
-.phone__apps .bay li .ico{padding:5px;box-shadow:2px 2px 0 var(--line-hard);}
-
-.phone__keys{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:5px;
-}
-.phone__keys b{
-  display:grid;
-  place-items:center;
-  gap:1px;
-  padding:7px 2px 5px;
-  background:var(--surface);
-  border:2px solid var(--line-hard);
-  box-shadow:2px 2px 0 var(--line-hard);
-  font-family:var(--font-mono);
-  font-size:12px;
-  font-weight:400;
-  color:var(--ink);
-  cursor:default;
-  transition:transform .08s steps(2), box-shadow .08s steps(2), background .08s;
-}
-.phone__keys b em{font-style:normal;font-size:7px;letter-spacing:.1em;color:var(--faint);}
-.phone__keys b:hover{background:var(--chip1);transform:translate(1px,1px);box-shadow:1px 1px 0 var(--line-hard);}
-
-.phone__foot{
-  margin:0;
-  text-align:center;
-  font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--faint);
-}
-
-@media (max-width:420px){
-  .phone{max-width:100%;padding:13px 12px 16px;}
-  .phone__apps .bay ul{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));}
-}
-
 /* ---- typed welcome ---- */
 #boot .boot__log{gap:2px;min-height:15em;}
 #boot .boot-big{
@@ -1424,28 +1277,6 @@ body::before{
   text-transform:uppercase;
   color:var(--boot-hot);
 }
-
-/* ---- contact list on the phone screen ---- */
-.phone__contacts{display:grid;gap:6px;padding:2px 2px 6px;}
-.phone__contacts a{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 11px;
-  background:var(--surface);
-  border:2px solid var(--line-hard);
-  box-shadow:2px 2px 0 var(--line-hard);
-  text-decoration:none;
-  color:var(--ink);
-  font-family:var(--font-mono);
-  font-size:10px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-}
-.phone__contacts a span{margin-left:auto;}
-.phone__contacts a:hover,.phone__contacts a:focus-visible{background:var(--chip1);outline:none;}
-.phone__contacts a.pri{background:var(--chip2);}
-.phone__contacts a.pri:hover{background:var(--chip1);}
 
 /* ================= glossy object icons ================= */
 
@@ -1478,7 +1309,7 @@ body::before{
 /* ---- the hanging receiver ---- */
 
 #contactmodal{padding-top:0;align-content:start;}
-#contactmodal .phone{margin:2px auto 26px;}
+
 .hangline{
   position:relative;
   display:flex;

@@ -1,401 +1,1699 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tamara Omomo — AI GTM Engineer</title>
-<meta name="description" content="I design AI workflows, agents and GTM systems that help modern revenue teams eliminate manual work, move faster and scale efficiently." />
-<link rel="canonical" href="https://tamaraomomo.com/" />
-<meta name="theme-color" content="#15100d" />
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://tamaraomomo.com/" />
-<meta property="og:site_name" content="Tamara Omomo" />
-<meta property="og:title" content="Tamara Omomo — AI GTM Engineer" />
-<meta property="og:description" content="AI GTM systems that drive revenue — workflows, agents and infrastructure that help revenue teams eliminate manual work and scale efficiently." />
-<meta property="og:image" content="https://tamaraomomo.com/assets/og.png" />
-<meta property="og:image:width" content="2400" />
-<meta property="og:image:height" content="1260" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Tamara Omomo — AI GTM Engineer" />
-<meta name="twitter:description" content="AI GTM systems that drive revenue — workflows, agents and infrastructure for modern revenue teams." />
-<meta name="twitter:image" content="https://tamaraomomo.com/assets/og.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Instrument+Serif:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260705b" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Tamara Omomo",
-  "jobTitle": "AI GTM Engineer",
-  "url": "https://tamaraomomo.com/",
-  "email": "mailto:omomo.oj@gmail.com",
-  "address": { "@type": "PostalAddress", "addressLocality": "Berlin", "addressCountry": "DE" },
-  "sameAs": [
-    "https://www.linkedin.com/in/tamara-omomo/",
-    "https://substack.com/@tamaraomomo"
-  ],
-  "knowsAbout": ["AI GTM Engineering", "GTM Engineering", "Revenue Operations", "AI Agents", "Marketing Automation", "Lead Enrichment", "Attribution Modeling", "Clay", "HubSpot", "Python", "dbt"]
+<meta name="description" content="Tamara Omomo — AI GTM Engineer. I design AI workflows, agents and GTM systems that help revenue teams eliminate manual work, move faster and scale efficiently.">
+<meta property="og:title" content="Tamara Omomo — AI GTM Engineer">
+<meta property="og:description" content="Tamara Omomo — AI GTM Engineer. I design AI workflows, agents and GTM systems that help revenue teams eliminate manual work, move faster and scale efficiently.">
+<meta property="og:type" content="website">
+<style>
+
+/* =============================================================
+   TAMARA OMOMO — retro terminal redesign
+   Clean near-monochrome. One accent. Everything reveals on click.
+   ============================================================= */
+
+:root{
+  --bg:#E3DEF7;
+  --surface:#FFFFFF;
+  --surface-2:#EFEAFF;
+  --ink:#1B1235;
+  --muted:#5B4E80;
+  --faint:#9187B5;
+  --line:#C7BFE8;
+  --line-hard:#1B1235;
+  --accent:#FF2E93;
+  --accent-ink:#FFFFFF;
+  --cyan:#0FBFBF;
+  --lime:#8FCF14;
+  --yellow:#F5C518;
+  --screen:#170E32;
+  --screen-ink:#7E74B8;
 }
-</script>
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#140C2E;
+    --surface:#1E1442;
+    --surface-2:#2A1C5B;
+    --ink:#EDE7FF;
+    --muted:#B3A6DE;
+    --faint:#7A6DAE;
+    --line:#392A70;
+    --line-hard:#4C3B90;
+    --accent:#FF4FA3;
+    --accent-ink:#1A0A12;
+    --cyan:#2FE0E0;
+    --lime:#C2FF4D;
+    --yellow:#FFD93D;
+    --screen:#0C0622;
+    --screen-ink:#6B5FA8;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#140C2E;
+  --surface:#1E1442;
+  --surface-2:#2A1C5B;
+  --ink:#EDE7FF;
+  --muted:#B3A6DE;
+  --faint:#7A6DAE;
+  --line:#392A70;
+  --line-hard:#4C3B90;
+  --accent:#FF4FA3;
+  --accent-ink:#1A0A12;
+  --cyan:#2FE0E0;
+  --lime:#C2FF4D;
+  --yellow:#FFD93D;
+  --screen:#0C0622;
+  --screen-ink:#6B5FA8;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:13px;
+  line-height:1.7;
+  font-variant-numeric:tabular-nums;
+  display:flex;
+  flex-direction:column;
+}
+
+a{color:inherit;}
+
+/* ---- shared bits ------------------------------------------ */
+
+.lbl{
+  font-size:10px;
+  line-height:1.5;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0;
+}
+.lbl--on{color:var(--accent);}
+
+.rule{height:1px;background:var(--line);border:0;margin:0;}
+
+/* ---- masthead --------------------------------------------- */
+
+.masthead{
+  flex:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 20px;
+  align-items:baseline;
+  justify-content:space-between;
+  padding:14px 20px;
+  border-bottom:1px solid var(--line);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.masthead b{color:var(--ink);font-weight:400;}
+.masthead .live{color:var(--accent);}
+.masthead .live::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--accent);
+  margin-right:7px;
+  vertical-align:1px;
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ---- stage ------------------------------------------------- */
+
+.stage{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:0 20px 26px;
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+}
+
+/* ---- opening screen ---------------------------------------- */
+
+.open{
+  padding:clamp(38px,9vh,86px) 0 clamp(30px,6vh,52px);
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  width:100%;
+}
+.open h1{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(21px,3.4vw,35px);
+  line-height:1.32;
+  letter-spacing:-.005em;
+  max-width:22ch;
+  text-wrap:balance;
+}
+.open h1 em{font-style:normal;color:var(--accent);}
+.open p{
+  margin:0;
+  max-width:62ch;
+  color:var(--muted);
+  font-size:13px;
+}
+.caret{
+  display:inline-block;
+  width:9px;
+  height:1.05em;
+  background:var(--accent);
+  vertical-align:-3px;
+  margin-left:3px;
+  animation:blink 1.05s steps(1) infinite;
+}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+.open[hidden]{display:none;}
+
+.prompt-hint{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--faint);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+.prompt-hint svg{flex:none;}
+
+/* ---- boot / self test ----------------------------------------- */
+
+#boot{
+  --boot-hot:#FF4FA3;
+  --boot-dim:#8FCF14;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#0C0622;
+  color:#9C8FD6;
+  font-family:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Courier New", monospace;
+  font-size:12.5px;
+  line-height:1.85;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  overflow:hidden;
+}
+#boot[hidden]{display:none;}
+#boot canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:.38;
+}
+.boot__sheet{
+  position:relative;
+  width:100%;
+  max-width:660px;
+  display:grid;
+  gap:14px;
+}
+.boot__hd{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 18px;
+  justify-content:space-between;
+  color:var(--boot-hot);
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  padding-bottom:10px;
+  border-bottom:1px solid #2E2160;
+}
+.boot__log{display:grid;gap:1px;min-height:16.5em;align-content:start;}
+.boot__log p{margin:0;white-space:pre;overflow:hidden;text-overflow:ellipsis;}
+.boot__log b{color:#EDE7FF;font-weight:400;}
+.boot__log i{color:var(--boot-dim);font-style:normal;}
+
+.boot__meter{display:grid;gap:7px;}
+.boot__track{height:7px;background:#241852;overflow:hidden;}
+.boot__track i{display:block;height:100%;width:0;background:var(--boot-dim);transition:width .18s linear;}
+.boot__pct{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#7A6DAE;
+}
+.boot__ready{color:#EDE7FF;letter-spacing:.2em;text-transform:uppercase;font-size:11px;min-height:1.6em;}
+.boot__ready i{color:var(--boot-hot);font-style:normal;}
+.boot__foot{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid #2E2160;
+  padding-top:12px;
+}
+.odo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:#6E7166;
+}
+.odo b{display:flex;gap:2px;}
+.odo b i{
+  background:#0C0622;
+  color:var(--boot-dim);
+  border:1px solid #3A2A78;
+  width:16px;
+  padding:3px 0;
+  text-align:center;
+  font-style:normal;
+  font-size:12px;
+  letter-spacing:0;
+}
+.boot__skip{
+  color:#6B5FA8;
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+}
+.boot__skip.is-armed{
+  color:var(--boot-hot);
+  animation:softpulse 1.5s ease-in-out infinite;
+}
+@keyframes softpulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+.boot__cursor{
+  display:inline-block;
+  width:8px;height:1em;
+  background:var(--boot-hot);
+  vertical-align:-2px;
+  animation:blink 1.05s steps(1) infinite;
+}
+
+/* ---- window ------------------------------------------------- */
+
+.window{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--line-hard);
+  margin-bottom:22px;
+  animation:rise .18s ease-out;
+}
+.window[hidden]{display:none;}
+@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+.window__bar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 10px;
+  border-bottom:1px solid var(--line-hard);
+  background:var(--surface-2);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.window__name{flex:none;color:var(--ink);}
+.window__ref{
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--faint);
+  letter-spacing:.16em;
+}
+.window__close{
+  flex:none;
+  width:20px;height:18px;
+  display:grid;place-items:center;
+  background:transparent;
+  border:1px solid var(--line-hard);
+  color:var(--ink);
+  font:inherit;
+  font-size:11px;
+  cursor:pointer;
+}
+.window__close:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+.window__close:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+.window__body{padding:22px 20px 24px;}
+
+/* section headings inside windows */
+.window h2{
+  margin:0 0 6px;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(18px,2.8vw,26px);
+  line-height:1.3;
+  letter-spacing:-.005em;
+}
+.window h2 em{font-style:normal;color:var(--accent);}
+.window > .window__body > .lbl:first-child{margin-bottom:14px;}
+
+/* ---- readme-style prose ------------------------------------- */
+
+.prose{display:grid;gap:15px;max-width:70ch;}
+.prose p{margin:0;font-size:13px;line-height:1.78;color:var(--ink);}
+.prose p.dim{color:var(--muted);}
+
+/* ---- key/value rows (spec) ---------------------------------- */
+
+.rows{display:grid;border-top:1px solid var(--line);margin-top:4px;}
+.row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:2px 18px;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+}
+.row b{flex:0 0 168px;font-weight:400;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;font-size:10px;}
+.row span{flex:1;min-width:180px;}
+
+/* ---- telemetry ---------------------------------------------- */
+
+.readouts{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+.readout{background:var(--surface);padding:16px 15px 17px;display:flex;flex-direction:column;gap:10px;}
+.readout__hd{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+.readout__val{font-size:30px;line-height:1.1;letter-spacing:-.02em;}
+.readout__val b{font-weight:400;color:var(--accent);}
+.readout__note{margin:0;font-size:11.5px;line-height:1.6;color:var(--muted);}
+.gauge{display:flex;gap:2px;height:6px;}
+.gauge i{flex:1;background:var(--line);}
+.gauge i.on{background:var(--cyan);}
+
+/* ---- build list ---------------------------------------------- */
+
+.builds{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);}
+.build{
+  background:var(--surface);
+  border:0;
+  padding:0;
+  text-align:left;
+  font:inherit;
+  color:inherit;
+  display:block;
+  width:100%;
+}
+.build__hd{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  padding:13px 15px;
+  background:transparent;
+  border:0;
+  font:inherit;
+  color:inherit;
+  cursor:pointer;
+  text-align:left;
+}
+.build__hd:hover{background:var(--surface-2);}
+.build__hd:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.build__no{flex:none;color:var(--faint);font-size:11px;letter-spacing:.1em;}
+.build__name{flex:1;min-width:0;font-size:12.5px;letter-spacing:.04em;}
+.build__stat{flex:none;color:var(--accent);font-size:12.5px;letter-spacing:.04em;}
+.build__sign{flex:none;width:13px;text-align:center;color:var(--faint);}
+.build__hd[aria-expanded="true"]{background:var(--surface-2);}
+.build__hd[aria-expanded="true"] .build__sign{color:var(--accent);}
+
+.build__panel{padding:0 15px 16px 15px;background:var(--surface-2);}
+.build__panel[hidden]{display:none;}
+.build__panel dl{margin:0;display:grid;gap:11px;max-width:76ch;}
+.build__panel dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+.build__panel dd{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink);}
+.build__panel .more{
+  display:inline-block;
+  margin-top:14px;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid var(--accent);
+  padding-bottom:2px;
+}
+
+/* ---- signal chain -------------------------------------------- */
+
+.chain{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:4px;}
+.chain__node{
+  background:var(--surface);
+  padding:9px 14px;
+  display:flex;
+  gap:14px;
+  align-items:baseline;
+  font-size:12px;
+}
+.chain__node b{flex:none;width:54px;font-weight:400;color:var(--faint);font-size:10px;letter-spacing:.16em;}
+.chain__node:last-child b{color:var(--accent);}
+
+/* ---- stack ---------------------------------------------------- */
+
+.bays{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));}
+.bay h3{
+  margin:0 0 9px;
+  font-family:inherit;
+  font-weight:400;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  padding-bottom:7px;
+  border-bottom:1px solid var(--line);
+}
+.bay ul{list-style:none;margin:0;padding:0;display:grid;gap:5px;}
+.bay li{font-size:12px;color:var(--ink);}
+.bay li::before{content:"\2013\00a0\00a0";color:var(--faint);}
+
+/* ---- links grid ------------------------------------------------ */
+
+.links{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:18px;}
+.links a{
+  background:var(--surface);
+  padding:14px 15px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.links a:hover,.links a:focus-visible{background:var(--accent);color:var(--accent-ink);outline:none;}
+.links a.pri{color:var(--accent);}
+.links a.pri:hover,.links a.pri:focus-visible{color:var(--accent-ink);}
+
+/* ---- dock (the cards) ------------------------------------------ */
+
+.dock{
+  position:sticky;
+  bottom:0;
+  z-index:100;
+  flex:none;
+  background:var(--bg);
+  border-top:1px solid var(--line-hard);
+}
+.dock__inner{
+  max-width:1000px;
+  margin:0 auto;
+  display:flex;
+  align-items:stretch;
+  gap:8px;
+  padding:10px 20px;
+  overflow-x:auto;
+  scrollbar-width:thin;
+}
+.card{
+  flex:0 0 auto;
+  background:var(--surface);
+  color:var(--ink);
+  border:1px solid var(--line-hard);
+  padding:10px 15px;
+  font:inherit;
+  font-size:10.5px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  cursor:pointer;
+  white-space:nowrap;
+  box-shadow:2px 2px 0 var(--line);
+  transition:background .1s ease, color .1s ease, transform .1s ease, box-shadow .1s ease;
+}
+.card:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--line);}
+.card:active{transform:translate(1px,1px);box-shadow:0 0 0 var(--line);}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.card[aria-pressed="true"]{
+  background:var(--accent);
+  color:var(--accent-ink);
+  border-color:var(--accent);
+  box-shadow:2px 2px 0 var(--line-hard);
+}
+.card--tray{
+  margin-left:auto;
+  background:transparent;
+  border-color:var(--line);
+  color:var(--muted);
+  box-shadow:none;
+  cursor:pointer;
+}
+.card--tray:hover{transform:none;box-shadow:none;color:var(--ink);}
+
+/* ---- data-processing monitor ---------------------------------- */
+
+.monitor{
+  border:1px solid var(--line-hard);
+  background:var(--surface);
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  align-items:stretch;
+}
+.monitor__bar{
+  grid-column:1 / -1;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:7px 10px;
+  border-bottom:1px solid var(--line-hard);
+  background:var(--surface-2);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.monitor__bar b{color:var(--ink);font-weight:400;}
+.monitor__bar .spark{
+  margin-left:auto;
+  color:var(--accent);
+  letter-spacing:.1em;
+}
+.monitor__screen{
+  position:relative;
+  min-height:186px;
+  background:var(--screen);
+  border-right:1px solid var(--line);
+  overflow:hidden;
+}
+.monitor__screen canvas{display:block;width:100%;height:100%;position:absolute;inset:0;}
+.monitor__feed{
+  padding:13px 14px;
+  display:grid;
+  gap:9px;
+  align-content:start;
+}
+.proc{display:grid;gap:5px;}
+.proc__hd{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.proc__hd b{font-weight:400;color:var(--ink);}
+.proc__bar{height:5px;background:var(--line);overflow:hidden;}
+.proc__bar i{display:block;height:100%;background:var(--cyan);width:0;}
+.proc__log{
+  margin:2px 0 0;
+  font-size:10.5px;
+  line-height:1.65;
+  color:var(--faint);
+  min-height:3.3em;
+  white-space:pre-wrap;
+  word-break:break-all;
+}
+.proc__log b{color:var(--accent);font-weight:400;}
+
+@media (max-width:700px){
+  .monitor{grid-template-columns:1fr;}
+  .monitor__screen{border-right:0;border-bottom:1px solid var(--line);min-height:132px;}
+}
+
+/* ---- responsive -------------------------------------------------- */
+
+@media (max-width:640px){
+  .masthead{padding:11px 14px;}
+  .stage{padding:0 14px 20px;}
+  .window__body{padding:16px 14px 18px;}
+  .dock__inner{padding:9px 14px;}
+  .row b{flex:1 1 100%;}
+  .build__stat{display:none;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+}
+
+/* ================= sub-page elements ========================= */
+
+.ico{
+  flex:none;
+  color:currentColor;
+  vertical-align:-3px;
+}
+.window__bar .ico{color:var(--ink);}
+.masthead .live{color:var(--lime);}
+.masthead .live::before{background:var(--lime);}
+.card .ico{margin-right:8px;vertical-align:-3px;}
+.links .ico{margin-right:9px;}
+
+/* ---- page head ------------------------------------------------ */
+
+.pagehead{
+  padding:clamp(30px,7vh,64px) 0 clamp(22px,4vh,36px);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  width:100%;
+}
+.pagehead h1{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(24px,4vw,40px);
+  line-height:1.24;
+  letter-spacing:-.01em;
+  max-width:24ch;
+  text-wrap:balance;
+}
+.pagehead h1 .dot{color:var(--accent);}
+.pagehead__lede{
+  margin:0;
+  max-width:64ch;
+  color:var(--muted);
+  font-size:13px;
+}
+.pagehead__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.pagehead__meta span{display:inline-flex;align-items:center;gap:8px;}
+
+/* ---- case study ------------------------------------------------ */
+
+.tagchip{
+  flex:none;
+  background:var(--yellow);
+  color:var(--ink) !important;
+  color:var(--accent-ink);
+  padding:3px 8px;
+  font-size:9px;
+  letter-spacing:.2em;
+}
+.case__head{margin-bottom:14px;}
+.case__head h2{margin:0 0 10px;}
+.case__stat{
+  margin:0;
+  font-size:26px;
+  line-height:1.15;
+  color:var(--accent);
+  letter-spacing:-.01em;
+}
+.case__stat small{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.case__lbl{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:22px 0 8px;
+}
+
+.chips{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.chips li{
+  border:1px solid var(--line);
+  padding:5px 10px;
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ---- stepped chain (the arc) ----------------------------------- */
+
+.chain--steps .chain__node{
+  display:grid;
+  grid-template-columns:80px 1fr;
+  gap:6px 16px;
+  align-items:baseline;
+  padding:14px;
+}
+.chain--steps .chain__node b{width:auto;grid-row:span 2;}
+.chain--steps strong{font-weight:400;color:var(--ink);font-size:13px;}
+.chain--steps span{color:var(--muted);font-size:12.5px;line-height:1.65;}
+
+/* ---- lab / principles grid ------------------------------------- */
+
+.lab{
+  display:grid;
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+.lab__item{background:var(--surface);padding:15px;display:grid;gap:9px;align-content:start;}
+.lab__hd{display:flex;align-items:center;gap:10px;color:var(--faint);}
+.state{
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+  border:1px solid var(--line);
+  padding:2px 7px;
+}
+.state--on{color:var(--accent);border-color:var(--accent);}
+.lab__item h3{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:13.5px;
+  letter-spacing:-.005em;
+  color:var(--ink);
+}
+.lab__item p{margin:0;font-size:12.5px;line-height:1.65;color:var(--muted);}
+
+/* ---- posts ------------------------------------------------------ */
+
+.posts{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);}
+.post{
+  background:var(--surface);
+  padding:17px 16px;
+  text-decoration:none;
+  color:inherit;
+  display:grid;
+  gap:9px;
+}
+.post:hover,.post:focus-visible{background:var(--surface-2);outline:none;}
+.post:focus-visible{box-shadow:inset 0 0 0 2px var(--accent);}
+.post__hd{display:flex;align-items:center;gap:10px;color:var(--faint);}
+.post__cat{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);}
+.post h2{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(15px,2.2vw,19px);
+  line-height:1.35;
+  letter-spacing:-.005em;
+  max-width:56ch;
+}
+.post p{margin:0;font-size:12.5px;color:var(--muted);max-width:64ch;}
+.post__go{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.subscribe{
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px dashed var(--line);
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 20px;
+  align-items:center;
+  justify-content:space-between;
+}
+.subscribe .lbl{display:inline-flex;align-items:center;gap:9px;}
+.btn-line{
+  border:1px solid var(--line-hard);
+  padding:10px 15px;
+  text-decoration:none;
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.btn-line:hover,.btn-line:focus-visible{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);outline:none;}
+
+/* ---- track record ------------------------------------------------ */
+
+.record{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.record__col{background:var(--surface);padding:16px;display:grid;gap:14px;align-content:start;}
+.record__col h3{
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-family:inherit;
+  font-weight:400;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  padding-bottom:11px;
+  border-bottom:1px solid var(--line);
+}
+.record__rows{display:grid;gap:13px;}
+.stat{display:grid;grid-template-columns:88px 1fr;gap:14px;align-items:baseline;}
+.stat b{font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.01em;}
+.stat span{font-size:12px;line-height:1.6;color:var(--muted);}
+
+/* ---- prose pull quote --------------------------------------------- */
+
+.prose p.pull{
+  border-left:2px solid var(--accent);
+  padding-left:15px;
+  color:var(--ink);
+  font-size:14px;
+}
+
+/* ---- dock links ---------------------------------------------------- */
+
+.card[aria-current="page"]{
+  background:var(--accent);
+  color:var(--accent-ink);
+  border-color:var(--accent);
+}
+a.card{text-decoration:none;display:inline-flex;align-items:center;}
+
+@media (max-width:640px){
+  .stat{grid-template-columns:1fr;gap:2px;}
+  .chain--steps .chain__node{grid-template-columns:1fr;}
+  .chain--steps .chain__node b{grid-row:auto;}
+}
+
+/* ---- colophon ------------------------------------------------------ */
+
+.colophon{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  padding:20px;
+  border-top:1px solid var(--line);
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 24px;
+  align-items:center;
+  justify-content:space-between;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.colophon__nav{display:flex;flex-wrap:wrap;gap:8px 18px;}
+.colophon a{text-decoration:none;color:var(--muted);}
+.colophon a:hover,.colophon a:focus-visible{color:var(--accent);}
+
+</style>
 </head>
 <body>
-
-<!-- ENTRY GATE -->
-<div id="preloader" role="dialog" aria-label="Enter site" tabindex="0">
-  <div class="pl-inner">
-    <div class="pl-mark"><span class="pl-dot"></span><span>Tamara Omomo</span></div>
-    <button class="pl-enter" type="button"><span>Enter</span><span class="pl-arr">→</span></button>
+<div id="boot">
+  <canvas id="bootrain" aria-hidden="true"></canvas>
+  <div class="boot__sheet">
+    <div class="boot__hd">
+      <span>Tamara systems &mdash; self test</span>
+      <span id="boot-stamp">&mdash;&mdash;</span>
+    </div>
+    <div class="boot__log" id="boot-log"></div>
+    <div class="boot__meter">
+      <div class="boot__track"><i id="boot-bar"></i></div>
+      <div class="boot__pct"><span>loading gtm.core</span><span id="boot-pct">0%</span></div>
+    </div>
+    <p class="boot__ready" id="boot-ready"></p>
+    <div class="boot__foot">
+      <span class="odo">You are visitor <b id="odo"></b></span>
+      <span class="boot__skip">press any key to continue</span>
+    </div>
   </div>
-  <div class="pl-count">0</div>
 </div>
-<noscript><style>#preloader{display:none}</style></noscript>
 
-<!-- NAV -->
-<header class="nav">
-  <a class="brand" href="#top">
-    <span class="dot"></span>
-    <span class="glitchable dx">Tamara Omomo</span>
-  </a>
-  <nav class="links">
-    <a href="builds.html" class="dx">Case Studies</a>
-    <a href="writing.html" class="dx">Thoughts</a>
-    <a href="about.html" class="dx">About</a>
-    <a href="#contact" class="dx">Contact</a>
-  </nav>
-  <div class="nav-right">
-    <a href="#contact" class="cta ghost mag" data-mag="0.3"><span>Let's talk</span><span class="arr">→</span></a>
-  </div>
+<header class="masthead">
+  <span><b>TAMARA</b> &nbsp;/&nbsp; AI GTM Engineer</span>
+  <span class="live">Available Q3 &rsquo;26 &middot; Berlin / Remote</span>
+  <span id="stamp">&mdash;&mdash;</span>
 </header>
 
-<main id="top">
+<main class="stage">
 
-  <!-- HERO STATEMENT -->
-  <section class="hero-statement">
-    <div class="hero-spotlight" aria-hidden="true"></div>
-    <div class="glow"></div>
-    <div class="hs-rail" aria-hidden="true">
-      <div class="hs-rail-track">
-        <span>AI Agents ✳ Clay ✳ HubSpot ✳ Claude Code ✳ n8n ✳ Python ✳ dbt ✳ Enrichment ✳ Routing ✳ Attribution ✳ Outbound ✳ Lifecycle ✳ </span>
-        <span>AI Agents ✳ Clay ✳ HubSpot ✳ Claude Code ✳ n8n ✳ Python ✳ dbt ✳ Enrichment ✳ Routing ✳ Attribution ✳ Outbound ✳ Lifecycle ✳ </span>
+  <!-- ============ OPENING ============ -->
+  <section class="open" id="open">
+    <p class="lbl">tamara@gtm:~$ whoami</p>
+    <h1>I build AI GTM systems that <em>drive revenue</em><span class="caret" aria-hidden="true"></span></h1>
+    <p>I design AI workflows, agents and GTM systems that help modern revenue teams eliminate manual work, move faster and scale efficiently. Seven of them are running in production right now.</p>
+    <div class="monitor" aria-hidden="true">
+      <div class="monitor__bar">
+        <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="10" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="3" height="1" fill="var(--lime)"/><rect x="12" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="6" width="1" height="1" fill="var(--lime)"/><rect x="12" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="10" height="1" fill="var(--cyan)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/><rect x="5" y="11" width="6" height="1" fill="currentColor"/><rect x="5" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/><rect x="2" y="13" width="12" height="1" fill="currentColor"/></svg><b>process monitor</b>
+        <span>live</span>
+        <span class="spark" id="spark">////////</span>
+      </div>
+      <div class="monitor__screen"><canvas id="rain"></canvas></div>
+      <div class="monitor__feed">
+        <div class="proc">
+          <div class="proc__hd"><b id="p1n">&mdash;</b><span id="p1v">0%</span></div>
+          <div class="proc__bar"><i id="p1"></i></div>
+        </div>
+        <div class="proc">
+          <div class="proc__hd"><b id="p2n">&mdash;</b><span id="p2v">0%</span></div>
+          <div class="proc__bar"><i id="p2"></i></div>
+        </div>
+        <div class="proc">
+          <div class="proc__hd"><b id="p3n">&mdash;</b><span id="p3v">0%</span></div>
+          <div class="proc__bar"><i id="p3"></i></div>
+        </div>
+        <div class="proc">
+          <div class="proc__hd"><b id="p4n">&mdash;</b><span id="p4v">0%</span></div>
+          <div class="proc__bar"><i id="p4"></i></div>
+        </div>
+        <p class="proc__log" id="plog"></p>
       </div>
     </div>
-    <div class="shell hs-wrap">
-      <div class="eyebrow">
-        <span class="badge"><span class="dot"></span><span class="scramble onload">Available — Q3 '26</span></span>
-        <span class="label scramble onload">Tamara Omomo / AI GTM Engineer</span>
-      </div>
 
-      <h1 class="hs-head hs-head-a r">
-        <span class="l">Engineering AI GTM</span>
-        <span class="l">Systems That</span>
-        <span class="l">Drive <span class="hs-em">Revenue</span></span>
-      </h1>
-
-      <div class="hs-sub r d1">
-        <div class="hs-copy">
-          <p class="hs-now">I design AI workflows, agents and GTM systems that help modern revenue teams <b>eliminate manual work, move faster and scale efficiently</b>.</p>
-          <p class="hs-building"><span class="hb-dot"></span><span class="hb-lab">Currently building</span> <span class="rot2" data-words="outbound engines.|inbound routing systems.|AI research agents.|enrichment pipelines.|attribution models.|lead-scoring engines.|lifecycle automations." data-interval="2200" data-delay="700">outbound engines.</span></p>
-        </div>
-        <div class="hs-ctas">
-          <a href="builds.html" class="cta mag" data-mag="0.3"><span>View case studies</span><span class="arr">→</span></a>
-          <a href="#contact" class="cta ghost mag" data-mag="0.3"><span>Let's talk</span><span class="arr">→</span></a>
-        </div>
-      </div>
-
-      <a href="#latest" class="scroll"><span class="arrowdown">↓</span><span>Scroll to explore</span></a>
-    </div>
-  </section>
-
-  <!-- SYSTEM METRICS -->
-  <section class="metrics" id="metrics">
-    <div class="shell">
-      <div class="m-panel r">
-        <div class="m-head">
-          <span class="m-lab"><span class="pulse"></span>System metrics — from live systems</span>
-          <span class="m-note">06 systems · measured in production</span>
-        </div>
-        <div class="m-grid">
-          <div class="metric"><span class="m-i">01 / Pipeline</span><div class="m-num" data-count="4.2" data-prefix="$" data-suffix="M">$0M</div><div class="m-cap">Pipeline sourced through automated enrichment &amp; routing</div><svg class="m-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline pathLength="100" points="0,25 17,21 34,22 50,14 67,10 84,6 100,3"/></svg></div>
-          <div class="metric"><span class="m-i">02 / Automation</span><div class="m-num" data-count="120" data-suffix="+">0</div><div class="m-cap">Automations shipped across acquisition, lifecycle &amp; ops</div><svg class="m-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline pathLength="100" points="0,26 17,23 34,17 50,16 67,10 84,7 100,4"/></svg></div>
-          <div class="metric"><span class="m-i">03 / AI Agents</span><div class="m-num" data-count="60" data-suffix="k">0</div><div class="m-cap">Accounts enriched by AI agents, continuously refreshed</div><svg class="m-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline pathLength="100" points="0,27 17,20 34,18 50,12 67,11 84,6 100,3"/></svg></div>
-          <div class="metric"><span class="m-i">04 / Speed</span><div class="m-num" data-count="11" data-suffix="min">0</div><div class="m-cap">Median lead response, down from 4 hours</div><svg class="m-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline pathLength="100" points="0,4 17,7 34,6 50,15 67,19 84,22 100,26"/></svg></div>
-          <div class="metric"><span class="m-i">05 / Conversion</span><div class="m-num" data-count="38" data-prefix="+" data-suffix="%">0</div><div class="m-cap">SQL → opportunity lift from agent enrichment</div><svg class="m-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline pathLength="100" points="0,25 17,22 34,16 50,15 67,9 84,6 100,3"/></svg></div>
-          <div class="metric"><span class="m-i">06 / Attribution</span><div class="m-num" data-count="1.1" data-prefix="$" data-suffix="M">0</div><div class="m-cap">Spend reallocated by the attribution model</div><svg class="m-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline pathLength="100" points="0,26 17,19 34,20 50,13 67,10 84,6 100,4"/></svg></div>
-        </div>
-      </div>
+    <div class="prompt-hint">
+      <svg width="13" height="13" viewBox="0 0 13 13" aria-hidden="true"><path d="M6.5 1v8M3 6l3.5 3.5L10 6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 12h11" stroke="currentColor" stroke-width="1.4"/></svg>
+      Open a card below to read more
     </div>
   </section>
 
-  <!-- LATEST BUILD -->
-  <section class="featured shell" id="latest">
-    <div class="sec-head">
-      <h2 class="scramble">Latest Case Study</h2>
-      <span class="label">{ Fresh from the lab }</span>
+  <!-- ============ WINDOWS ============ -->
+
+  <section class="window" id="w-telemetry" hidden>
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">telemetry</span>
+      <span class="window__ref">06 channels &middot; measured in production</span>
+      <button class="window__close" data-close="w-telemetry" aria-label="Close telemetry">&times;</button>
     </div>
-    <a class="feat-card r" href="builds.html#case-07" style="--g:linear-gradient(90deg,#cc0a0d,#f87f23)">
-      <span class="fc-band"></span>
-      <div class="feat-top">
-        <h3>A synthetic-persona <span class="ital">outbound engine</span></h3>
-        <span class="feat-metric">Days → 15min per campaign</span>
-      </div>
-      <p class="feat-desc">An internal sales-enablement tool. I took <b>transcripts from the team's real sales conversations</b> and synthesised them into <b>5 synthetic buyer personas</b> — then let those personas write the outbound: a unique email + LinkedIn sequence per contact, in the persona's own language, grounded in real transcript quotes.</p>
-      <div class="feat-cols">
-        <div>
-          <h4>Business problem</h4>
-          <p>Every campaign took days of manual copywriting and still sounded generic. What convinces a CIO vs. a CFO lived only in scattered sales calls — and never reached the emails prospects actually received.</p>
+    <div class="window__body">
+      <p class="lbl">Numbers from systems I shipped, not projections</p>
+      <div class="readouts">
+        <div class="readout">
+          <div class="readout__hd"><p class="lbl">01 / Pipeline</p><p class="lbl lbl--on">Sourced</p></div>
+          <div class="readout__val"><b>$3.6M</b></div>
+          <div class="gauge" data-fill="10" aria-hidden="true"></div>
+          <p class="readout__note">Pipeline sourced through automated enrichment &amp; routing.</p>
         </div>
-        <div>
-          <h4>Outcome</h4>
-          <p>Every first line opens with the recipient's role-specific pain, in their own language. Per-campaign effort collapses to a 15-minute review — scaling the team's best hand-written outreach to <b>500+ contacts</b>.</p>
+        <div class="readout">
+          <div class="readout__hd"><p class="lbl">02 / Automation</p><p class="lbl">Shipped</p></div>
+          <div class="readout__val">102+</div>
+          <div class="gauge" data-fill="9" aria-hidden="true"></div>
+          <p class="readout__note">Automations shipped across acquisition, lifecycle &amp; ops.</p>
         </div>
-      </div>
-      <div class="case-flow" style="margin-bottom: 26px;">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">Sales-call transcripts</span><span class="farr">→</span>
-          <span class="fnode hot">Synthetic persona synthesis</span><span class="farr">→</span>
-          <span class="fnode">Persona-match + enrich</span><span class="farr">→</span>
-          <span class="fnode hot">AI writes the sequence</span><span class="farr">→</span>
-          <span class="fnode">Human review + canary</span><span class="farr">→</span>
-          <span class="fnode">Lemlist</span>
+        <div class="readout">
+          <div class="readout__hd"><p class="lbl">03 / AI agents</p><p class="lbl lbl--on">Live</p></div>
+          <div class="readout__val">51k</div>
+          <div class="gauge" data-fill="8" aria-hidden="true"></div>
+          <p class="readout__note">Accounts enriched by AI agents, continuously refreshed.</p>
         </div>
-      </div>
-      <span class="feat-link">Read the full case study <span class="fl-arr">→</span></span>
-    </a>
-  </section>
-
-  <!-- BUILDS — flip cards -->
-  <section class="work shell" id="builds">
-    <div class="sec-head">
-      <h2 class="scramble">Case Studies</h2>
-      <span class="label">{ Systems that moved the number }</span>
-    </div>
-    <div class="builds-grid">
-
-      <div class="bcard r" tabindex="0" role="button" aria-expanded="false" style="--g:linear-gradient(90deg,#f87f23,#cc0a0d)">
-        <div class="bc-inner">
-          <div class="bc-face bc-front">
-            <span class="bn">01 / Outbound</span>
-            <div class="bstat">24/7<span class="bu">lead engine</span></div>
-            <div class="bt">Always-on <span class="ital">outbound engine</span></div>
-            <span class="bflip"><span class="ico">↻</span> Flip for the story</span>
-          </div>
-          <div class="bc-face bc-back">
-            <div><h5>Business problem</h5><p>Right-fit companies visited the site and left anonymously — intent went cold before anyone noticed.</p></div>
-            <div><h5>Outcome</h5><p><b>New conversations every day</b> from a visitor → outreach system with a human approval gate.</p></div>
-            <a class="bview" href="builds.html#case-01">Read case study <span class="wv-arr">→</span></a>
-          </div>
+        <div class="readout">
+          <div class="readout__hd"><p class="lbl">04 / Speed</p><p class="lbl">&minus;96%</p></div>
+          <div class="readout__val"><b>9min</b></div>
+          <div class="gauge" data-fill="9" aria-hidden="true"></div>
+          <p class="readout__note">Median lead response, down from 4 hours.</p>
         </div>
-      </div>
-
-      <div class="bcard r d1" tabindex="0" role="button" aria-expanded="false" style="--g:linear-gradient(90deg,#cc3711,#f87f23)">
-        <div class="bc-inner">
-          <div class="bc-face bc-front">
-            <span class="bn">02 / Routing</span>
-            <div class="bstat">11min<span class="bu">from 4 hours</span></div>
-            <div class="bt">Inbound routing <span class="ital">engine</span></div>
-            <span class="bflip"><span class="ico">↻</span> Flip for the story</span>
-          </div>
-          <div class="bc-face bc-back">
-            <div><h5>Business problem</h5><p>Leads from every source landed in different tools and inboxes; hot demos went cold in queue.</p></div>
-            <div><h5>Outcome</h5><p>Every source unified, scored and routed. <b>Median response fell from 4 hours to 11 minutes.</b></p></div>
-            <a class="bview" href="builds.html#case-02">Read case study <span class="wv-arr">→</span></a>
-          </div>
+        <div class="readout">
+          <div class="readout__hd"><p class="lbl">05 / Conversion</p><p class="lbl">Lift</p></div>
+          <div class="readout__val">+32%</div>
+          <div class="gauge" data-fill="7" aria-hidden="true"></div>
+          <p class="readout__note">SQL &rarr; opportunity lift from agent enrichment.</p>
         </div>
-      </div>
-
-      <div class="bcard r d2" tabindex="0" role="button" aria-expanded="false" style="--g:linear-gradient(90deg,#21130f,#cc0a0d)">
-        <div class="bc-inner">
-          <div class="bc-face bc-front">
-            <span class="bn">03 / AI Agents</span>
-            <div class="bstat">+38%<span class="bu">conversion</span></div>
-            <div class="bt">AI research <span class="ital">agents</span></div>
-            <span class="bflip"><span class="ico">↻</span> Flip for the story</span>
-          </div>
-          <div class="bc-face bc-back">
-            <div><h5>Business problem</h5><p>Thin, stale CRM data — and enrichment tools that couldn't answer real qualification questions.</p></div>
-            <div><h5>Outcome</h5><p>Agents research like an SDR would. <b>SQL → opportunity conversion up 38%.</b></p></div>
-            <a class="bview" href="builds.html#case-03">Read case study <span class="wv-arr">→</span></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="bcard r" tabindex="0" role="button" aria-expanded="false" style="--g:linear-gradient(90deg,#f87f23,#f0dfcb)">
-        <div class="bc-inner">
-          <div class="bc-face bc-front">
-            <span class="bn">04 / Events</span>
-            <div class="bstat">Pre-booked</div>
-            <div class="bt">Event-driven <span class="ital">campaigns</span></div>
-            <span class="bflip"><span class="ico">↻</span> Flip for the story</span>
-          </div>
-          <div class="bc-face bc-back">
-            <div><h5>Business problem</h5><p>Execs walked into conferences with zero booked meetings and no context on who mattered.</p></div>
-            <div><h5>Outcome</h5><p><b>Calendars filled before the event</b>, briefing tool in hand, follow-ups fired automatically.</p></div>
-            <a class="bview" href="builds.html#case-04">Read case study <span class="wv-arr">→</span></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="bcard r d1" tabindex="0" role="button" aria-expanded="false" style="--g:linear-gradient(90deg,#cc0a0d,#21130f)">
-        <div class="bc-inner">
-          <div class="bc-face bc-front">
-            <span class="bn">05 / Attribution</span>
-            <div class="bstat">$1.1M<span class="bu">reallocated</span></div>
-            <div class="bt">Multi-touch <span class="ital">attribution</span></div>
-            <span class="bflip"><span class="ico">↻</span> Flip for the story</span>
-          </div>
-          <div class="bc-face bc-back">
-            <div><h5>Business problem</h5><p>Spend decisions ran on last-touch guesses; marketing and finance argued over what drove pipeline.</p></div>
-            <div><h5>Outcome</h5><p>One source of truth in SQL/dbt. <b>$1.1M moved to the channels that actually close.</b></p></div>
-            <a class="bview" href="builds.html#case-05">Read case study <span class="wv-arr">→</span></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="bcard r d2" tabindex="0" role="button" aria-expanded="false" style="--g:linear-gradient(90deg,#f87f23,#cc3711)">
-        <div class="bc-inner">
-          <div class="bc-face bc-front">
-            <span class="bn">06 / Tooling</span>
-            <div class="bstat">0<span class="bu">ops backlog</span></div>
-            <div class="bt">In-house <span class="ital">tooling</span></div>
-            <span class="bflip"><span class="ico">↻</span> Flip for the story</span>
-          </div>
-          <div class="bc-face bc-back">
-            <div><h5>Business problem</h5><p>Every dashboard, list pull and report waited on ops or engineering — a constant bottleneck.</p></div>
-            <div><h5>Outcome</h5><p>Dashboards, Slack apps and data tools made in-house. <b>The team self-serves in seconds.</b></p></div>
-            <a class="bview" href="builds.html#case-06">Read case study <span class="wv-arr">→</span></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="bcard r" tabindex="0" role="button" aria-expanded="false" style="--g:linear-gradient(90deg,#cc0a0d,#f87f23)">
-        <div class="bc-inner">
-          <div class="bc-face bc-front">
-            <span class="bn">07 / Synthetic Personas</span>
-            <div class="bstat">15min<span class="bu">per campaign, from days</span></div>
-            <div class="bt">Synthetic-persona <span class="ital">outbound engine</span></div>
-            <span class="bflip"><span class="ico">↻</span> Flip for the story</span>
-          </div>
-          <div class="bc-face bc-back">
-            <div><h5>Business problem</h5><p>Campaigns took days to write and still sounded generic — what convinces a CIO vs. a CFO lived only in scattered sales calls.</p></div>
-            <div><h5>Outcome</h5><p>Real sales transcripts become 5 synthetic personas that write per-contact copy. <b>Per-campaign effort dropped to a 15-minute review.</b></p></div>
-            <a class="bview" href="builds.html#case-07">Read case study <span class="wv-arr">→</span></a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PULL QUOTE -->
-  <section class="quote shell">
-    <blockquote>
-      Great GTM isn't a deck — it's a&nbsp;<span class="circled">system<svg viewBox="0 0 300 90" preserveAspectRatio="none"><path d="M150 8 C70 6 18 22 14 45 C10 70 95 84 158 83 C240 82 292 64 286 40 C281 19 205 7 120 12"></path></svg></span>. Functional, instrumented, made to&nbsp;compound.
-    </blockquote>
-    <div class="by">— Tamara Omomo, AI GTM Engineer</div>
-  </section>
-
-  <!-- STACK -->
-  <section class="stack" id="stack">
-    <div class="shell">
-      <div class="sec-head">
-        <h2 class="scramble">The Stack</h2>
-        <span class="label">{ Capabilities first, tools second }</span>
-      </div>
-      <div class="stack-cats r">
-        <div class="scat">
-          <h4>AI</h4>
-          <ul>
-            <li><img src="assets/logos/anthropic.svg" alt="" data-filter="invert">Claude</li>
-            <li><img src="assets/logos/openai.svg" alt="" data-filter="invert">OpenAI</li>
-            <li><img src="assets/logos/clay.svg" alt="">Clay agents</li>
-            <li><span class="sq" style="--c:#f87f23">AG</span>Custom agents</li>
-          </ul>
-        </div>
-        <div class="scat">
-          <h4>Automation</h4>
-          <ul>
-            <li><img src="assets/logos/n8n.svg" alt="" data-filter="invert">n8n</li>
-            <li><img src="assets/logos/make.svg" alt="" data-filter="invert">Make.com</li>
-            <li><img src="assets/logos/zapier.svg" alt="" data-filter="invert">Zapier</li>
-            <li><img src="assets/logos/lemlist.svg" alt="">Lemlist</li>
-            <li><img src="assets/logos/heyreach.svg" alt="">HeyReach</li>
-            <li><img src="assets/logos/smartlead.svg" alt="">Smartlead</li>
-          </ul>
-        </div>
-        <div class="scat">
-          <h4>CRM</h4>
-          <ul>
-            <li><img src="assets/logos/hubspot.svg" alt="" data-filter="invert">HubSpot</li>
-            <li><img src="assets/logos/salesforce.svg" alt="">Salesforce</li>
-            <li><img src="assets/logos/apollo.svg" alt="" data-filter="invert">Apollo</li>
-            <li><img src="assets/logos/gong.svg" alt="">Gong</li>
-            <li><img src="assets/logos/linkedin.svg" alt="">LinkedIn</li>
-          </ul>
-        </div>
-        <div class="scat">
-          <h4>Data</h4>
-          <ul>
-            <li><img src="assets/logos/dbt.svg" alt="">dbt</li>
-            <li><span class="sq" style="--c:#8a8478">SQL</span>SQL</li>
-            <li><img src="assets/logos/segment.svg" alt="">Segment</li>
-            <li><img src="assets/logos/hockeystack.svg" alt="">HockeyStack</li>
-          </ul>
-        </div>
-        <div class="scat">
-          <h4>Developer Tools</h4>
-          <ul>
-            <li><span class="sq" style="--c:#d97757">&lt;/&gt;</span>Claude Code</li>
-            <li><img src="assets/logos/python.svg" alt="">Python</li>
-            <li><span class="sq" style="--c:#f87f23">API</span>APIs &amp; Webhooks</li>
-            <li><span class="sq" style="--c:#61dafb">R</span>React</li>
-          </ul>
+        <div class="readout">
+          <div class="readout__hd"><p class="lbl">06 / Attribution</p><p class="lbl">Moved</p></div>
+          <div class="readout__val"><b>$0.9M</b></div>
+          <div class="gauge" data-fill="8" aria-hidden="true"></div>
+          <p class="readout__note">Spend reallocated by the attribution model.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about-mini shell" id="about">
-    <div class="sec-head">
-      <h2 class="scramble">About</h2>
-      <span class="label">{ Marketer → Engineer }</span>
+  <section class="window" id="w-builds" hidden>
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="6" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="6" height="1" fill="var(--yellow)"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="14" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">builds</span>
+      <span class="window__ref">7 systems &middot; click any line to expand</span>
+      <button class="window__close" data-close="w-builds" aria-label="Close builds">&times;</button>
     </div>
-    <p class="am-p r">My background in growth marketing taught me how companies <b>generate</b> demand. GTM engineering taught me how they <b>scale</b> it. Today I design <span class="em">AI-powered systems</span> that connect people, data and workflows — so revenue teams operate better.</p>
-    <a class="am-more r d1" href="about.html">More about me →</a>
+    <div class="window__body">
+      <p class="lbl">tamara@gtm:~$ ls ./builds</p>
+      <div class="builds">
+
+        <div class="build">
+          <button class="build__hd" aria-expanded="false" aria-controls="b1">
+            <span class="build__no">01</span>
+            <span class="build__name">Always-on outbound engine</span>
+            <span class="build__stat">24/7</span>
+            <span class="build__sign" aria-hidden="true">+</span>
+          </button>
+          <div class="build__panel" id="b1" hidden>
+            <dl>
+              <dt>Business problem</dt>
+              <dd>Right-fit companies visited the site and left anonymously &mdash; intent went cold before anyone noticed.</dd>
+              <dt>Outcome</dt>
+              <dd>New conversations every day from a visitor &rarr; outreach system with a human approval gate.</dd>
+            </dl>
+            <a class="more" href="/builds#case-01">Read case study &rarr;</a>
+          </div>
+        </div>
+
+        <div class="build">
+          <button class="build__hd" aria-expanded="false" aria-controls="b2">
+            <span class="build__no">02</span>
+            <span class="build__name">Inbound routing engine</span>
+            <span class="build__stat">11 min</span>
+            <span class="build__sign" aria-hidden="true">+</span>
+          </button>
+          <div class="build__panel" id="b2" hidden>
+            <dl>
+              <dt>Business problem</dt>
+              <dd>Leads from every source landed in different tools and inboxes; hot demos went cold in queue.</dd>
+              <dt>Outcome</dt>
+              <dd>Every source unified, scored and routed. Median response fell from 4 hours to 11 minutes.</dd>
+            </dl>
+            <a class="more" href="/builds#case-02">Read case study &rarr;</a>
+          </div>
+        </div>
+
+        <div class="build">
+          <button class="build__hd" aria-expanded="false" aria-controls="b3">
+            <span class="build__no">03</span>
+            <span class="build__name">AI research agents</span>
+            <span class="build__stat">+38%</span>
+            <span class="build__sign" aria-hidden="true">+</span>
+          </button>
+          <div class="build__panel" id="b3" hidden>
+            <dl>
+              <dt>Business problem</dt>
+              <dd>Thin, stale CRM data &mdash; and enrichment tools that couldn&rsquo;t answer real qualification questions.</dd>
+              <dt>Outcome</dt>
+              <dd>Agents research like an SDR would. SQL &rarr; opportunity conversion up 38%.</dd>
+            </dl>
+            <a class="more" href="/builds#case-03">Read case study &rarr;</a>
+          </div>
+        </div>
+
+        <div class="build">
+          <button class="build__hd" aria-expanded="false" aria-controls="b4">
+            <span class="build__no">04</span>
+            <span class="build__name">Event-driven campaigns</span>
+            <span class="build__stat">Pre-booked</span>
+            <span class="build__sign" aria-hidden="true">+</span>
+          </button>
+          <div class="build__panel" id="b4" hidden>
+            <dl>
+              <dt>Business problem</dt>
+              <dd>Execs walked into conferences with zero booked meetings and no context on who mattered.</dd>
+              <dt>Outcome</dt>
+              <dd>Calendars filled before the event, briefing tool in hand, follow-ups fired automatically.</dd>
+            </dl>
+            <a class="more" href="/builds#case-04">Read case study &rarr;</a>
+          </div>
+        </div>
+
+        <div class="build">
+          <button class="build__hd" aria-expanded="false" aria-controls="b5">
+            <span class="build__no">05</span>
+            <span class="build__name">Multi-touch attribution</span>
+            <span class="build__stat">$1.1M</span>
+            <span class="build__sign" aria-hidden="true">+</span>
+          </button>
+          <div class="build__panel" id="b5" hidden>
+            <dl>
+              <dt>Business problem</dt>
+              <dd>Spend decisions ran on last-touch guesses; marketing and finance argued over what drove pipeline.</dd>
+              <dt>Outcome</dt>
+              <dd>One source of truth in SQL/dbt. $1.1M moved to the channels that actually close.</dd>
+            </dl>
+            <a class="more" href="/builds#case-05">Read case study &rarr;</a>
+          </div>
+        </div>
+
+        <div class="build">
+          <button class="build__hd" aria-expanded="false" aria-controls="b6">
+            <span class="build__no">06</span>
+            <span class="build__name">In-house tooling</span>
+            <span class="build__stat">0 backlog</span>
+            <span class="build__sign" aria-hidden="true">+</span>
+          </button>
+          <div class="build__panel" id="b6" hidden>
+            <dl>
+              <dt>Business problem</dt>
+              <dd>Every dashboard, list pull and report waited on ops or engineering &mdash; a constant bottleneck.</dd>
+              <dt>Outcome</dt>
+              <dd>Dashboards, Slack apps and data tools made in-house. The team self-serves in seconds.</dd>
+            </dl>
+            <a class="more" href="/builds#case-06">Read case study &rarr;</a>
+          </div>
+        </div>
+
+        <div class="build">
+          <button class="build__hd" aria-expanded="false" aria-controls="b7">
+            <span class="build__no">07</span>
+            <span class="build__name">Synthetic-persona outbound</span>
+            <span class="build__stat">15 min</span>
+            <span class="build__sign" aria-hidden="true">+</span>
+          </button>
+          <div class="build__panel" id="b7" hidden>
+            <dl>
+              <dt>Business problem</dt>
+              <dd>Campaigns took days to write and still sounded generic &mdash; what convinces a CIO vs. a CFO lived only in scattered sales calls.</dd>
+              <dt>Outcome</dt>
+              <dd>Real sales transcripts become 5 synthetic personas that write per-contact copy. Per-campaign effort dropped to a 15-minute review.</dd>
+            </dl>
+            <a class="more" href="/builds#case-07">Read case study &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+      <a class="btn-line" style="margin-top:18px;display:inline-block;" href="builds.html"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="6" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="6" height="1" fill="var(--yellow)"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="14" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> Open the full case studies <span aria-hidden="true">&rarr;</span></a>
+    </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="glow"></div>
-    <div class="shell inner">
-      <span class="label">{ Let's ship better GTM systems }</span>
-      <h2>Let's <span class="ital">ship</span>.</h2>
-      <p class="hs-now" style="max-width:52ch; margin: 0 auto 8px; color: var(--muted);">Whether you're hiring, shipping AI workflows or rethinking your GTM infrastructure — I'd love to hear what you're working on.</p>
-      <div class="mail">
-        <a href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener" class="cta mag" data-mag="0.25"><span>Book a conversation</span><span class="arr">→</span></a>
-      </div>
-      <div class="socials">
-        <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener" class="dx">LinkedIn</a>
-        <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener" class="dx">Substack</a>
-        <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener" class="dx">Résumé / CV</a>
-        <a href="mailto:omomo.oj@gmail.com" class="dx">Email</a>
+  <section class="window" id="w-stack" hidden>
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg>
+      <span class="window__name">stack</span>
+      <span class="window__ref">capabilities first, tools second</span>
+      <button class="window__close" data-close="w-stack" aria-label="Close stack">&times;</button>
+    </div>
+    <div class="window__body">
+      <p class="lbl">tamara@gtm:~$ cat stack.txt</p>
+      <div class="bays">
+        <div class="bay">
+          <h3>AI</h3>
+          <ul><li>Claude</li><li>OpenAI</li><li>Clay agents</li><li>Custom agents</li></ul>
+        </div>
+        <div class="bay">
+          <h3>Automation</h3>
+          <ul><li>n8n</li><li>Make.com</li><li>Zapier</li><li>Lemlist</li><li>HeyReach</li><li>Smartlead</li></ul>
+        </div>
+        <div class="bay">
+          <h3>CRM</h3>
+          <ul><li>HubSpot</li><li>Salesforce</li><li>Apollo</li><li>Gong</li><li>LinkedIn</li></ul>
+        </div>
+        <div class="bay">
+          <h3>Data</h3>
+          <ul><li>dbt</li><li>SQL</li><li>Segment</li><li>HockeyStack</li></ul>
+        </div>
+        <div class="bay">
+          <h3>Developer</h3>
+          <ul><li>Claude Code</li><li>Python</li><li>APIs &amp; webhooks</li><li>React</li></ul>
+        </div>
       </div>
     </div>
-    <div class="ghostmark"><span>OMOMO</span></div>
   </section>
+
+  <section class="window" id="w-readme" hidden>
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="11" y="4" width="4" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="13" height="1" fill="currentColor"/></svg>
+      <span class="window__name">readme.txt</span>
+      <span class="window__ref">marketer &rarr; engineer</span>
+      <button class="window__close" data-close="w-readme" aria-label="Close readme">&times;</button>
+    </div>
+    <div class="window__body">
+      <p class="lbl">tamara@gtm:~$ cat readme.txt</p>
+      <div class="prose">
+        <p>My background in growth marketing taught me how companies generate demand. GTM engineering taught me how they scale it. Today I design AI-powered systems that connect people, data and workflows &mdash; so revenue teams operate better.</p>
+        <p class="dim">Great GTM isn&rsquo;t a deck &mdash; it&rsquo;s a system. Functional, instrumented, made to compound.</p>
+      </div>
+      <div class="rows">
+        <div class="row"><b>Discipline</b><span>AI GTM engineering &middot; revenue systems</span></div>
+        <div class="row"><b>Base</b><span>Berlin &middot; remote-ready</span></div>
+        <div class="row"><b>Availability</b><span style="color:var(--accent)">Open from Q3 &rsquo;26</span></div>
+        <div class="row"><b>Output</b><span>Systems in production, not slides</span></div>
+      </div>
+      <a class="more" href="/about" style="display:inline-block;margin-top:18px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;">More about me &rarr;</a>
+    </div>
+  </section>
+
+  <section class="window" id="w-contact" hidden>
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="2" height="1" fill="var(--accent)"/><rect x="11" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="2" height="1" fill="var(--accent)"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="2" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="2" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">contact</span>
+      <span class="window__ref">open channel</span>
+      <button class="window__close" data-close="w-contact" aria-label="Close contact">&times;</button>
+    </div>
+    <div class="window__body">
+      <p class="lbl">tamara@gtm:~$ ./connect</p>
+      <h2>Let&rsquo;s <em>ship</em>.</h2>
+      <div class="prose" style="margin-top:12px;">
+        <p class="dim">Whether you&rsquo;re hiring, shipping AI workflows or rethinking your GTM infrastructure &mdash; I&rsquo;d love to hear what you&rsquo;re working on.</p>
+      </div>
+      <div class="links">
+        <a class="pri" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="5" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="2" height="1" fill="currentColor"/><rect x="11" y="10" width="2" height="1" fill="currentColor"/><rect x="5" y="11" width="6" height="1" fill="currentColor"/></svg> Book a conversation <span aria-hidden="true">&rarr;</span></a>
+        <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="5" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="5" width="5" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="5" height="1" fill="currentColor"/><rect x="6" y="8" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="8" width="5" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="6" y="9" width="1" height="1" fill="currentColor"/><rect x="9" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="9" y="10" width="1" height="1" fill="currentColor"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="11" width="2" height="1" fill="currentColor"/><rect x="11" y="11" width="2" height="1" fill="currentColor"/><rect x="5" y="12" width="6" height="1" fill="currentColor"/></svg> LinkedIn <span aria-hidden="true">&rarr;</span></a>
+        <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="1" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="1" height="1" fill="currentColor"/><rect x="12" y="2" width="2" height="1" fill="var(--accent)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="2" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--accent)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="11" y="5" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="1" height="1" fill="currentColor"/><rect x="8" y="6" width="2" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="1" height="1" fill="currentColor"/><rect x="6" y="8" width="2" height="1" fill="var(--accent)"/><rect x="8" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="2" height="1" fill="var(--accent)"/><rect x="7" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="2" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="4" height="1" fill="currentColor"/><rect x="2" y="12" width="2" height="1" fill="currentColor"/></svg> Substack <span aria-hidden="true">&rarr;</span></a>
+        <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="11" y="4" width="4" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="13" height="1" fill="currentColor"/></svg> R&eacute;sum&eacute; / CV <span aria-hidden="true">&rarr;</span></a>
+        <a href="mailto:omomo.oj@gmail.com"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="2" height="1" fill="var(--accent)"/><rect x="11" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="2" height="1" fill="var(--accent)"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="2" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="2" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg> Email <span aria-hidden="true">&rarr;</span></a>
+        <a href="/writing"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="1" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="1" height="1" fill="currentColor"/><rect x="12" y="2" width="2" height="1" fill="var(--accent)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="2" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--accent)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="11" y="5" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="1" height="1" fill="currentColor"/><rect x="8" y="6" width="2" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="1" height="1" fill="currentColor"/><rect x="6" y="8" width="2" height="1" fill="var(--accent)"/><rect x="8" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="2" height="1" fill="var(--accent)"/><rect x="7" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="2" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="4" height="1" fill="currentColor"/><rect x="2" y="12" width="2" height="1" fill="currentColor"/></svg> Thoughts <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer class="footer">
-  <span>© 2026 Tamara Omomo</span>
-  <span>AI GTM Engineer — Designed &amp; coded in the browser</span>
-  <span>Berlin → Remote</span>
+<!-- ============ DOCK ============ -->
+
+<footer class="colophon">
+  <span>&copy; 2026 Tamara Omomo &mdash; built, not decked</span>
+  <nav class="colophon__nav">
+    <a href="gtm-engineering.html">GTM engineering</a>
+    <a href="ai-gtm.html">AI GTM</a>
+    <a href="revenue-systems.html">Revenue systems</a>
+  </nav>
+  <span>Berlin &middot; open from Q3 &rsquo;26</span>
 </footer>
 
-<script src="assets/interactions.js?v=20260705b"></script>
+<nav class="dock" aria-label="Sections">
+  <div class="dock__inner">
+    <button class="card" data-window="w-readme" aria-pressed="false"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="11" y="4" width="4" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="13" height="1" fill="currentColor"/></svg>readme.txt</button>
+    <button class="card" data-window="w-builds" aria-pressed="false"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="6" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="6" height="1" fill="var(--yellow)"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="14" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>builds</button>
+    <button class="card" data-window="w-telemetry" aria-pressed="false"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="10" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="3" height="1" fill="var(--lime)"/><rect x="12" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="6" width="1" height="1" fill="var(--lime)"/><rect x="12" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="10" height="1" fill="var(--cyan)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/><rect x="5" y="11" width="6" height="1" fill="currentColor"/><rect x="5" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/><rect x="2" y="13" width="12" height="1" fill="currentColor"/></svg>telemetry</button>
+    <button class="card" data-window="w-stack" aria-pressed="false"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg>stack</button>
+    <button class="card" data-window="w-contact" aria-pressed="false"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="2" height="1" fill="var(--accent)"/><rect x="11" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="2" height="1" fill="var(--accent)"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="2" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="2" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg>contact</button>
+    <button class="card card--tray" id="scheme" title="Toggle display scheme">&#9681;</button>
+  </div>
+</nav>
+
+
+<script>
+
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- gauges ---- */
+  document.querySelectorAll(".gauge").forEach(function(g){
+    var fill = parseInt(g.getAttribute("data-fill"), 10) || 0;
+    var html = "";
+    for (var i = 0; i < 10; i++) html += '<i class="' + (i < fill ? "on" : "") + '"></i>';
+    g.innerHTML = html;
+  });
+
+  /* ---- dock cards open / close windows ---- */
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".card[data-window]"));
+  var open = document.getElementById("open");
+
+  function setOpenScreen(){
+    var anyOpen = cards.some(function(c){ return c.getAttribute("aria-pressed") === "true"; });
+    open.hidden = anyOpen;
+  }
+
+  function toggle(card, force){
+    var win = document.getElementById(card.getAttribute("data-window"));
+    if (!win) return;
+    var show = force !== undefined ? force : win.hidden;
+    win.hidden = !show;
+    card.setAttribute("aria-pressed", String(show));
+    setOpenScreen();
+    if (show) win.scrollIntoView({behavior: reduce ? "auto" : "smooth", block: "start"});
+  }
+
+  cards.forEach(function(card){
+    card.addEventListener("click", function(){ toggle(card); });
+  });
+
+  document.querySelectorAll("[data-close]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.getAttribute("data-close");
+      var card = cards.filter(function(c){ return c.getAttribute("data-window") === id; })[0];
+      if (card) toggle(card, false);
+    });
+  });
+
+  /* ---- build rows expand in place ---- */
+  document.querySelectorAll(".build__hd").forEach(function(hd){
+    hd.addEventListener("click", function(){
+      var panel = document.getElementById(hd.getAttribute("aria-controls"));
+      var show = panel.hidden;
+      panel.hidden = !show;
+      hd.setAttribute("aria-expanded", String(show));
+      hd.querySelector(".build__sign").textContent = show ? "−" : "+";
+    });
+  });
+
+  /* ---- masthead stamp ---- */
+  var stamp = document.getElementById("stamp");
+  function tick(){
+    var d = new Date();
+    stamp.textContent =
+      String(d.getDate()).padStart(2, "0") + "." +
+      String(d.getMonth() + 1).padStart(2, "0") + "." + d.getFullYear() + " " +
+      String(d.getHours()).padStart(2, "0") + ":" +
+      String(d.getMinutes()).padStart(2, "0");
+  }
+  tick();
+  setInterval(tick, 20000);
+
+
+  /* ---- data-processing monitor ---- */
+  var cv = document.getElementById("rain");
+  if (cv) {
+    var ctx = cv.getContext("2d");
+    var CH = "0123456789ABCDEF/\\|<>[]{}=+*.:$#%";
+    var cols = [], cw = 7, ch = 12, W = 0, H = 0, dpr = 1;
+    var palette = {screen:"#151613", ink:"#7E8175", hot:"#FF5C00"};
+
+    function readPalette(){
+      var cs = getComputedStyle(document.documentElement);
+      palette.screen = cs.getPropertyValue("--screen").trim() || palette.screen;
+      palette.ink = cs.getPropertyValue("--screen-ink").trim() || palette.ink;
+      palette.hot = cs.getPropertyValue("--lime").trim() || palette.hot;
+    }
+
+    function size(){
+      var r = cv.parentNode.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      cv.width = Math.floor(W * dpr);
+      cv.height = Math.floor(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = "10px ui-monospace, Menlo, Consolas, monospace";
+      ctx.textBaseline = "top";
+      var n = Math.ceil(W / cw);
+      var visible = Math.ceil(H / ch);
+      cols = [];
+      for (var i = 0; i < n; i++) cols.push(mkCol(visible, true));
+    }
+
+    function mkCol(visible, spread){
+      var len = 7 + ((Math.random() * 14) | 0);
+      var chars = [];
+      for (var j = 0; j < len; j++) chars.push(CH[(Math.random() * CH.length) | 0]);
+      return {
+        head: spread ? ((Math.random() * (visible + len)) | 0) : -(1 + ((Math.random() * 6) | 0)),
+        chars: chars,
+        len: len,
+        every: 1 + ((Math.random() * 3) | 0),
+        t: 0,
+        hot: Math.random() < 0.1
+      };
+    }
+
+    function draw(){
+      ctx.fillStyle = palette.screen;
+      ctx.fillRect(0, 0, W, H);
+      var visible = Math.ceil(H / ch);
+      for (var i = 0; i < cols.length; i++) {
+        var c = cols[i];
+        var x = i * cw;
+        for (var j = 0; j < c.len; j++) {
+          var row = c.head - j;
+          if (row < 0 || row > visible) continue;
+          var fade = 1 - (j / c.len);
+          ctx.globalAlpha = j === 0 ? 0.95 : Math.max(0.05, fade * 0.6);
+          ctx.fillStyle = (j === 0 || c.hot) ? palette.hot : palette.ink;
+          ctx.fillText(c.chars[j], x, row * ch);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function advance(){
+      var visible = Math.ceil(H / ch);
+      for (var i = 0; i < cols.length; i++) {
+        var c = cols[i];
+        c.t++;
+        if (c.t % c.every) continue;
+        c.chars.pop();
+        c.chars.unshift(CH[(Math.random() * CH.length) | 0]);
+        c.head++;
+        if (c.head - c.len > visible) cols[i] = mkCol(visible, false);
+      }
+    }
+
+    function frame(){
+      advance();
+      draw();
+      raf = requestAnimationFrame(frame);
+    }
+
+    var raf = null;
+    readPalette();
+    size();
+    if (reduce) {
+      draw();
+    } else {
+      raf = requestAnimationFrame(frame);
+    }
+
+    window.addEventListener("resize", function(){ readPalette(); size(); });
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function(){ readPalette(); size(); });
+      ro.observe(cv.parentNode);
+    }
+    window.addEventListener("load", function(){ readPalette(); size(); });
+    document.addEventListener("schemechange", function(){ readPalette(); });
+
+    /* pause the loop while the opening screen is hidden */
+    var obs = new MutationObserver(function(){
+      if (reduce) return;
+      if (open.hidden && raf) { cancelAnimationFrame(raf); raf = null; }
+      else if (!open.hidden && !raf) { size(); raf = requestAnimationFrame(frame); }
+    });
+    obs.observe(open, { attributes: true, attributeFilter: ["hidden"] });
+
+    /* progress readouts + log */
+    var JOBS = [
+      "enrich", "route", "attribute", "score", "persona-synth", "deal-desk",
+      "pipeline-copilot", "health-agent", "account-research", "event-brief",
+      "canary-send", "dbt-run", "agent-queue", "crm-sync", "icp-match",
+      "transcript-sync", "sequence-write", "fit-model"
+    ];
+    var jobAt = 0;
+    function nextJob(){
+      var name = JOBS[jobAt % JOBS.length];
+      jobAt++;
+      return name;
+    }
+
+    var bars = [1, 2, 3, 4].map(function(i){
+      return {
+        el: document.getElementById("p" + i),
+        val: document.getElementById("p" + i + "v"),
+        name: document.getElementById("p" + i + "n"),
+        v: Math.random() * 70,
+        sp: 0.35 + Math.random() * 0.9
+      };
+    }).filter(function(b){ return b.el; });
+
+    bars.forEach(function(b){ if (b.name) b.name.textContent = nextJob(); });
+
+    var LOG = [
+      "enrich   \u25B8 51,204 accounts refreshed",
+      "route    \u25B8 median response <b>9 min</b>",
+      "score    \u25B8 fit model v4 applied",
+      "sync     \u25B8 hubspot \u2194 clay ok",
+      "attrib   \u25B8 <b>$0.9M</b> reallocated",
+      "agent    \u25B8 12 research tasks queued",
+      "send     \u25B8 canary batch approved",
+      "persona  \u25B8 5 personas rebuilt from calls",
+      "dealdesk \u25B8 pricing context assembled",
+      "copilot  \u25B8 4 stalled deals surfaced",
+      "health   \u25B8 churn risk flagged pre-QBR",
+      "brief    \u25B8 exec briefing generated",
+      "dbt      \u25B8 attribution models rebuilt",
+      "research \u25B8 account brief ready"
+    ];
+    var li = 0, lines = [];
+    var plog = document.getElementById("plog");
+    var spark = document.getElementById("spark");
+
+    function step(){
+      bars.forEach(function(b){
+        b.v += b.sp;
+        if (b.v >= 100) {
+          b.v = 0;
+          b.sp = 0.35 + Math.random() * 0.9;
+          if (b.name) b.name.textContent = nextJob();
+        }
+        b.el.style.width = b.v.toFixed(0) + "%";
+        b.val.textContent = b.v.toFixed(0) + "%";
+      });
+      spark.textContent = "////////".slice(0, 1 + (Math.floor(Date.now() / 220) % 8));
+    }
+    function pushLine(){
+      lines.push(LOG[li % LOG.length]);
+      li++;
+      if (lines.length > 3) lines.shift();
+      plog.innerHTML = lines.join("\n");
+    }
+    pushLine(); pushLine(); pushLine();
+    if (!reduce) {
+      setInterval(step, 90);
+      setInterval(pushLine, 1900);
+    }
+  }
+
+
+  /* ---- boot / self test ---- */
+  (function(){
+    var boot = document.getElementById("boot");
+    if (!boot) return;
+    var logEl = document.getElementById("boot-log");
+    var barEl = document.getElementById("boot-bar");
+    var pctEl = document.getElementById("boot-pct");
+    var readyEl = document.getElementById("boot-ready");
+    var stampEl = document.getElementById("boot-stamp");
+
+    var d = new Date();
+    stampEl.textContent =
+      String(d.getDate()).padStart(2, "0") + "." +
+      String(d.getMonth() + 1).padStart(2, "0") + "." + d.getFullYear();
+
+
+    var LINES = [
+      ["init  gtm.core", "ok"],
+      ["scan  revenue systems", "<b>7 units</b>"],
+      ["load  enrichment agents", "<b>51,204</b> accounts"],
+      ["mount ./builds", "7 case studies"],
+      ["test  pipeline channel", "<b>$3.6M</b> sourced"],
+      ["test  response latency", "<b>9 min</b> median"],
+      ["test  conversion lift", "<b>+32%</b> sql &rarr; opp"],
+      ["test  attribution model", "<b>$0.9M</b> reallocated"],
+      ["auth  tamaraa", "<i>ai gtm engineer</i>"]
+    ];
+
+    var timers = [];
+    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+
+    var odo = document.getElementById("odo");
+    if (odo) {
+      var target = 98068 + (Math.floor(Date.now() / 86400000) % 400);
+      function paintOdo(n){
+        odo.innerHTML = String(n).padStart(6, "0").split("").map(function(c){
+          return "<i>" + c + "</i>";
+        }).join("");
+      }
+      paintOdo(target);
+      if (!reduce) {
+        var from = target - 7, cur = from;
+        paintOdo(cur);
+        var spin = setInterval(function(){
+          cur++;
+          paintOdo(cur);
+          if (cur >= target) clearInterval(spin);
+        }, 230);
+        timers.push(spin);
+      }
+    }
+
+
+    function endBoot(){
+      if (boot.hidden) return;
+      boot.hidden = true;
+      timers.forEach(clearTimeout);
+      timers = [];
+      document.removeEventListener("keydown", endBoot);
+      document.removeEventListener("pointerdown", endBoot);
+      if (typeof stopBootRain === "function") stopBootRain();
+    }
+
+    var SEEN = "omomo-booted";
+    var alreadyBooted = false;
+    try { alreadyBooted = sessionStorage.getItem(SEEN) === "1"; } catch (e) {}
+    if (reduce || alreadyBooted) { endBoot(); return; }
+    try { sessionStorage.setItem(SEEN, "1"); } catch (e) {}
+
+    document.addEventListener("keydown", endBoot);
+    document.addEventListener("pointerdown", endBoot);
+
+    var STEP = 460;
+    LINES.forEach(function(pair, i){
+      later(function(){
+        var p = document.createElement("p");
+        var dots = ".".repeat(Math.max(3, 34 - pair[0].length));
+        p.innerHTML = "&gt; " + pair[0] + " " + dots + " " + pair[1];
+        logEl.appendChild(p);
+        var pct = Math.round(((i + 1) / LINES.length) * 100);
+        barEl.style.width = pct + "%";
+        pctEl.textContent = pct + "%";
+      }, STEP * i);
+    });
+
+    var total = STEP * LINES.length;
+
+    later(function(){
+      readyEl.innerHTML = "all channels nominal &mdash; <i>ready</i><span class=\"boot__cursor\"></span>";
+      var skip = boot.querySelector(".boot__skip");
+      if (skip) skip.classList.add("is-armed");
+    }, total + 700);
+
+    /* faint data rain behind the self test */
+    var bc = document.getElementById("bootrain");
+    var stopBootRain = null;
+    if (bc) {
+      var bx = bc.getContext("2d");
+      var BCH = "0123456789ABCDEF/\\|<>[]{}=+*.:$#%";
+      var bcols = [], bcw = 8, bch = 13, BW = 0, BH = 0, braf = null;
+      function bsize(){
+        var dp = Math.min(window.devicePixelRatio || 1, 2);
+        BW = boot.clientWidth; BH = boot.clientHeight;
+        bc.width = Math.floor(BW * dp); bc.height = Math.floor(BH * dp);
+        bx.setTransform(dp, 0, 0, dp, 0, 0);
+        bx.font = "11px ui-monospace, Menlo, Consolas, monospace";
+        bx.textBaseline = "top";
+        var vis = Math.ceil(BH / bch);
+        bcols = [];
+        for (var i = 0; i < Math.ceil(BW / bcw); i++) bcols.push(bmk(vis, true));
+      }
+      function bmk(vis, spread){
+        var len = 8 + ((Math.random() * 16) | 0), ch = [];
+        for (var j = 0; j < len; j++) ch.push(BCH[(Math.random() * BCH.length) | 0]);
+        return { head: spread ? ((Math.random() * (vis + len)) | 0) : -(1 + ((Math.random() * 6) | 0)),
+                 chars: ch, len: len, every: 1 + ((Math.random() * 3) | 0), t: 0 };
+      }
+      function bframe(){
+        var vis = Math.ceil(BH / bch);
+        bx.fillStyle = "#0B0C0A";
+        bx.fillRect(0, 0, BW, BH);
+        for (var i = 0; i < bcols.length; i++) {
+          var c = bcols[i];
+          c.t++;
+          if (!(c.t % c.every)) {
+            c.chars.pop();
+            c.chars.unshift(BCH[(Math.random() * BCH.length) | 0]);
+            c.head++;
+            if (c.head - c.len > vis) { bcols[i] = bmk(vis, false); continue; }
+          }
+          for (var j = 0; j < c.len; j++) {
+            var row = c.head - j;
+            if (row < 0 || row > vis) continue;
+            bx.globalAlpha = j === 0 ? 0.9 : Math.max(0.05, (1 - j / c.len) * 0.55);
+            bx.fillStyle = j === 0 ? "#FF6A14" : "#9B9E92";
+            bx.fillText(c.chars[j], i * bcw, row * bch);
+          }
+        }
+        bx.globalAlpha = 1;
+        braf = requestAnimationFrame(bframe);
+      }
+      bsize();
+      braf = requestAnimationFrame(bframe);
+      window.addEventListener("resize", bsize);
+      stopBootRain = function(){ if (braf) cancelAnimationFrame(braf); braf = null; };
+    }
+  })();
+
+  /* ---- display scheme ---- */
+  var root = document.documentElement;
+  document.getElementById("scheme").addEventListener("click", function(){
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    root.setAttribute("data-theme", dark ? "light" : "dark");
+    document.dispatchEvent(new Event("schemechange"));
+  });
+})();
+
+</script>
 </body>
 </html>

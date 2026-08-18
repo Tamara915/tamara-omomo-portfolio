@@ -1,333 +1,1680 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Case Studies — Tamara Omomo, AI GTM Engineer</title>
-<meta name="description" content="A public library of AI GTM systems — outbound engine, inbound routing, AI research agents, event campaigns, attribution, and internal tooling. Problem, solution, workflow and impact for each." />
-<link rel="canonical" href="https://tamaraomomo.com/builds.html" />
-<meta name="theme-color" content="#15100d" />
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://tamaraomomo.com/builds.html" />
-<meta property="og:site_name" content="Tamara Omomo" />
-<meta property="og:title" content="Case Studies — Tamara Omomo, AI GTM Engineer" />
-<meta property="og:description" content="A public library of AI GTM systems — problem, solution, workflow and impact for each one." />
-<meta property="og:image" content="https://tamaraomomo.com/assets/og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://tamaraomomo.com/assets/og.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Instrument+Serif:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260705b" />
+<meta name="description" content="Seven GTM systems from the seam between marketing, sales and code — each one replaced a manual process and moved a number.">
+<meta property="og:title" content="Case Studies — Tamara Omomo, AI GTM Engineer">
+<meta property="og:description" content="Seven GTM systems from the seam between marketing, sales and code — each one replaced a manual process and moved a number.">
+<meta property="og:type" content="website">
+<style>
+
+/* =============================================================
+   TAMARA OMOMO — retro terminal redesign
+   Clean near-monochrome. One accent. Everything reveals on click.
+   ============================================================= */
+
+:root{
+  --bg:#E3DEF7;
+  --surface:#FFFFFF;
+  --surface-2:#EFEAFF;
+  --ink:#1B1235;
+  --muted:#5B4E80;
+  --faint:#9187B5;
+  --line:#C7BFE8;
+  --line-hard:#1B1235;
+  --accent:#FF2E93;
+  --accent-ink:#FFFFFF;
+  --cyan:#0FBFBF;
+  --lime:#8FCF14;
+  --yellow:#F5C518;
+  --screen:#170E32;
+  --screen-ink:#7E74B8;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#140C2E;
+    --surface:#1E1442;
+    --surface-2:#2A1C5B;
+    --ink:#EDE7FF;
+    --muted:#B3A6DE;
+    --faint:#7A6DAE;
+    --line:#392A70;
+    --line-hard:#4C3B90;
+    --accent:#FF4FA3;
+    --accent-ink:#1A0A12;
+    --cyan:#2FE0E0;
+    --lime:#C2FF4D;
+    --yellow:#FFD93D;
+    --screen:#0C0622;
+    --screen-ink:#6B5FA8;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#140C2E;
+  --surface:#1E1442;
+  --surface-2:#2A1C5B;
+  --ink:#EDE7FF;
+  --muted:#B3A6DE;
+  --faint:#7A6DAE;
+  --line:#392A70;
+  --line-hard:#4C3B90;
+  --accent:#FF4FA3;
+  --accent-ink:#1A0A12;
+  --cyan:#2FE0E0;
+  --lime:#C2FF4D;
+  --yellow:#FFD93D;
+  --screen:#0C0622;
+  --screen-ink:#6B5FA8;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:13px;
+  line-height:1.7;
+  font-variant-numeric:tabular-nums;
+  display:flex;
+  flex-direction:column;
+}
+
+a{color:inherit;}
+
+/* ---- shared bits ------------------------------------------ */
+
+.lbl{
+  font-size:10px;
+  line-height:1.5;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0;
+}
+.lbl--on{color:var(--accent);}
+
+.rule{height:1px;background:var(--line);border:0;margin:0;}
+
+/* ---- masthead --------------------------------------------- */
+
+.masthead{
+  flex:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 20px;
+  align-items:baseline;
+  justify-content:space-between;
+  padding:14px 20px;
+  border-bottom:1px solid var(--line);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.masthead b{color:var(--ink);font-weight:400;}
+.masthead .live{color:var(--accent);}
+.masthead .live::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--accent);
+  margin-right:7px;
+  vertical-align:1px;
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ---- stage ------------------------------------------------- */
+
+.stage{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:0 20px 26px;
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+}
+
+/* ---- opening screen ---------------------------------------- */
+
+.open{
+  padding:clamp(38px,9vh,86px) 0 clamp(30px,6vh,52px);
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  width:100%;
+}
+.open h1{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(21px,3.4vw,35px);
+  line-height:1.32;
+  letter-spacing:-.005em;
+  max-width:22ch;
+  text-wrap:balance;
+}
+.open h1 em{font-style:normal;color:var(--accent);}
+.open p{
+  margin:0;
+  max-width:62ch;
+  color:var(--muted);
+  font-size:13px;
+}
+.caret{
+  display:inline-block;
+  width:9px;
+  height:1.05em;
+  background:var(--accent);
+  vertical-align:-3px;
+  margin-left:3px;
+  animation:blink 1.05s steps(1) infinite;
+}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+.open[hidden]{display:none;}
+
+.prompt-hint{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--faint);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+.prompt-hint svg{flex:none;}
+
+/* ---- boot / self test ----------------------------------------- */
+
+#boot{
+  --boot-hot:#FF4FA3;
+  --boot-dim:#8FCF14;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#0C0622;
+  color:#9C8FD6;
+  font-family:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Courier New", monospace;
+  font-size:12.5px;
+  line-height:1.85;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  overflow:hidden;
+}
+#boot[hidden]{display:none;}
+#boot canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:.38;
+}
+.boot__sheet{
+  position:relative;
+  width:100%;
+  max-width:660px;
+  display:grid;
+  gap:14px;
+}
+.boot__hd{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 18px;
+  justify-content:space-between;
+  color:var(--boot-hot);
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  padding-bottom:10px;
+  border-bottom:1px solid #2E2160;
+}
+.boot__log{display:grid;gap:1px;min-height:16.5em;align-content:start;}
+.boot__log p{margin:0;white-space:pre;overflow:hidden;text-overflow:ellipsis;}
+.boot__log b{color:#EDE7FF;font-weight:400;}
+.boot__log i{color:var(--boot-dim);font-style:normal;}
+
+.boot__meter{display:grid;gap:7px;}
+.boot__track{height:7px;background:#241852;overflow:hidden;}
+.boot__track i{display:block;height:100%;width:0;background:var(--boot-dim);transition:width .18s linear;}
+.boot__pct{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#7A6DAE;
+}
+.boot__ready{color:#EDE7FF;letter-spacing:.2em;text-transform:uppercase;font-size:11px;min-height:1.6em;}
+.boot__ready i{color:var(--boot-hot);font-style:normal;}
+.boot__foot{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid #2E2160;
+  padding-top:12px;
+}
+.odo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:#6E7166;
+}
+.odo b{display:flex;gap:2px;}
+.odo b i{
+  background:#0C0622;
+  color:var(--boot-dim);
+  border:1px solid #3A2A78;
+  width:16px;
+  padding:3px 0;
+  text-align:center;
+  font-style:normal;
+  font-size:12px;
+  letter-spacing:0;
+}
+.boot__skip{
+  color:#6B5FA8;
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+}
+.boot__skip.is-armed{
+  color:var(--boot-hot);
+  animation:softpulse 1.5s ease-in-out infinite;
+}
+@keyframes softpulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+.boot__cursor{
+  display:inline-block;
+  width:8px;height:1em;
+  background:var(--boot-hot);
+  vertical-align:-2px;
+  animation:blink 1.05s steps(1) infinite;
+}
+
+/* ---- window ------------------------------------------------- */
+
+.window{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--line-hard);
+  margin-bottom:22px;
+  animation:rise .18s ease-out;
+}
+.window[hidden]{display:none;}
+@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+.window__bar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 10px;
+  border-bottom:1px solid var(--line-hard);
+  background:var(--surface-2);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.window__name{flex:none;color:var(--ink);}
+.window__ref{
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--faint);
+  letter-spacing:.16em;
+}
+.window__close{
+  flex:none;
+  width:20px;height:18px;
+  display:grid;place-items:center;
+  background:transparent;
+  border:1px solid var(--line-hard);
+  color:var(--ink);
+  font:inherit;
+  font-size:11px;
+  cursor:pointer;
+}
+.window__close:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+.window__close:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+.window__body{padding:22px 20px 24px;}
+
+/* section headings inside windows */
+.window h2{
+  margin:0 0 6px;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(18px,2.8vw,26px);
+  line-height:1.3;
+  letter-spacing:-.005em;
+}
+.window h2 em{font-style:normal;color:var(--accent);}
+.window > .window__body > .lbl:first-child{margin-bottom:14px;}
+
+/* ---- readme-style prose ------------------------------------- */
+
+.prose{display:grid;gap:15px;max-width:70ch;}
+.prose p{margin:0;font-size:13px;line-height:1.78;color:var(--ink);}
+.prose p.dim{color:var(--muted);}
+
+/* ---- key/value rows (spec) ---------------------------------- */
+
+.rows{display:grid;border-top:1px solid var(--line);margin-top:4px;}
+.row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:2px 18px;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+}
+.row b{flex:0 0 168px;font-weight:400;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;font-size:10px;}
+.row span{flex:1;min-width:180px;}
+
+/* ---- telemetry ---------------------------------------------- */
+
+.readouts{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+.readout{background:var(--surface);padding:16px 15px 17px;display:flex;flex-direction:column;gap:10px;}
+.readout__hd{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+.readout__val{font-size:30px;line-height:1.1;letter-spacing:-.02em;}
+.readout__val b{font-weight:400;color:var(--accent);}
+.readout__note{margin:0;font-size:11.5px;line-height:1.6;color:var(--muted);}
+.gauge{display:flex;gap:2px;height:6px;}
+.gauge i{flex:1;background:var(--line);}
+.gauge i.on{background:var(--cyan);}
+
+/* ---- build list ---------------------------------------------- */
+
+.builds{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);}
+.build{
+  background:var(--surface);
+  border:0;
+  padding:0;
+  text-align:left;
+  font:inherit;
+  color:inherit;
+  display:block;
+  width:100%;
+}
+.build__hd{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  padding:13px 15px;
+  background:transparent;
+  border:0;
+  font:inherit;
+  color:inherit;
+  cursor:pointer;
+  text-align:left;
+}
+.build__hd:hover{background:var(--surface-2);}
+.build__hd:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.build__no{flex:none;color:var(--faint);font-size:11px;letter-spacing:.1em;}
+.build__name{flex:1;min-width:0;font-size:12.5px;letter-spacing:.04em;}
+.build__stat{flex:none;color:var(--accent);font-size:12.5px;letter-spacing:.04em;}
+.build__sign{flex:none;width:13px;text-align:center;color:var(--faint);}
+.build__hd[aria-expanded="true"]{background:var(--surface-2);}
+.build__hd[aria-expanded="true"] .build__sign{color:var(--accent);}
+
+.build__panel{padding:0 15px 16px 15px;background:var(--surface-2);}
+.build__panel[hidden]{display:none;}
+.build__panel dl{margin:0;display:grid;gap:11px;max-width:76ch;}
+.build__panel dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+.build__panel dd{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink);}
+.build__panel .more{
+  display:inline-block;
+  margin-top:14px;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid var(--accent);
+  padding-bottom:2px;
+}
+
+/* ---- signal chain -------------------------------------------- */
+
+.chain{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:4px;}
+.chain__node{
+  background:var(--surface);
+  padding:9px 14px;
+  display:flex;
+  gap:14px;
+  align-items:baseline;
+  font-size:12px;
+}
+.chain__node b{flex:none;width:54px;font-weight:400;color:var(--faint);font-size:10px;letter-spacing:.16em;}
+.chain__node:last-child b{color:var(--accent);}
+
+/* ---- stack ---------------------------------------------------- */
+
+.bays{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));}
+.bay h3{
+  margin:0 0 9px;
+  font-family:inherit;
+  font-weight:400;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  padding-bottom:7px;
+  border-bottom:1px solid var(--line);
+}
+.bay ul{list-style:none;margin:0;padding:0;display:grid;gap:5px;}
+.bay li{font-size:12px;color:var(--ink);}
+.bay li::before{content:"\2013\00a0\00a0";color:var(--faint);}
+
+/* ---- links grid ------------------------------------------------ */
+
+.links{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:18px;}
+.links a{
+  background:var(--surface);
+  padding:14px 15px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.links a:hover,.links a:focus-visible{background:var(--accent);color:var(--accent-ink);outline:none;}
+.links a.pri{color:var(--accent);}
+.links a.pri:hover,.links a.pri:focus-visible{color:var(--accent-ink);}
+
+/* ---- dock (the cards) ------------------------------------------ */
+
+.dock{
+  position:sticky;
+  bottom:0;
+  z-index:100;
+  flex:none;
+  background:var(--bg);
+  border-top:1px solid var(--line-hard);
+}
+.dock__inner{
+  max-width:1000px;
+  margin:0 auto;
+  display:flex;
+  align-items:stretch;
+  gap:8px;
+  padding:10px 20px;
+  overflow-x:auto;
+  scrollbar-width:thin;
+}
+.card{
+  flex:0 0 auto;
+  background:var(--surface);
+  color:var(--ink);
+  border:1px solid var(--line-hard);
+  padding:10px 15px;
+  font:inherit;
+  font-size:10.5px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  cursor:pointer;
+  white-space:nowrap;
+  box-shadow:2px 2px 0 var(--line);
+  transition:background .1s ease, color .1s ease, transform .1s ease, box-shadow .1s ease;
+}
+.card:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--line);}
+.card:active{transform:translate(1px,1px);box-shadow:0 0 0 var(--line);}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.card[aria-pressed="true"]{
+  background:var(--accent);
+  color:var(--accent-ink);
+  border-color:var(--accent);
+  box-shadow:2px 2px 0 var(--line-hard);
+}
+.card--tray{
+  margin-left:auto;
+  background:transparent;
+  border-color:var(--line);
+  color:var(--muted);
+  box-shadow:none;
+  cursor:pointer;
+}
+.card--tray:hover{transform:none;box-shadow:none;color:var(--ink);}
+
+/* ---- data-processing monitor ---------------------------------- */
+
+.monitor{
+  border:1px solid var(--line-hard);
+  background:var(--surface);
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  align-items:stretch;
+}
+.monitor__bar{
+  grid-column:1 / -1;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:7px 10px;
+  border-bottom:1px solid var(--line-hard);
+  background:var(--surface-2);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.monitor__bar b{color:var(--ink);font-weight:400;}
+.monitor__bar .spark{
+  margin-left:auto;
+  color:var(--accent);
+  letter-spacing:.1em;
+}
+.monitor__screen{
+  position:relative;
+  min-height:186px;
+  background:var(--screen);
+  border-right:1px solid var(--line);
+  overflow:hidden;
+}
+.monitor__screen canvas{display:block;width:100%;height:100%;position:absolute;inset:0;}
+.monitor__feed{
+  padding:13px 14px;
+  display:grid;
+  gap:9px;
+  align-content:start;
+}
+.proc{display:grid;gap:5px;}
+.proc__hd{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.proc__hd b{font-weight:400;color:var(--ink);}
+.proc__bar{height:5px;background:var(--line);overflow:hidden;}
+.proc__bar i{display:block;height:100%;background:var(--cyan);width:0;}
+.proc__log{
+  margin:2px 0 0;
+  font-size:10.5px;
+  line-height:1.65;
+  color:var(--faint);
+  min-height:3.3em;
+  white-space:pre-wrap;
+  word-break:break-all;
+}
+.proc__log b{color:var(--accent);font-weight:400;}
+
+@media (max-width:700px){
+  .monitor{grid-template-columns:1fr;}
+  .monitor__screen{border-right:0;border-bottom:1px solid var(--line);min-height:132px;}
+}
+
+/* ---- responsive -------------------------------------------------- */
+
+@media (max-width:640px){
+  .masthead{padding:11px 14px;}
+  .stage{padding:0 14px 20px;}
+  .window__body{padding:16px 14px 18px;}
+  .dock__inner{padding:9px 14px;}
+  .row b{flex:1 1 100%;}
+  .build__stat{display:none;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+}
+
+/* ================= sub-page elements ========================= */
+
+.ico{
+  flex:none;
+  color:currentColor;
+  vertical-align:-3px;
+}
+.window__bar .ico{color:var(--ink);}
+.masthead .live{color:var(--lime);}
+.masthead .live::before{background:var(--lime);}
+.card .ico{margin-right:8px;vertical-align:-3px;}
+.links .ico{margin-right:9px;}
+
+/* ---- page head ------------------------------------------------ */
+
+.pagehead{
+  padding:clamp(30px,7vh,64px) 0 clamp(22px,4vh,36px);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  width:100%;
+}
+.pagehead h1{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(24px,4vw,40px);
+  line-height:1.24;
+  letter-spacing:-.01em;
+  max-width:24ch;
+  text-wrap:balance;
+}
+.pagehead h1 .dot{color:var(--accent);}
+.pagehead__lede{
+  margin:0;
+  max-width:64ch;
+  color:var(--muted);
+  font-size:13px;
+}
+.pagehead__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.pagehead__meta span{display:inline-flex;align-items:center;gap:8px;}
+
+/* ---- case study ------------------------------------------------ */
+
+.tagchip{
+  flex:none;
+  background:var(--yellow);
+  color:var(--ink) !important;
+  color:var(--accent-ink);
+  padding:3px 8px;
+  font-size:9px;
+  letter-spacing:.2em;
+}
+.case__head{margin-bottom:14px;}
+.case__head h2{margin:0 0 10px;}
+.case__stat{
+  margin:0;
+  font-size:26px;
+  line-height:1.15;
+  color:var(--accent);
+  letter-spacing:-.01em;
+}
+.case__stat small{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.case__lbl{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:22px 0 8px;
+}
+
+.chips{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.chips li{
+  border:1px solid var(--line);
+  padding:5px 10px;
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ---- stepped chain (the arc) ----------------------------------- */
+
+.chain--steps .chain__node{
+  display:grid;
+  grid-template-columns:80px 1fr;
+  gap:6px 16px;
+  align-items:baseline;
+  padding:14px;
+}
+.chain--steps .chain__node b{width:auto;grid-row:span 2;}
+.chain--steps strong{font-weight:400;color:var(--ink);font-size:13px;}
+.chain--steps span{color:var(--muted);font-size:12.5px;line-height:1.65;}
+
+/* ---- lab / principles grid ------------------------------------- */
+
+.lab{
+  display:grid;
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+.lab__item{background:var(--surface);padding:15px;display:grid;gap:9px;align-content:start;}
+.lab__hd{display:flex;align-items:center;gap:10px;color:var(--faint);}
+.state{
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+  border:1px solid var(--line);
+  padding:2px 7px;
+}
+.state--on{color:var(--accent);border-color:var(--accent);}
+.lab__item h3{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:13.5px;
+  letter-spacing:-.005em;
+  color:var(--ink);
+}
+.lab__item p{margin:0;font-size:12.5px;line-height:1.65;color:var(--muted);}
+
+/* ---- posts ------------------------------------------------------ */
+
+.posts{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);}
+.post{
+  background:var(--surface);
+  padding:17px 16px;
+  text-decoration:none;
+  color:inherit;
+  display:grid;
+  gap:9px;
+}
+.post:hover,.post:focus-visible{background:var(--surface-2);outline:none;}
+.post:focus-visible{box-shadow:inset 0 0 0 2px var(--accent);}
+.post__hd{display:flex;align-items:center;gap:10px;color:var(--faint);}
+.post__cat{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);}
+.post h2{
+  margin:0;
+  font-family:inherit;
+  font-weight:400;
+  font-size:clamp(15px,2.2vw,19px);
+  line-height:1.35;
+  letter-spacing:-.005em;
+  max-width:56ch;
+}
+.post p{margin:0;font-size:12.5px;color:var(--muted);max-width:64ch;}
+.post__go{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.subscribe{
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px dashed var(--line);
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 20px;
+  align-items:center;
+  justify-content:space-between;
+}
+.subscribe .lbl{display:inline-flex;align-items:center;gap:9px;}
+.btn-line{
+  border:1px solid var(--line-hard);
+  padding:10px 15px;
+  text-decoration:none;
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.btn-line:hover,.btn-line:focus-visible{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);outline:none;}
+
+/* ---- track record ------------------------------------------------ */
+
+.record{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.record__col{background:var(--surface);padding:16px;display:grid;gap:14px;align-content:start;}
+.record__col h3{
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-family:inherit;
+  font-weight:400;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  padding-bottom:11px;
+  border-bottom:1px solid var(--line);
+}
+.record__rows{display:grid;gap:13px;}
+.stat{display:grid;grid-template-columns:88px 1fr;gap:14px;align-items:baseline;}
+.stat b{font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.01em;}
+.stat span{font-size:12px;line-height:1.6;color:var(--muted);}
+
+/* ---- prose pull quote --------------------------------------------- */
+
+.prose p.pull{
+  border-left:2px solid var(--accent);
+  padding-left:15px;
+  color:var(--ink);
+  font-size:14px;
+}
+
+/* ---- dock links ---------------------------------------------------- */
+
+.card[aria-current="page"]{
+  background:var(--accent);
+  color:var(--accent-ink);
+  border-color:var(--accent);
+}
+a.card{text-decoration:none;display:inline-flex;align-items:center;}
+
+@media (max-width:640px){
+  .stat{grid-template-columns:1fr;gap:2px;}
+  .chain--steps .chain__node{grid-template-columns:1fr;}
+  .chain--steps .chain__node b{grid-row:auto;}
+}
+
+/* ---- colophon ------------------------------------------------------ */
+
+.colophon{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  padding:20px;
+  border-top:1px solid var(--line);
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 24px;
+  align-items:center;
+  justify-content:space-between;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.colophon__nav{display:flex;flex-wrap:wrap;gap:8px 18px;}
+.colophon a{text-decoration:none;color:var(--muted);}
+.colophon a:hover,.colophon a:focus-visible{color:var(--accent);}
+
+</style>
 </head>
 <body>
+<div id="boot">
+  <canvas id="bootrain" aria-hidden="true"></canvas>
+  <div class="boot__sheet">
+    <div class="boot__hd">
+      <span>Tamara systems &mdash; self test</span>
+      <span id="boot-stamp">&mdash;&mdash;</span>
+    </div>
+    <div class="boot__log" id="boot-log"></div>
+    <div class="boot__meter">
+      <div class="boot__track"><i id="boot-bar"></i></div>
+      <div class="boot__pct"><span>loading gtm.core</span><span id="boot-pct">0%</span></div>
+    </div>
+    <p class="boot__ready" id="boot-ready"></p>
+    <div class="boot__foot">
+      <span class="odo">You are visitor <b id="odo"></b></span>
+      <span class="boot__skip">press any key to continue</span>
+    </div>
+  </div>
+</div>
 
-<!-- NAV -->
-<header class="nav">
-  <a class="brand" href="index.html#top">
-    <span class="dot"></span>
-    <span class="glitchable dx">Tamara Omomo</span>
-  </a>
-  <nav class="links">
-    <a href="builds.html" class="dx" aria-current="page">Case Studies</a>
-    <a href="writing.html" class="dx">Thoughts</a>
-    <a href="about.html" class="dx">About</a>
-    <a href="#contact" class="dx">Contact</a>
-  </nav>
-  <a href="#contact" class="cta ghost mag" data-mag="0.3"><span>Let's talk</span><span class="arr">→</span></a>
+<header class="masthead">
+  <span><b>TAMARA</b> &nbsp;/&nbsp; AI GTM Engineer</span>
+  <span class="live">Available Q3 &rsquo;26 &middot; Berlin / Remote</span>
+  <span id="stamp">&mdash;&mdash;</span>
 </header>
 
-<main id="top">
+<main class="stage">
 
-  <!-- BUILDS HERO -->
-  <section class="wk-hero">
-    <div class="glow"></div>
-    <div class="shell">
-      <div class="wk-eyebrow">
-        <span class="label">( Selected case studies )</span>
-        <span class="label">Tamara Omomo / AI GTM Engineer</span>
+  <section class="pagehead">
+    <p class="lbl">tamara@gtm:~$ ls -l ./builds</p>
+    <h1>The case studies<span class="dot">.</span></h1>
+    <p class="pagehead__lede">Seven systems from the seam between marketing, sales and code. Each one replaced a manual, leaky process &mdash; and moved a number I can point to.</p>
+    <div class="pagehead__meta">
+      <span><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="6" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="6" height="1" fill="var(--yellow)"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="14" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> 07 units &mdash; and counting</span>
+      <span><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> all shipped to production</span>
+      <span><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="2" height="1" fill="currentColor"/><rect x="2" y="2" width="3" height="1" fill="currentColor"/><rect x="2" y="3" width="4" height="1" fill="currentColor"/><rect x="2" y="4" width="5" height="1" fill="currentColor"/><rect x="2" y="5" width="6" height="1" fill="currentColor"/><rect x="2" y="6" width="7" height="1" fill="currentColor"/><rect x="2" y="7" width="8" height="1" fill="currentColor"/><rect x="2" y="8" width="9" height="1" fill="currentColor"/><rect x="2" y="9" width="6" height="1" fill="currentColor"/><rect x="2" y="10" width="2" height="1" fill="currentColor"/><rect x="5" y="10" width="4" height="1" fill="currentColor"/><rect x="2" y="11" width="1" height="1" fill="currentColor"/><rect x="6" y="11" width="4" height="1" fill="currentColor"/><rect x="7" y="12" width="4" height="1" fill="currentColor"/><rect x="8" y="13" width="2" height="1" fill="currentColor"/></svg> click a unit to open it</span>
+    </div>
+  </section>
+
+  <!-- ============ 07 · LATEST ============ -->
+  <section class="window" id="case-07">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="6" y="2" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="8" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--accent)"/><rect x="11" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="6" height="1" fill="var(--accent)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="1" height="1" fill="currentColor"/><rect x="5" y="10" width="6" height="1" fill="var(--accent)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="11" width="8" height="1" fill="currentColor"/><rect x="14" y="11" width="1" height="1" fill="currentColor"/><rect x="1" y="12" width="1" height="1" fill="currentColor"/><rect x="14" y="12" width="1" height="1" fill="currentColor"/><rect x="1" y="13" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">synthetic-persona.exe</span>
+      <span class="window__ref">unit 07 &middot; latest</span>
+      <span class="tagchip">latest</span>
+    </div>
+    <div class="window__body">
+      <div class="case__head">
+        <div>
+          <h2>Synthetic-persona outbound engine</h2>
+          <p class="case__stat">15min<small>per campaign, from days of copywriting</small></p>
+        </div>
       </div>
-      <h1 class="wk-head r">The<br><span class="em">case studies.</span></h1>
-      <div class="wk-intro">
-        <p class="r d1">Seven systems from the seam between marketing, sales and code. Each one replaced a manual, leaky process — and moved a number I can point to.</p>
-        <span class="count-lbl r d2">( 07 — and counting )</span>
+      <div class="rows">
+        <div class="row"><b>Business problem</b><span>Every outbound campaign took days of manual copywriting &mdash; and still sounded generic. What actually convinces a CIO versus a CFO versus a Head of Procurement lived only in scattered sales calls. That knowledge never reached the emails prospects received, and campaign reviews showed it: generic first messages got ignored.</span></div>
+        <div class="row"><b>The solution</b><span>I took transcripts from the team&rsquo;s real sales conversations &mdash; pain-point calls with 7 AEs and SDRs &mdash; and synthesised them into 5 synthetic buyer personas: pains, buying triggers, objections and counters, per role, size band and industry. Not guessed from a whiteboard; drawn from what buyers actually said. New sales-call transcripts sync from Google Drive hourly and refresh the personas automatically. Upload a contact CSV and every lead is matched to a persona, enriched, and handed a unique email + LinkedIn sequence written in that persona&rsquo;s language (German Sie-form and English), grounded in real transcript quotes. A human review queue, a compliance blocklist and a canary test-send gate every campaign before a one-click push to Lemlist.</span></div>
+        <div class="row"><b>Business impact</b><span>Every first line opens with the recipient&rsquo;s role-specific pain in their own language &mdash; a CFO reads about budget predictability, a CIO about ticket volume. Per-campaign effort collapses from days to a 15-minute review, scaling the team&rsquo;s best hand-written outreach to 500+ contacts. The playbook compounds: every new call makes the next campaign sharper, even as people move on.</span></div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> workflow &mdash; live run</p>
+      <div class="chain">
+        <div class="chain__node"><b>in 01</b>Sales-call transcripts &middot; Drive</div>
+        <div class="chain__node"><b>02</b>Synthetic persona synthesis</div>
+        <div class="chain__node"><b>03</b>Contact CSV &middot; persona-match + enrich</div>
+        <div class="chain__node"><b>04</b>AI writes email + LinkedIn</div>
+        <div class="chain__node"><b>05</b>Human review &middot; compliance &middot; canary</div>
+        <div class="chain__node"><b>out 06</b>Lemlist</div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg> tech used</p>
+      <ul class="chips">
+        <li>Clay</li><li>Perplexity</li><li>Lemlist</li><li>Anthropic</li><li>Claude Code</li><li>Custom tool</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 01 ============ -->
+  <section class="window" id="case-01">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="6" y="2" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="8" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--accent)"/><rect x="11" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="6" height="1" fill="var(--accent)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="1" height="1" fill="currentColor"/><rect x="5" y="10" width="6" height="1" fill="var(--accent)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="11" width="8" height="1" fill="currentColor"/><rect x="14" y="11" width="1" height="1" fill="currentColor"/><rect x="1" y="12" width="1" height="1" fill="currentColor"/><rect x="14" y="12" width="1" height="1" fill="currentColor"/><rect x="1" y="13" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">lead-engine.exe</span>
+      <span class="window__ref">unit 01</span>
+    </div>
+    <div class="window__body">
+      <div class="case__head">
+        <div>
+          <h2>Always-on outbound engine</h2>
+          <p class="case__stat">Daily leads<small>new conversations every day, on autopilot</small></p>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="row"><b>Business problem</b><span>Right-fit companies were visiting the site and leaving anonymously. There was no way to spot them, find the right people and reach out before the intent went cold.</span></div>
+        <div class="row"><b>The solution</b><span>An always-on system that tracks which companies visit the site, pulls the domain, identifies the right contacts by job title, and pushes them into parallel LinkedIn + email sequences across multiple senders &mdash; with a human approval gate before anything sends.</span></div>
+        <div class="row"><b>Business impact</b><span>The campaign generates fresh leads and new conversations every day &mdash; a steady, predictable flow of replies and booked calls instead of one-off blasts. A Slack channel surfaces each company and contact in real time.</span></div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> workflow &mdash; live run</p>
+      <div class="chain">
+        <div class="chain__node"><b>in 01</b>Website visitor</div>
+        <div class="chain__node"><b>02</b>Company identified</div>
+        <div class="chain__node"><b>03</b>Contacts found by title</div>
+        <div class="chain__node"><b>04</b>Human approval</div>
+        <div class="chain__node"><b>05</b>LinkedIn + email sequences</div>
+        <div class="chain__node"><b>out 06</b>Booked calls</div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg> tech used</p>
+      <ul class="chips"><li>Clay</li><li>Lemlist</li><li>Slack</li><li>Claude Code</li><li>Custom tool</li><li>LinkedIn</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ 02 ============ -->
+  <section class="window" id="case-02">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="6" y="2" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="8" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--accent)"/><rect x="11" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="6" height="1" fill="var(--accent)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="1" height="1" fill="currentColor"/><rect x="5" y="10" width="6" height="1" fill="var(--accent)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="11" width="8" height="1" fill="currentColor"/><rect x="14" y="11" width="1" height="1" fill="currentColor"/><rect x="1" y="12" width="1" height="1" fill="currentColor"/><rect x="14" y="12" width="1" height="1" fill="currentColor"/><rect x="1" y="13" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">routing-engine.exe</span>
+      <span class="window__ref">unit 02</span>
+    </div>
+    <div class="window__body">
+      <div class="case__head">
+        <div>
+          <h2>Inbound routing engine</h2>
+          <p class="case__stat">11min<small>median response, from 4 hours</small></p>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="row"><b>Business problem</b><span>Leads arrived from everywhere &mdash; website inbound, paid search, LinkedIn ads &mdash; into different tools and inboxes. Round-robin couldn&rsquo;t account for fit, source or rep capacity, so high-intent demos went cold before anyone replied.</span></div>
+        <div class="row"><b>The solution</b><span>A routing engine that unifies every lead source into one flow. It scores each lead, round-robins across the sales team by territory and live capacity, enrolls them in the right drip sequence based on score, and hands the rep full context &mdash; source, enrichment and history.</span></div>
+        <div class="row"><b>Business impact</b><span>Median first response dropped from 4 hours to 11 minutes, the speed-to-lead SLA held above 95%, and no lead slipped through the cracks regardless of where it came from.</span></div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> workflow &mdash; live run</p>
+      <div class="chain">
+        <div class="chain__node"><b>in 01</b>Every lead source</div>
+        <div class="chain__node"><b>02</b>Score + qualify</div>
+        <div class="chain__node"><b>03</b>Route by territory + capacity</div>
+        <div class="chain__node"><b>04</b>Score-based drip sequence</div>
+        <div class="chain__node"><b>out 05</b>Rep with full context</div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg> tech used</p>
+      <ul class="chips"><li>HubSpot</li><li>Node</li><li>Slack</li><li>Revenue ops</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ 03 ============ -->
+  <section class="window" id="case-03">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="6" y="2" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="8" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--accent)"/><rect x="11" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="6" height="1" fill="var(--accent)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="1" height="1" fill="currentColor"/><rect x="5" y="10" width="6" height="1" fill="var(--accent)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="11" width="8" height="1" fill="currentColor"/><rect x="14" y="11" width="1" height="1" fill="currentColor"/><rect x="1" y="12" width="1" height="1" fill="currentColor"/><rect x="14" y="12" width="1" height="1" fill="currentColor"/><rect x="1" y="13" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">research-agents.exe</span>
+      <span class="window__ref">unit 03</span>
+    </div>
+    <div class="window__body">
+      <div class="case__head">
+        <div>
+          <h2>AI research agents</h2>
+          <p class="case__stat">+38%<small>sql &rarr; opportunity conversion</small></p>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="row"><b>Business problem</b><span>Reps burned hours on unqualified accounts. CRM records were thin and stale, and off-the-shelf enrichment couldn&rsquo;t answer the nuanced, research-style questions that actually decide fit.</span></div>
+        <div class="row"><b>The solution</b><span>Custom Clay AI agents that research each account the way a human SDR would &mdash; reading sites, news and signals to pull firmographic, technographic and intent data, qualify against our ICP, and write a clean fit score back to the CRM automatically.</span></div>
+        <div class="row"><b>Business impact</b><span>60k accounts agent-enriched and continuously refreshed; SQL-to-opportunity conversion up 38%. Reps only touch accounts worth touching.</span></div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> workflow &mdash; live run</p>
+      <div class="chain">
+        <div class="chain__node"><b>in 01</b>Account list</div>
+        <div class="chain__node"><b>02</b>AI research agents</div>
+        <div class="chain__node"><b>03</b>Fit + intent scoring</div>
+        <div class="chain__node"><b>04</b>CRM write-back</div>
+        <div class="chain__node"><b>out 05</b>Prioritised outreach</div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg> tech used</p>
+      <ul class="chips"><li>Clay</li><li>AI agents</li><li>Python</li><li>Enrichment</li><li>Scoring</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ 04 ============ -->
+  <section class="window" id="case-04">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="6" y="2" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="3" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="9" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="8" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--accent)"/><rect x="11" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="6" height="1" fill="var(--accent)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="1" height="1" fill="currentColor"/><rect x="5" y="10" width="6" height="1" fill="var(--accent)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="11" width="8" height="1" fill="currentColor"/><rect x="14" y="11" width="1" height="1" fill="currentColor"/><rect x="1" y="12" width="1" height="1" fill="currentColor"/><rect x="14" y="12" width="1" height="1" fill="currentColor"/><rect x="1" y="13" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">event-campaigns.exe</span>
+      <span class="window__ref">unit 04</span>
+    </div>
+    <div class="window__body">
+      <div class="case__head">
+        <div>
+          <h2>Event-driven campaigns</h2>
+          <p class="case__stat">Pre-booked<small>exec calendars, filled before each event</small></p>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="row"><b>Business problem</b><span>Conferences are full of right-fit buyers, but exec time on the ground is scarce. Leadership showed up without booked meetings or context on who was even worth meeting.</span></div>
+        <div class="row"><b>The solution</b><span>A two-part engine. Before the event, scrape the attendee list, identify the right accounts and run targeted campaigns to book meetings onto exec calendars. Then a custom briefing tool gives each exec full context per contact &mdash; slot, background, and whether the meeting happened.</span></div>
+        <div class="row"><b>Business impact</b><span>Execs walked in with pre-booked, well-briefed meetings instead of cold floor-walking &mdash; and because the tool tracked what happened, follow-up campaigns fired automatically, turning conversations into pipeline.</span></div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> workflow &mdash; live run</p>
+      <div class="chain">
+        <div class="chain__node"><b>in 01</b>Attendee list scraped</div>
+        <div class="chain__node"><b>02</b>Target accounts identified</div>
+        <div class="chain__node"><b>03</b>Pre-event campaigns</div>
+        <div class="chain__node"><b>04</b>Exec briefing tool</div>
+        <div class="chain__node"><b>05</b>Meeting tracked</div>
+        <div class="chain__node"><b>out 06</b>Automated follow-up</div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg> tech used</p>
+      <ul class="chips"><li>Lovable</li><li>Claude Code</li><li>Clay</li><li>Custom tool</li><li>Lemlist</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ 05 ============ -->
+  <section class="window" id="case-05">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="2" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="10" height="1" fill="var(--cyan)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="11" width="10" height="1" fill="currentColor"/></svg>
+      <span class="window__name">attribution.dbt</span>
+      <span class="window__ref">unit 05</span>
+    </div>
+    <div class="window__body">
+      <div class="case__head">
+        <div>
+          <h2>Multi-touch attribution</h2>
+          <p class="case__stat">$1.1M<small>spend reallocated to what closes</small></p>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="row"><b>Business problem</b><span>Spend decisions ran on last-touch guesses. Marketing and finance argued endlessly over what actually drove pipeline.</span></div>
+        <div class="row"><b>The solution</b><span>A SQL/dbt multi-touch attribution model that stitches every touch to closed revenue in one source of truth, surfaced in a live dashboard everyone can query.</span></div>
+        <div class="row"><b>Business impact</b><span>$1.1M of spend reallocated toward the channels and plays that actually close &mdash; with the data to defend every call.</span></div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> workflow &mdash; live run</p>
+      <div class="chain">
+        <div class="chain__node"><b>in 01</b>Every touchpoint</div>
+        <div class="chain__node"><b>02</b>dbt models</div>
+        <div class="chain__node"><b>03</b>Multi-touch weighting</div>
+        <div class="chain__node"><b>04</b>Live dashboard</div>
+        <div class="chain__node"><b>out 05</b>Budget decisions</div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg> tech used</p>
+      <ul class="chips"><li>dbt</li><li>SQL</li><li>HockeyStack</li><li>Analytics</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ 06 ============ -->
+  <section class="window" id="case-06">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg>
+      <span class="window__name">in-house-tools.exe</span>
+      <span class="window__ref">unit 06</span>
+    </div>
+    <div class="window__body">
+      <div class="case__head">
+        <div>
+          <h2>In-house tooling</h2>
+          <p class="case__stat">Self-serve<small>gtm team, off the ops backlog</small></p>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="row"><b>Business problem</b><span>The GTM team waited on ops and eng for every dashboard, list pull or one-off report &mdash; a constant bottleneck.</span></div>
+        <div class="row"><b>The solution</b><span>Internal dashboards, Slack apps and lightweight data tools made in-house &mdash; so the team can answer its own questions in seconds.</span></div>
+        <div class="row"><b>Business impact</b><span>GTM self-serves on the data it needs, and the ops backlog shrank &mdash; freeing engineering for the systems that matter.</span></div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> workflow &mdash; live run</p>
+      <div class="chain">
+        <div class="chain__node"><b>in 01</b>GTM question</div>
+        <div class="chain__node"><b>02</b>Internal tool / Slack app</div>
+        <div class="chain__node"><b>03</b>Live data</div>
+        <div class="chain__node"><b>out 04</b>Self-serve answer</div>
+      </div>
+      <p class="lbl case__lbl"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="1" height="1" fill="currentColor"/><rect x="7" y="1" width="1" height="1" fill="currentColor"/><rect x="10" y="1" width="1" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="0" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="15" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="var(--cyan)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="currentColor"/><rect x="4" y="11" width="1" height="1" fill="currentColor"/><rect x="7" y="11" width="1" height="1" fill="currentColor"/><rect x="10" y="11" width="1" height="1" fill="currentColor"/><rect x="4" y="12" width="1" height="1" fill="currentColor"/><rect x="7" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/></svg> tech used</p>
+      <ul class="chips"><li>Claude Code</li><li>React</li><li>Python</li><li>Slack apps</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ THE LAB ============ -->
+  <section class="window" id="lab">
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="6" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="9" y="2" width="1" height="1" fill="currentColor"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="10" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="6" height="1" fill="var(--lime)"/><rect x="10" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="8" height="1" fill="var(--lime)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="8" height="1" fill="var(--lime)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="10" height="1" fill="currentColor"/></svg>
+      <span class="window__name">the lab</span>
+      <span class="window__ref">currently building &middot; live experiments</span>
+    </div>
+    <div class="window__body">
+      <p class="lbl">tamara@gtm:~$ ps aux | grep experiment</p>
+      <div class="lab">
+        <div class="lab__item">
+          <div class="lab__hd"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="6" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="9" y="2" width="1" height="1" fill="currentColor"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="10" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="6" height="1" fill="var(--lime)"/><rect x="10" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="8" height="1" fill="var(--lime)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="8" height="1" fill="var(--lime)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="10" height="1" fill="currentColor"/></svg><span class="state state--on">in progress</span></div>
+          <h3>AI Deal Desk</h3>
+          <p>An agent that assembles pricing, legal and approval context the moment a deal hits stage three.</p>
+        </div>
+        <div class="lab__item">
+          <div class="lab__hd"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="6" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="9" y="2" width="1" height="1" fill="currentColor"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="10" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="6" height="1" fill="var(--lime)"/><rect x="10" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="8" height="1" fill="var(--lime)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="8" height="1" fill="var(--lime)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="10" height="1" fill="currentColor"/></svg><span class="state state--on">in progress</span></div>
+          <h3>Pipeline Copilot</h3>
+          <p>Weekly pipeline review, automated &mdash; surfaces stalled deals, coverage gaps and next actions.</p>
+        </div>
+        <div class="lab__item">
+          <div class="lab__hd"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="6" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="9" y="2" width="1" height="1" fill="currentColor"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="10" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="6" height="1" fill="var(--lime)"/><rect x="10" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="8" height="1" fill="var(--lime)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="8" height="1" fill="var(--lime)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="10" height="1" fill="currentColor"/></svg><span class="state">exploring</span></div>
+          <h3>Customer Health Agent</h3>
+          <p>Reads product usage, support tickets and CRM signals to flag churn risk before the QBR does.</p>
+        </div>
+        <div class="lab__item">
+          <div class="lab__hd"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="6" height="1" fill="currentColor"/><rect x="4" y="2" width="1" height="1" fill="currentColor"/><rect x="9" y="2" width="1" height="1" fill="currentColor"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="10" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="6" height="1" fill="var(--lime)"/><rect x="10" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="8" height="1" fill="var(--lime)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="8" height="1" fill="var(--lime)"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="10" height="1" fill="currentColor"/></svg><span class="state">exploring</span></div>
+          <h3>AI Account Research</h3>
+          <p>Deep-research briefs on any target account, generated on demand for reps before every call.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CASES -->
-  <section class="cases shell">
-
-    <article class="case r" id="case-07">
-      <div class="case-head">
-        <span class="case-no">07 · Latest</span>
-        <div>
-          <h2 class="case-title">Synthetic-persona <span class="ital">outbound engine</span></h2>
-        </div>
-        <div class="case-metric"><span class="cm-num">15<span class="u">min</span></span><span class="cm-lab">Per campaign, from days of copywriting</span></div>
-      </div>
-      <div class="case-band" style="--g:linear-gradient(90deg,#cc0a0d,#f87f23)"></div>
-      <div class="case-body">
-        <div class="cb-col"><h4>Business problem</h4><p>Every outbound campaign took <b>days of manual copywriting</b> — and still sounded generic. What actually convinces a CIO versus a CFO versus a Head of Procurement lived only in scattered sales calls. That knowledge never reached the emails prospects received, and campaign reviews showed it: generic first messages got ignored.</p></div>
-        <div class="cb-col"><h4>The solution</h4><p>I took <b>transcripts from the team's real sales conversations</b> — pain-point calls with 7 AEs and SDRs — and synthesised them into <b>5 synthetic buyer personas</b>: pains, buying triggers, objections and counters, per role, size band and industry. Not guessed from a whiteboard; drawn from what buyers actually said. New sales-call transcripts sync from Google Drive hourly and refresh the personas automatically. Upload a contact CSV and every lead is matched to a persona, enriched, and handed a unique email + LinkedIn sequence written <b>in that persona's language</b> (German <i>Sie</i>-form and English), grounded in real transcript quotes. A human review queue, a compliance blocklist and a canary test-send gate every campaign before a one-click push to Lemlist.</p></div>
-        <div class="cb-col"><h4>Business impact</h4><p>Every first line opens with the recipient's <b>role-specific pain in their own language</b> — a CFO reads about budget predictability, a CIO about ticket volume. Per-campaign effort collapses from days to a <b>15-minute review</b>, scaling the team's best hand-written outreach to <b>500+ contacts</b>. The playbook compounds: every new call makes the next campaign sharper, even as people move on.</p></div>
-      </div>
-      <div class="case-flow">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">Sales-call transcripts · Drive</span><span class="farr">→</span>
-          <span class="fnode hot">Synthetic persona synthesis</span><span class="farr">→</span>
-          <span class="fnode">Contact CSV · persona-match + enrich</span><span class="farr">→</span>
-          <span class="fnode hot">AI writes email + LinkedIn</span><span class="farr">→</span>
-          <span class="fnode">Human review · compliance · canary</span><span class="farr">→</span>
-          <span class="fnode hot">Lemlist</span>
-        </div>
-      </div>
-      <div class="case-tech">
-        <span class="ct-lab">Tech used</span>
-        <div class="case-tags"><span>Clay</span><span>Perplexity</span><span>Lemlist</span><span>Anthropic</span><span>Claude Code</span><span>Custom Tool</span></div>
-      </div>
-    </article>
-
-    <article class="case r" id="case-01">
-      <div class="case-head">
-        <span class="case-no">01</span>
-        <div>
-          <h2 class="case-title">Always-on <span class="ital">outbound engine</span></h2>
-        </div>
-        <div class="case-metric"><span class="cm-num">Daily<span class="u"> leads</span></span><span class="cm-lab">New conversations every day, on autopilot</span></div>
-      </div>
-      <div class="case-band" style="--g:linear-gradient(90deg,#f87f23,#cc0a0d)"></div>
-      <div class="case-body">
-        <div class="cb-col"><h4>Business problem</h4><p>Right-fit companies were visiting the site and leaving anonymously. There was no way to spot them, find the right people and reach out <b>before the intent went cold</b>.</p></div>
-        <div class="cb-col"><h4>The solution</h4><p>An always-on system that tracks which companies visit the site, pulls the domain, identifies the right contacts <b>by job title</b>, and pushes them into parallel LinkedIn + email sequences across multiple senders — with a human approval gate before anything sends.</p></div>
-        <div class="cb-col"><h4>Business impact</h4><p>The campaign generates <b>fresh leads and new conversations every day</b> — a steady, predictable flow of replies and booked calls instead of one-off blasts. A Slack channel surfaces each company and contact in real time.</p></div>
-      </div>
-      <div class="case-flow">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">Website visitor</span><span class="farr">→</span>
-          <span class="fnode">Company identified</span><span class="farr">→</span>
-          <span class="fnode">Contacts found by title</span><span class="farr">→</span>
-          <span class="fnode hot">Human approval</span><span class="farr">→</span>
-          <span class="fnode">LinkedIn + email sequences</span><span class="farr">→</span>
-          <span class="fnode hot">Booked calls</span>
-        </div>
-      </div>
-      <div class="case-tech">
-        <span class="ct-lab">Tech used</span>
-        <div class="case-tags"><span>Clay</span><span>Lemlist</span><span>Slack</span><span>Claude Code</span><span>Custom Tool</span><span>LinkedIn</span></div>
-      </div>
-    </article>
-
-    <article class="case r" id="case-02">
-      <div class="case-head">
-        <span class="case-no">02</span>
-        <div>
-          <h2 class="case-title">Inbound routing <span class="ital">engine</span></h2>
-        </div>
-        <div class="case-metric"><span class="cm-num">11<span class="u">min</span></span><span class="cm-lab">Median response, from 4 hours</span></div>
-      </div>
-      <div class="case-band" style="--g:linear-gradient(90deg,#cc3711,#f87f23)"></div>
-      <div class="case-body">
-        <div class="cb-col"><h4>Business problem</h4><p>Leads arrived from <b>everywhere</b> — website inbound, paid search, LinkedIn ads — into different tools and inboxes. Round-robin couldn't account for fit, source or rep capacity, so high-intent demos went cold before anyone replied.</p></div>
-        <div class="cb-col"><h4>The solution</h4><p>A routing engine that <b>unifies every lead source</b> into one flow. It scores each lead, round-robins across the sales team by territory and live capacity, enrolls them in the right <b>drip sequence based on score</b>, and hands the rep full context — source, enrichment and history.</p></div>
-        <div class="cb-col"><h4>Business impact</h4><p>Median first response dropped from <b>4 hours to 11 minutes</b>, the speed-to-lead SLA held above 95%, and no lead slipped through the cracks regardless of where it came from.</p></div>
-      </div>
-      <div class="case-flow">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">Every lead source</span><span class="farr">→</span>
-          <span class="fnode hot">Score + qualify</span><span class="farr">→</span>
-          <span class="fnode">Route by territory + capacity</span><span class="farr">→</span>
-          <span class="fnode">Score-based drip sequence</span><span class="farr">→</span>
-          <span class="fnode hot">Rep with full context</span>
-        </div>
-      </div>
-      <div class="case-tech">
-        <span class="ct-lab">Tech used</span>
-        <div class="case-tags"><span>HubSpot</span><span>Node</span><span>Slack</span><span>Revenue Ops</span></div>
-      </div>
-    </article>
-
-    <article class="case r" id="case-03">
-      <div class="case-head">
-        <span class="case-no">03</span>
-        <div>
-          <h2 class="case-title">AI research <span class="ital">agents</span></h2>
-        </div>
-        <div class="case-metric"><span class="cm-num">+38<span class="u">%</span></span><span class="cm-lab">SQL → opportunity conversion</span></div>
-      </div>
-      <div class="case-band" style="--g:linear-gradient(90deg,#21130f,#cc0a0d)"></div>
-      <div class="case-body">
-        <div class="cb-col"><h4>Business problem</h4><p>Reps burned hours on unqualified accounts. CRM records were <b>thin and stale</b>, and off-the-shelf enrichment couldn't answer the nuanced, research-style questions that actually decide fit.</p></div>
-        <div class="cb-col"><h4>The solution</h4><p>Custom <b>Clay AI agents</b> that research each account the way a human SDR would — reading sites, news and signals to pull firmographic, technographic and intent data, qualify against our ICP, and write a clean <b>fit score</b> back to the CRM automatically.</p></div>
-        <div class="cb-col"><h4>Business impact</h4><p><b>60k accounts</b> agent-enriched and continuously refreshed; SQL-to-opportunity conversion up <b>38%</b>. Reps only touch accounts worth touching.</p></div>
-      </div>
-      <div class="case-flow">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">Account list</span><span class="farr">→</span>
-          <span class="fnode hot">AI research agents</span><span class="farr">→</span>
-          <span class="fnode">Fit + intent scoring</span><span class="farr">→</span>
-          <span class="fnode">CRM write-back</span><span class="farr">→</span>
-          <span class="fnode hot">Prioritised outreach</span>
-        </div>
-      </div>
-      <div class="case-tech">
-        <span class="ct-lab">Tech used</span>
-        <div class="case-tags"><span>Clay</span><span>AI Agents</span><span>Python</span><span>Enrichment</span><span>Scoring</span></div>
-      </div>
-    </article>
-
-    <article class="case r" id="case-04">
-      <div class="case-head">
-        <span class="case-no">04</span>
-        <div>
-          <h2 class="case-title">Event-driven <span class="ital">campaigns</span></h2>
-        </div>
-        <div class="case-metric"><span class="cm-num">Pre<span class="u">-booked</span></span><span class="cm-lab">Exec calendars, filled before each event</span></div>
-      </div>
-      <div class="case-band" style="--g:linear-gradient(90deg,#f87f23,#f0dfcb)"></div>
-      <div class="case-body">
-        <div class="cb-col"><h4>Business problem</h4><p>Conferences are full of right-fit buyers, but exec time on the ground is scarce. Leadership showed up <b>without booked meetings or context</b> on who was even worth meeting.</p></div>
-        <div class="cb-col"><h4>The solution</h4><p>A two-part engine. <b>Before the event</b>, scrape the attendee list, identify the right accounts and run targeted campaigns to book meetings onto exec calendars. Then a <b>custom briefing tool</b> gives each exec full context per contact — slot, background, and whether the meeting happened.</p></div>
-        <div class="cb-col"><h4>Business impact</h4><p>Execs walked in with <b>pre-booked, well-briefed meetings</b> instead of cold floor-walking — and because the tool tracked what happened, <b>follow-up campaigns fired automatically</b>, turning conversations into pipeline.</p></div>
-      </div>
-      <div class="case-flow">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">Attendee list scraped</span><span class="farr">→</span>
-          <span class="fnode">Target accounts identified</span><span class="farr">→</span>
-          <span class="fnode">Pre-event campaigns</span><span class="farr">→</span>
-          <span class="fnode hot">Exec briefing tool</span><span class="farr">→</span>
-          <span class="fnode">Meeting tracked</span><span class="farr">→</span>
-          <span class="fnode hot">Automated follow-up</span>
-        </div>
-      </div>
-      <div class="case-tech">
-        <span class="ct-lab">Tech used</span>
-        <div class="case-tags"><span>Lovable</span><span>Claude Code</span><span>Clay</span><span>Custom Tool</span><span>Lemlist</span></div>
-      </div>
-    </article>
-
-    <article class="case r" id="case-05">
-      <div class="case-head">
-        <span class="case-no">05</span>
-        <div>
-          <h2 class="case-title">Multi-touch <span class="ital">attribution</span></h2>
-        </div>
-        <div class="case-metric"><span class="cm-num">$1.1<span class="u">M</span></span><span class="cm-lab">Spend reallocated to what closes</span></div>
-      </div>
-      <div class="case-band" style="--g:linear-gradient(90deg,#cc0a0d,#21130f)"></div>
-      <div class="case-body">
-        <div class="cb-col"><h4>Business problem</h4><p>Spend decisions ran on <b>last-touch guesses</b>. Marketing and finance argued endlessly over what actually drove pipeline.</p></div>
-        <div class="cb-col"><h4>The solution</h4><p>A SQL/dbt multi-touch attribution model that stitches every touch to closed revenue in <b>one source of truth</b>, surfaced in a live dashboard everyone can query.</p></div>
-        <div class="cb-col"><h4>Business impact</h4><p><b>$1.1M of spend</b> reallocated toward the channels and plays that actually close — with the data to defend every call.</p></div>
-      </div>
-      <div class="case-flow">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">Every touchpoint</span><span class="farr">→</span>
-          <span class="fnode hot">dbt models</span><span class="farr">→</span>
-          <span class="fnode">Multi-touch weighting</span><span class="farr">→</span>
-          <span class="fnode">Live dashboard</span><span class="farr">→</span>
-          <span class="fnode hot">Budget decisions</span>
-        </div>
-      </div>
-      <div class="case-tech">
-        <span class="ct-lab">Tech used</span>
-        <div class="case-tags"><span>dbt</span><span>SQL</span><span>HockeyStack</span><span>Analytics</span></div>
-      </div>
-    </article>
-
-    <article class="case r" id="case-06">
-      <div class="case-head">
-        <span class="case-no">06</span>
-        <div>
-          <h2 class="case-title">In-house <span class="ital">tooling</span></h2>
-        </div>
-        <div class="case-metric"><span class="cm-num">Self<span class="u">-serve</span></span><span class="cm-lab">GTM team, off the ops backlog</span></div>
-      </div>
-      <div class="case-band" style="--g:linear-gradient(90deg,#f87f23,#cc3711)"></div>
-      <div class="case-body">
-        <div class="cb-col"><h4>Business problem</h4><p>The GTM team waited on ops and eng for <b>every dashboard, list pull or one-off report</b> — a constant bottleneck.</p></div>
-        <div class="cb-col"><h4>The solution</h4><p>Internal dashboards, Slack apps and lightweight data tools made in-house — so the team can <b>answer its own questions</b> in seconds.</p></div>
-        <div class="cb-col"><h4>Business impact</h4><p>GTM self-serves on the data it needs, and the ops backlog shrank — freeing engineering for the systems that matter.</p></div>
-      </div>
-      <div class="case-flow">
-        <div class="cf-lab">Workflow <span class="cf-live"><span class="pulse"></span>live run</span></div>
-        <div class="flow">
-          <span class="fnode">GTM question</span><span class="farr">→</span>
-          <span class="fnode hot">Internal tool / Slack app</span><span class="farr">→</span>
-          <span class="fnode">Live data</span><span class="farr">→</span>
-          <span class="fnode hot">Self-serve answer</span>
-        </div>
-      </div>
-      <div class="case-tech">
-        <span class="ct-lab">Tech used</span>
-        <div class="case-tags"><span>Claude Code</span><span>React</span><span>Python</span><span>Slack Apps</span></div>
-      </div>
-    </article>
-
-  </section>
-
-  <!-- CURRENTLY BUILDING -->
-  <section class="lab shell" id="lab">
-    <div class="sec-head">
-      <h2 class="scramble">Currently Building</h2>
-      <span class="label">{ The lab — live experiments }</span>
+  <section class="window" id="w-contact" hidden>
+    <div class="window__bar">
+      <svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="2" height="1" fill="var(--accent)"/><rect x="11" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="2" height="1" fill="var(--accent)"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="2" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="2" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name">contact</span>
+      <span class="window__ref">open channel</span>
+      <button class="window__close" data-close="w-contact" aria-label="Close contact">&times;</button>
     </div>
-    <div class="lab-grid">
-      <div class="lab-card r">
-        <span class="ls"><span class="pulse"></span>In progress</span>
-        <h4>AI Deal Desk</h4>
-        <p>An agent that assembles pricing, legal and approval context the moment a deal hits stage three.</p>
+    <div class="window__body">
+      <p class="lbl">tamara@gtm:~$ ./connect</p>
+      <h2>Let&rsquo;s <em>ship</em>.</h2>
+      <div class="prose" style="margin-top:12px;">
+        <p class="dim">Whether you&rsquo;re hiring, shipping AI workflows or rethinking your GTM infrastructure &mdash; I&rsquo;d love to hear what you&rsquo;re working on.</p>
       </div>
-      <div class="lab-card r d1">
-        <span class="ls"><span class="pulse"></span>In progress</span>
-        <h4>Pipeline Copilot</h4>
-        <p>Weekly pipeline review, automated — surfaces stalled deals, coverage gaps and next actions.</p>
-      </div>
-      <div class="lab-card r d2">
-        <span class="ls"><span class="pulse"></span>Exploring</span>
-        <h4>Customer Health Agent</h4>
-        <p>Reads product usage, support tickets and CRM signals to flag churn risk before the QBR does.</p>
-      </div>
-      <div class="lab-card r d3">
-        <span class="ls"><span class="pulse"></span>Exploring</span>
-        <h4>AI Account Research</h4>
-        <p>Deep-research briefs on any target account, generated on demand for reps before every call.</p>
+      <div class="links">
+        <a class="pri" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="5" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="2" height="1" fill="currentColor"/><rect x="11" y="10" width="2" height="1" fill="currentColor"/><rect x="5" y="11" width="6" height="1" fill="currentColor"/></svg> Book a conversation <span aria-hidden="true">&rarr;</span></a>
+        <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="5" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="5" width="5" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="5" height="1" fill="currentColor"/><rect x="6" y="8" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="8" width="5" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="6" y="9" width="1" height="1" fill="currentColor"/><rect x="9" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="9" y="10" width="1" height="1" fill="currentColor"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="11" width="2" height="1" fill="currentColor"/><rect x="11" y="11" width="2" height="1" fill="currentColor"/><rect x="5" y="12" width="6" height="1" fill="currentColor"/></svg> LinkedIn <span aria-hidden="true">&rarr;</span></a>
+        <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="1" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="1" height="1" fill="currentColor"/><rect x="12" y="2" width="2" height="1" fill="var(--accent)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="2" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--accent)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="11" y="5" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="1" height="1" fill="currentColor"/><rect x="8" y="6" width="2" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="1" height="1" fill="currentColor"/><rect x="6" y="8" width="2" height="1" fill="var(--accent)"/><rect x="8" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="2" height="1" fill="var(--accent)"/><rect x="7" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="2" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="4" height="1" fill="currentColor"/><rect x="2" y="12" width="2" height="1" fill="currentColor"/></svg> Substack <span aria-hidden="true">&rarr;</span></a>
+        <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="11" y="4" width="4" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="6" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="4" height="1" fill="var(--cyan)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="13" height="1" fill="currentColor"/></svg> R&eacute;sum&eacute; / CV <span aria-hidden="true">&rarr;</span></a>
+        <a href="mailto:omomo.oj@gmail.com"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="2" height="1" fill="var(--accent)"/><rect x="11" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="2" height="1" fill="var(--accent)"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="2" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="2" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg> Email <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="glow"></div>
-    <div class="shell inner">
-      <span class="label">( Let's ship better GTM systems )</span>
-      <h2>Let's <span class="ital">ship</span>.</h2>
-      <a href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener" class="cta mag" data-mag="0.25"><span>Book a conversation</span><span class="arr">→</span></a>
-      <div class="socials">
-        <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener" class="dx">LinkedIn</a>
-        <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener" class="dx">Substack</a>
-        <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener" class="dx">Résumé / CV</a>
-        <a href="mailto:omomo.oj@gmail.com" class="dx">Email</a>
-      </div>
-    </div>
-    <div class="ghostmark"><span>OMOMO</span></div>
-  </section>
 </main>
 
-<footer class="footer">
-  <span>© 2026 Tamara Omomo</span>
-  <span>AI GTM Engineer — Designed &amp; coded in the browser</span>
-  <span>Berlin → Remote</span>
+
+<footer class="colophon">
+  <span>&copy; 2026 Tamara Omomo &mdash; built, not decked</span>
+  <nav class="colophon__nav">
+    <a href="gtm-engineering.html">GTM engineering</a>
+    <a href="ai-gtm.html">AI GTM</a>
+    <a href="revenue-systems.html">Revenue systems</a>
+  </nav>
+  <span>Berlin &middot; open from Q3 &rsquo;26</span>
 </footer>
 
-<script src="assets/interactions.js?v=20260705b"></script>
+<nav class="dock" aria-label="Pages">
+  <div class="dock__inner">
+    <a class="card" href="index.html"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="10" height="1" fill="var(--cyan)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="3" height="1" fill="var(--lime)"/><rect x="12" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="6" width="1" height="1" fill="var(--lime)"/><rect x="12" y="6" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="10" height="1" fill="var(--cyan)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/><rect x="5" y="11" width="6" height="1" fill="currentColor"/><rect x="5" y="12" width="1" height="1" fill="currentColor"/><rect x="10" y="12" width="1" height="1" fill="currentColor"/><rect x="2" y="13" width="12" height="1" fill="currentColor"/></svg>home</a>
+    <a class="card" aria-current="page" href="builds.html"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="6" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="6" height="1" fill="var(--yellow)"/><rect x="8" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="14" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="12" height="1" fill="var(--yellow)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>builds</a>
+    <a class="card" href="writing.html"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="1" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="1" height="1" fill="currentColor"/><rect x="12" y="2" width="2" height="1" fill="var(--accent)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="2" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--accent)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="11" y="5" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="1" height="1" fill="currentColor"/><rect x="8" y="6" width="2" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="1" height="1" fill="currentColor"/><rect x="6" y="8" width="2" height="1" fill="var(--accent)"/><rect x="8" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="2" height="1" fill="var(--accent)"/><rect x="7" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="2" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="4" height="1" fill="currentColor"/><rect x="2" y="12" width="2" height="1" fill="currentColor"/></svg>thoughts</a>
+    <a class="card" href="about.html"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="12" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="13" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="4" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="5" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="4" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="6" height="1" fill="currentColor"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="8" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="1" height="1" fill="currentColor"/><rect x="11" y="10" width="1" height="1" fill="currentColor"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="12" height="1" fill="currentColor"/></svg>about</a>
+    <button class="card" data-window="w-contact" aria-pressed="false"><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="2" height="1" fill="var(--accent)"/><rect x="11" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="2" height="1" fill="var(--accent)"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="2" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="2" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg>contact</button>
+    <button class="card card--tray" id="scheme" title="Toggle display scheme">&#9681;</button>
+  </div>
+</nav>
+
+<script>
+
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- gauges ---- */
+  document.querySelectorAll(".gauge").forEach(function(g){
+    var fill = parseInt(g.getAttribute("data-fill"), 10) || 0;
+    var html = "";
+    for (var i = 0; i < 10; i++) html += '<i class="' + (i < fill ? "on" : "") + '"></i>';
+    g.innerHTML = html;
+  });
+
+  /* ---- dock cards open / close windows ---- */
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".card[data-window]"));
+  var open = document.getElementById("open");
+
+  function setOpenScreen(){
+    var anyOpen = cards.some(function(c){ return c.getAttribute("aria-pressed") === "true"; });
+    open.hidden = anyOpen;
+  }
+
+  function toggle(card, force){
+    var win = document.getElementById(card.getAttribute("data-window"));
+    if (!win) return;
+    var show = force !== undefined ? force : win.hidden;
+    win.hidden = !show;
+    card.setAttribute("aria-pressed", String(show));
+    setOpenScreen();
+    if (show) win.scrollIntoView({behavior: reduce ? "auto" : "smooth", block: "start"});
+  }
+
+  cards.forEach(function(card){
+    card.addEventListener("click", function(){ toggle(card); });
+  });
+
+  document.querySelectorAll("[data-close]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.getAttribute("data-close");
+      var card = cards.filter(function(c){ return c.getAttribute("data-window") === id; })[0];
+      if (card) toggle(card, false);
+    });
+  });
+
+  /* ---- build rows expand in place ---- */
+  document.querySelectorAll(".build__hd").forEach(function(hd){
+    hd.addEventListener("click", function(){
+      var panel = document.getElementById(hd.getAttribute("aria-controls"));
+      var show = panel.hidden;
+      panel.hidden = !show;
+      hd.setAttribute("aria-expanded", String(show));
+      hd.querySelector(".build__sign").textContent = show ? "−" : "+";
+    });
+  });
+
+  /* ---- masthead stamp ---- */
+  var stamp = document.getElementById("stamp");
+  function tick(){
+    var d = new Date();
+    stamp.textContent =
+      String(d.getDate()).padStart(2, "0") + "." +
+      String(d.getMonth() + 1).padStart(2, "0") + "." + d.getFullYear() + " " +
+      String(d.getHours()).padStart(2, "0") + ":" +
+      String(d.getMinutes()).padStart(2, "0");
+  }
+  tick();
+  setInterval(tick, 20000);
+
+
+  /* ---- data-processing monitor ---- */
+  var cv = document.getElementById("rain");
+  if (cv) {
+    var ctx = cv.getContext("2d");
+    var CH = "0123456789ABCDEF/\\|<>[]{}=+*.:$#%";
+    var cols = [], cw = 7, ch = 12, W = 0, H = 0, dpr = 1;
+    var palette = {screen:"#151613", ink:"#7E8175", hot:"#FF5C00"};
+
+    function readPalette(){
+      var cs = getComputedStyle(document.documentElement);
+      palette.screen = cs.getPropertyValue("--screen").trim() || palette.screen;
+      palette.ink = cs.getPropertyValue("--screen-ink").trim() || palette.ink;
+      palette.hot = cs.getPropertyValue("--lime").trim() || palette.hot;
+    }
+
+    function size(){
+      var r = cv.parentNode.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      cv.width = Math.floor(W * dpr);
+      cv.height = Math.floor(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = "10px ui-monospace, Menlo, Consolas, monospace";
+      ctx.textBaseline = "top";
+      var n = Math.ceil(W / cw);
+      var visible = Math.ceil(H / ch);
+      cols = [];
+      for (var i = 0; i < n; i++) cols.push(mkCol(visible, true));
+    }
+
+    function mkCol(visible, spread){
+      var len = 7 + ((Math.random() * 14) | 0);
+      var chars = [];
+      for (var j = 0; j < len; j++) chars.push(CH[(Math.random() * CH.length) | 0]);
+      return {
+        head: spread ? ((Math.random() * (visible + len)) | 0) : -(1 + ((Math.random() * 6) | 0)),
+        chars: chars,
+        len: len,
+        every: 1 + ((Math.random() * 3) | 0),
+        t: 0,
+        hot: Math.random() < 0.1
+      };
+    }
+
+    function draw(){
+      ctx.fillStyle = palette.screen;
+      ctx.fillRect(0, 0, W, H);
+      var visible = Math.ceil(H / ch);
+      for (var i = 0; i < cols.length; i++) {
+        var c = cols[i];
+        var x = i * cw;
+        for (var j = 0; j < c.len; j++) {
+          var row = c.head - j;
+          if (row < 0 || row > visible) continue;
+          var fade = 1 - (j / c.len);
+          ctx.globalAlpha = j === 0 ? 0.95 : Math.max(0.05, fade * 0.6);
+          ctx.fillStyle = (j === 0 || c.hot) ? palette.hot : palette.ink;
+          ctx.fillText(c.chars[j], x, row * ch);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function advance(){
+      var visible = Math.ceil(H / ch);
+      for (var i = 0; i < cols.length; i++) {
+        var c = cols[i];
+        c.t++;
+        if (c.t % c.every) continue;
+        c.chars.pop();
+        c.chars.unshift(CH[(Math.random() * CH.length) | 0]);
+        c.head++;
+        if (c.head - c.len > visible) cols[i] = mkCol(visible, false);
+      }
+    }
+
+    function frame(){
+      advance();
+      draw();
+      raf = requestAnimationFrame(frame);
+    }
+
+    var raf = null;
+    readPalette();
+    size();
+    if (reduce) {
+      draw();
+    } else {
+      raf = requestAnimationFrame(frame);
+    }
+
+    window.addEventListener("resize", function(){ readPalette(); size(); });
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function(){ readPalette(); size(); });
+      ro.observe(cv.parentNode);
+    }
+    window.addEventListener("load", function(){ readPalette(); size(); });
+    document.addEventListener("schemechange", function(){ readPalette(); });
+
+    /* pause the loop while the opening screen is hidden */
+    var obs = new MutationObserver(function(){
+      if (reduce) return;
+      if (open.hidden && raf) { cancelAnimationFrame(raf); raf = null; }
+      else if (!open.hidden && !raf) { size(); raf = requestAnimationFrame(frame); }
+    });
+    obs.observe(open, { attributes: true, attributeFilter: ["hidden"] });
+
+    /* progress readouts + log */
+    var JOBS = [
+      "enrich", "route", "attribute", "score", "persona-synth", "deal-desk",
+      "pipeline-copilot", "health-agent", "account-research", "event-brief",
+      "canary-send", "dbt-run", "agent-queue", "crm-sync", "icp-match",
+      "transcript-sync", "sequence-write", "fit-model"
+    ];
+    var jobAt = 0;
+    function nextJob(){
+      var name = JOBS[jobAt % JOBS.length];
+      jobAt++;
+      return name;
+    }
+
+    var bars = [1, 2, 3, 4].map(function(i){
+      return {
+        el: document.getElementById("p" + i),
+        val: document.getElementById("p" + i + "v"),
+        name: document.getElementById("p" + i + "n"),
+        v: Math.random() * 70,
+        sp: 0.35 + Math.random() * 0.9
+      };
+    }).filter(function(b){ return b.el; });
+
+    bars.forEach(function(b){ if (b.name) b.name.textContent = nextJob(); });
+
+    var LOG = [
+      "enrich   \u25B8 51,204 accounts refreshed",
+      "route    \u25B8 median response <b>9 min</b>",
+      "score    \u25B8 fit model v4 applied",
+      "sync     \u25B8 hubspot \u2194 clay ok",
+      "attrib   \u25B8 <b>$0.9M</b> reallocated",
+      "agent    \u25B8 12 research tasks queued",
+      "send     \u25B8 canary batch approved",
+      "persona  \u25B8 5 personas rebuilt from calls",
+      "dealdesk \u25B8 pricing context assembled",
+      "copilot  \u25B8 4 stalled deals surfaced",
+      "health   \u25B8 churn risk flagged pre-QBR",
+      "brief    \u25B8 exec briefing generated",
+      "dbt      \u25B8 attribution models rebuilt",
+      "research \u25B8 account brief ready"
+    ];
+    var li = 0, lines = [];
+    var plog = document.getElementById("plog");
+    var spark = document.getElementById("spark");
+
+    function step(){
+      bars.forEach(function(b){
+        b.v += b.sp;
+        if (b.v >= 100) {
+          b.v = 0;
+          b.sp = 0.35 + Math.random() * 0.9;
+          if (b.name) b.name.textContent = nextJob();
+        }
+        b.el.style.width = b.v.toFixed(0) + "%";
+        b.val.textContent = b.v.toFixed(0) + "%";
+      });
+      spark.textContent = "////////".slice(0, 1 + (Math.floor(Date.now() / 220) % 8));
+    }
+    function pushLine(){
+      lines.push(LOG[li % LOG.length]);
+      li++;
+      if (lines.length > 3) lines.shift();
+      plog.innerHTML = lines.join("\n");
+    }
+    pushLine(); pushLine(); pushLine();
+    if (!reduce) {
+      setInterval(step, 90);
+      setInterval(pushLine, 1900);
+    }
+  }
+
+
+  /* ---- boot / self test ---- */
+  (function(){
+    var boot = document.getElementById("boot");
+    if (!boot) return;
+    var logEl = document.getElementById("boot-log");
+    var barEl = document.getElementById("boot-bar");
+    var pctEl = document.getElementById("boot-pct");
+    var readyEl = document.getElementById("boot-ready");
+    var stampEl = document.getElementById("boot-stamp");
+
+    var d = new Date();
+    stampEl.textContent =
+      String(d.getDate()).padStart(2, "0") + "." +
+      String(d.getMonth() + 1).padStart(2, "0") + "." + d.getFullYear();
+
+
+    var LINES = [
+      ["init  gtm.core", "ok"],
+      ["scan  revenue systems", "<b>7 units</b>"],
+      ["load  enrichment agents", "<b>51,204</b> accounts"],
+      ["mount ./builds", "7 case studies"],
+      ["test  pipeline channel", "<b>$3.6M</b> sourced"],
+      ["test  response latency", "<b>9 min</b> median"],
+      ["test  conversion lift", "<b>+32%</b> sql &rarr; opp"],
+      ["test  attribution model", "<b>$0.9M</b> reallocated"],
+      ["auth  tamaraa", "<i>ai gtm engineer</i>"]
+    ];
+
+    var timers = [];
+    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+
+    var odo = document.getElementById("odo");
+    if (odo) {
+      var target = 98068 + (Math.floor(Date.now() / 86400000) % 400);
+      function paintOdo(n){
+        odo.innerHTML = String(n).padStart(6, "0").split("").map(function(c){
+          return "<i>" + c + "</i>";
+        }).join("");
+      }
+      paintOdo(target);
+      if (!reduce) {
+        var from = target - 7, cur = from;
+        paintOdo(cur);
+        var spin = setInterval(function(){
+          cur++;
+          paintOdo(cur);
+          if (cur >= target) clearInterval(spin);
+        }, 230);
+        timers.push(spin);
+      }
+    }
+
+
+    function endBoot(){
+      if (boot.hidden) return;
+      boot.hidden = true;
+      timers.forEach(clearTimeout);
+      timers = [];
+      document.removeEventListener("keydown", endBoot);
+      document.removeEventListener("pointerdown", endBoot);
+      if (typeof stopBootRain === "function") stopBootRain();
+    }
+
+    var SEEN = "omomo-booted";
+    var alreadyBooted = false;
+    try { alreadyBooted = sessionStorage.getItem(SEEN) === "1"; } catch (e) {}
+    if (reduce || alreadyBooted) { endBoot(); return; }
+    try { sessionStorage.setItem(SEEN, "1"); } catch (e) {}
+
+    document.addEventListener("keydown", endBoot);
+    document.addEventListener("pointerdown", endBoot);
+
+    var STEP = 460;
+    LINES.forEach(function(pair, i){
+      later(function(){
+        var p = document.createElement("p");
+        var dots = ".".repeat(Math.max(3, 34 - pair[0].length));
+        p.innerHTML = "&gt; " + pair[0] + " " + dots + " " + pair[1];
+        logEl.appendChild(p);
+        var pct = Math.round(((i + 1) / LINES.length) * 100);
+        barEl.style.width = pct + "%";
+        pctEl.textContent = pct + "%";
+      }, STEP * i);
+    });
+
+    var total = STEP * LINES.length;
+
+    later(function(){
+      readyEl.innerHTML = "all channels nominal &mdash; <i>ready</i><span class=\"boot__cursor\"></span>";
+      var skip = boot.querySelector(".boot__skip");
+      if (skip) skip.classList.add("is-armed");
+    }, total + 700);
+
+    /* faint data rain behind the self test */
+    var bc = document.getElementById("bootrain");
+    var stopBootRain = null;
+    if (bc) {
+      var bx = bc.getContext("2d");
+      var BCH = "0123456789ABCDEF/\\|<>[]{}=+*.:$#%";
+      var bcols = [], bcw = 8, bch = 13, BW = 0, BH = 0, braf = null;
+      function bsize(){
+        var dp = Math.min(window.devicePixelRatio || 1, 2);
+        BW = boot.clientWidth; BH = boot.clientHeight;
+        bc.width = Math.floor(BW * dp); bc.height = Math.floor(BH * dp);
+        bx.setTransform(dp, 0, 0, dp, 0, 0);
+        bx.font = "11px ui-monospace, Menlo, Consolas, monospace";
+        bx.textBaseline = "top";
+        var vis = Math.ceil(BH / bch);
+        bcols = [];
+        for (var i = 0; i < Math.ceil(BW / bcw); i++) bcols.push(bmk(vis, true));
+      }
+      function bmk(vis, spread){
+        var len = 8 + ((Math.random() * 16) | 0), ch = [];
+        for (var j = 0; j < len; j++) ch.push(BCH[(Math.random() * BCH.length) | 0]);
+        return { head: spread ? ((Math.random() * (vis + len)) | 0) : -(1 + ((Math.random() * 6) | 0)),
+                 chars: ch, len: len, every: 1 + ((Math.random() * 3) | 0), t: 0 };
+      }
+      function bframe(){
+        var vis = Math.ceil(BH / bch);
+        bx.fillStyle = "#0B0C0A";
+        bx.fillRect(0, 0, BW, BH);
+        for (var i = 0; i < bcols.length; i++) {
+          var c = bcols[i];
+          c.t++;
+          if (!(c.t % c.every)) {
+            c.chars.pop();
+            c.chars.unshift(BCH[(Math.random() * BCH.length) | 0]);
+            c.head++;
+            if (c.head - c.len > vis) { bcols[i] = bmk(vis, false); continue; }
+          }
+          for (var j = 0; j < c.len; j++) {
+            var row = c.head - j;
+            if (row < 0 || row > vis) continue;
+            bx.globalAlpha = j === 0 ? 0.9 : Math.max(0.05, (1 - j / c.len) * 0.55);
+            bx.fillStyle = j === 0 ? "#FF6A14" : "#9B9E92";
+            bx.fillText(c.chars[j], i * bcw, row * bch);
+          }
+        }
+        bx.globalAlpha = 1;
+        braf = requestAnimationFrame(bframe);
+      }
+      bsize();
+      braf = requestAnimationFrame(bframe);
+      window.addEventListener("resize", bsize);
+      stopBootRain = function(){ if (braf) cancelAnimationFrame(braf); braf = null; };
+    }
+  })();
+
+  /* ---- display scheme ---- */
+  var root = document.documentElement;
+  document.getElementById("scheme").addEventListener("click", function(){
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    root.setAttribute("data-theme", dark ? "light" : "dark");
+    document.dispatchEvent(new Event("schemechange"));
+  });
+})();
+
+</script>
 </body>
 </html>

@@ -1477,9 +1477,16 @@ body::before{
   /* tap targets */
   .contact-links{gap:6px 18px;}
   .contact-links a{padding:10px 4px;}
-  .colophon{gap:8px 18px;}
-  .colophon__nav{gap:4px 16px;}
-  .colophon a{display:inline-block;padding:6px 0;}
+  .colophon{gap:10px 18px;}
+  .colophon__nav{gap:8px 12px;}
+  .colophon a{
+    display:inline-flex;
+    align-items:center;
+    min-height:44px;
+    padding:0 12px;
+    border:1px solid var(--line);
+    font-size:10px;
+  }
   .contact-x{width:42px;height:40px;font-size:18px;}
   .window__close{width:30px;height:26px;}
   .iconbtn{padding:9px 12px 9px 9px;}

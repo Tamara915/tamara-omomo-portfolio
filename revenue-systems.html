@@ -36,6 +36,10 @@
   --chip2:#4FC2AC;
   --chip3:#7FB2F0;
   --chip4:#FFFFFF;
+  --tel-body:#C63324;
+  --tel-shade:#8F1F13;
+  --tel-line:#14120F;
+  --tel-grid:var(--line);
   --font-mono:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-display:"American Typewriter", "Rockwell", "Courier New", "Courier", Georgia, serif;
 }
@@ -62,6 +66,10 @@
     --chip2:#4FC2AC;
     --chip3:#7FB2F0;
     --chip4:#E8E3D6;
+    --tel-body:#E4493A;
+    --tel-shade:#A32718;
+    --tel-line:#F2EDE3;
+    --tel-grid:#3A342A;
   }
 }
 :root[data-theme="dark"]{
@@ -85,6 +93,10 @@
   --chip2:#4FC2AC;
   --chip3:#7FB2F0;
   --chip4:#E8E3D6;
+  --tel-body:#E4493A;
+  --tel-shade:#A32718;
+  --tel-line:#F2EDE3;
+  --tel-grid:#3A342A;
 }
 
 *{box-sizing:border-box;}
@@ -1325,7 +1337,7 @@ body::before{
   display:block;
   width:3px;
   height:clamp(34px,6vh,64px);
-  background:repeating-linear-gradient(180deg, var(--line-hard) 0 6px, transparent 6px 9px);
+  background:repeating-linear-gradient(180deg, var(--tel-line) 0 6px, transparent 6px 9px);
 }
 .receiver{
   width:clamp(64px,10vw,92px);
@@ -1357,8 +1369,8 @@ body::before{
 #contactmodal{
   background:var(--bg);
   background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    linear-gradient(var(--tel-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--tel-grid) 1px, transparent 1px);
   background-size:64px 64px;
   display:flex;
   flex-direction:column;
@@ -1458,12 +1470,12 @@ body::before{
   <a class="hangline" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener" aria-label="Pick up the phone — book a conversation">
     <i class="cord"></i>
     <svg class="receiver" viewBox="0 0 76 76" aria-hidden="true">
-      <path d="M17 53 A 31 31 0 0 1 53 17" stroke="#14120F" stroke-width="24" fill="none" stroke-linecap="round"/>
-      <path d="M17 53 A 31 31 0 0 1 53 17" stroke="#C63324" stroke-width="16" fill="none" stroke-linecap="round"/>
-      <ellipse cx="17" cy="53" rx="14" ry="9.5" transform="rotate(-50 17 53)" fill="#C63324" stroke="#14120F" stroke-width="3"/>
-      <ellipse cx="53" cy="17" rx="14" ry="9.5" transform="rotate(-50 53 17)" fill="#C63324" stroke="#14120F" stroke-width="3"/>
-      <ellipse cx="17" cy="53" rx="7" ry="4.5" transform="rotate(-50 17 53)" fill="#8F1F13"/>
-      <ellipse cx="53" cy="17" rx="7" ry="4.5" transform="rotate(-50 53 17)" fill="#8F1F13"/>
+      <path d="M17 53 A 31 31 0 0 1 53 17" stroke="var(--tel-line)" stroke-width="24" fill="none" stroke-linecap="round"/>
+      <path d="M17 53 A 31 31 0 0 1 53 17" stroke="var(--tel-body)" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <ellipse cx="17" cy="53" rx="14" ry="9.5" transform="rotate(-50 17 53)" fill="var(--tel-body)" stroke="var(--tel-line)" stroke-width="3"/>
+      <ellipse cx="53" cy="17" rx="14" ry="9.5" transform="rotate(-50 53 17)" fill="var(--tel-body)" stroke="var(--tel-line)" stroke-width="3"/>
+      <ellipse cx="17" cy="53" rx="7" ry="4.5" transform="rotate(-50 17 53)" fill="var(--tel-shade)"/>
+      <ellipse cx="53" cy="17" rx="7" ry="4.5" transform="rotate(-50 53 17)" fill="var(--tel-shade)"/>
     </svg>
   </a>
   <p class="pickup">(pick up the phone &uarr;)</p>

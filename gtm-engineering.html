@@ -1545,6 +1545,111 @@ body::before{
   .window__ref{order:3;}
 }
 
+/* ================= case-study stickers ================= */
+
+.stickers{
+  display:grid;
+  gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+}
+.sticker{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:7px;
+  text-align:left;
+  padding:14px 14px 12px;
+  background:var(--surface);
+  border:2px solid var(--line-hard);
+  box-shadow:5px 5px 0 var(--line-hard);
+  font-family:var(--font-mono);
+  color:var(--ink);
+  cursor:pointer;
+  transition:transform .12s steps(2), box-shadow .12s steps(2), background .12s;
+}
+.sticker:nth-child(3n+1){transform:rotate(-1.1deg);}
+.sticker:nth-child(3n+2){transform:rotate(.7deg);}
+.sticker:nth-child(3n+3){transform:rotate(-.4deg);}
+.sticker:hover,.sticker:focus-visible{
+  transform:rotate(0deg) translate(-3px,-3px);
+  box-shadow:9px 9px 0 var(--line-hard);
+  background:var(--surface-2);
+  outline:none;
+}
+.sticker:active{transform:rotate(0deg) translate(2px,2px);box-shadow:1px 1px 0 var(--line-hard);}
+
+.sticker__top{display:flex;align-items:center;gap:9px;width:100%;}
+.sticker__no{
+  font-size:10px;
+  letter-spacing:.18em;
+  color:var(--faint);
+}
+.sticker__flag{
+  margin-left:auto;
+  background:var(--chip2);
+  border:1.5px solid var(--line-hard);
+  padding:2px 7px;
+  font-size:8.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.sticker__stat{
+  font-family:var(--font-display);
+  font-size:27px;
+  line-height:1.05;
+  color:var(--accent-text);
+}
+.sticker__name{
+  font-size:12px;
+  line-height:1.4;
+  letter-spacing:.02em;
+}
+.sticker__sub{
+  font-size:9.5px;
+  line-height:1.45;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.sticker__open{
+  margin-top:6px;
+  padding-top:8px;
+  width:100%;
+  border-top:1px dashed var(--line);
+  font-size:9.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent-text);
+}
+
+/* ---- the pop-up ---- */
+
+.casemodal{
+  background:rgba(20,18,15,.45);
+  align-items:start;
+  padding:24px 16px 40px;
+  overflow-y:auto;
+}
+.casemodal[hidden]{display:none;}
+.casewin{
+  width:100%;
+  max-width:720px;
+  margin:auto;
+  background:var(--surface);
+  border:2px solid var(--line-hard);
+  box-shadow:8px 8px 0 var(--line-hard);
+}
+.casewin .window__bar{position:sticky;top:0;z-index:1;}
+.casewin .window__body{padding:20px;}
+
+@media (max-width:700px){
+  .stickers{grid-template-columns:1fr;gap:12px;}
+  .sticker{transform:none !important;}
+  .casemodal{padding:12px 10px 30px;}
+  .casewin .window__body{padding:15px;}
+}
+
 </style>
 </head>
 <body>
@@ -2121,6 +2226,10 @@ body::before{
     function show(id, trigger){
       var m = document.getElementById(id);
       if (!m) return;
+      // only one pop-up at a time
+      document.querySelectorAll(".scrim[id]:not([hidden])").forEach(function(o){
+        if (o.id !== id && o.id !== "scrim") o.hidden = true;
+      });
       last = trigger || null;
       m.hidden = false;
       var first = m.querySelector("[data-modal-close]");
@@ -2138,6 +2247,15 @@ body::before{
     document.querySelectorAll("[data-modal-close]").forEach(function(el){
       el.addEventListener("click", function(){ hide(el.getAttribute("data-modal-close")); });
     });
+    function openFromHash(){
+      var h = location.hash.replace("#", "");
+      if (!h) return;
+      var m = document.getElementById("m-" + h);
+      if (m) show("m-" + h, document.getElementById(h));
+    }
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+
     document.querySelectorAll(".scrim[id]").forEach(function(m){
       m.addEventListener("click", function(e){ if (e.target === m) hide(m.id); });
     });

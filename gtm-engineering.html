@@ -1416,7 +1416,7 @@ body::before{
   text-align:center;
 }
 .contact-links{
-  margin-top:clamp(28px,6vh,54px);
+  margin-top:clamp(18px,3.5vh,30px);
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
@@ -1433,6 +1433,27 @@ body::before{
   padding-bottom:3px;
 }
 .contact-links a:hover,.contact-links a:focus-visible{border-bottom-color:var(--accent);outline:none;}
+
+.contact-cta{
+  margin-top:clamp(24px,5vh,44px);
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  background:var(--chip1);
+  color:var(--ink);
+  border:2px solid var(--line-hard);
+  box-shadow:4px 4px 0 var(--line-hard);
+  padding:13px 22px;
+  text-decoration:none;
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  transition:transform .1s steps(2), box-shadow .1s steps(2), background .1s;
+}
+.contact-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--line-hard);background:var(--chip2);}
+.contact-cta:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--line-hard);}
+.contact-cta:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
 
 </style>
 </head>
@@ -1482,6 +1503,7 @@ body::before{
   </a>
   <p class="pickup">(pick up the phone &uarr;)</p>
   <p class="contact-tag">for hiring + collabs.</p>
+  <a class="contact-cta" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener">Book a conversation <span aria-hidden="true">&rarr;</span></a>
   <nav class="contact-links" aria-label="Contact channels">
     <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack</a>

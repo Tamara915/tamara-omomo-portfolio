@@ -1529,8 +1529,20 @@ body::before{
   .bay li{font-size:10px;}
   .deskicon{font-size:10px;}
   .colophon{font-size:10.5px;}
-  /* the ref subtitle just truncates on a phone — drop it and keep the name */
-  .window__ref{display:none;}
+  /* title bars stack so the subtitle can wrap instead of truncating */
+  .window__bar{flex-wrap:wrap;row-gap:3px;}
+  .window__name{flex:1 1 auto;}
+  .window__ref{
+    flex:1 1 100%;
+    min-width:0;
+    white-space:normal;
+    overflow:visible;
+    text-overflow:clip;
+    line-height:1.45;
+  }
+  /* keep the close button pinned to the first row */
+  .window__close{order:2;}
+  .window__ref{order:3;}
 }
 
 </style>

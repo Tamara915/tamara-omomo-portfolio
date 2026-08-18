@@ -1029,16 +1029,17 @@ a.card{text-decoration:none;display:inline-flex;align-items:center;}
   border-style:dotted;
 }
 
-/* a fine dither over the desktop, System 7 style */
+/* ruled grid over the desktop, same as the contact scene */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   z-index:-1;
   pointer-events:none;
-  opacity:.5;
-  background-image:radial-gradient(var(--line) .5px, transparent .5px);
-  background-size:3px 3px;
+  background-image:
+    linear-gradient(var(--tel-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--tel-grid) 1px, transparent 1px);
+  background-size:64px 64px;
 }
 
 .bay li .ico{

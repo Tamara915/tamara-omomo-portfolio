@@ -1521,6 +1521,74 @@ body::before{
   .obj,.hangline{animation:none !important;transition:none !important;}
 }
 
+/* ================= contact scene (taiwoade-style) ================= */
+
+#contactmodal{
+  background:var(--bg);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:64px 64px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0 18px 48px;
+  overflow-y:auto;
+}
+.contact-x{
+  position:fixed;
+  top:16px;
+  right:18px;
+  width:34px;height:32px;
+  display:grid;place-items:center;
+  background:var(--surface);
+  border:2px solid var(--line-hard);
+  box-shadow:3px 3px 0 var(--line-hard);
+  color:var(--ink);
+  font:inherit;
+  font-size:16px;
+  cursor:pointer;
+  z-index:2;
+}
+.contact-x:hover{background:var(--chip1);}
+.contact-x:active{transform:translate(2px,2px);box-shadow:0 0 0;}
+.contact-x:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+#contactmodal .cord{height:clamp(100px,20vh,220px);}
+#contactmodal .receiver{width:clamp(110px,18vw,168px);}
+
+#contactmodal .pickup{
+  padding:26px 0 0;
+  font-size:clamp(15px,2.2vw,19px);
+  color:var(--muted);
+}
+.contact-tag{
+  margin:8px 0 0;
+  font-family:Georgia, "Times New Roman", serif;
+  font-weight:700;
+  font-size:clamp(20px,3.4vw,28px);
+  color:var(--ink);
+  text-align:center;
+}
+.contact-links{
+  margin-top:clamp(28px,6vh,54px);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px 26px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.contact-links a{
+  text-decoration:none;
+  color:var(--ink);
+  border-bottom:2px solid var(--line);
+  padding-bottom:3px;
+}
+.contact-links a:hover,.contact-links a:focus-visible{border-bottom-color:var(--accent);outline:none;}
+
 </style>
 </head>
 <body>
@@ -1553,7 +1621,9 @@ body::before{
   </div>
 </div>
 
+
 <div class="scrim" id="contactmodal" hidden>
+  <button class="contact-x" data-modal-close="contactmodal" aria-label="Close contact">&times;</button>
   <a class="hangline" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener" aria-label="Pick up the phone — book a conversation">
     <i class="cord"></i>
     <svg class="receiver" viewBox="0 0 76 76" aria-hidden="true">
@@ -1565,34 +1635,14 @@ body::before{
       <ellipse cx="53" cy="17" rx="7" ry="4.5" transform="rotate(-50 53 17)" fill="#8F1F13"/>
     </svg>
   </a>
-  <div class="phone" role="dialog" aria-modal="true" aria-labelledby="phone-title">
-    <div class="phone__antenna"></div>
-    <div class="phone__top">
-      <span class="phone__brand" id="phone-title">TAMARA&nbsp;MOBiLE</span>
-      <button class="phone__x" data-modal-close="contactmodal" aria-label="Close contact">&times;</button>
-    </div>
-    <div class="phone__speaker"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="phone__screen">
-      <div class="phone__status"><span>&#9679;&#9679;&#9679;&#9675;&#9675;</span><span>CONTACT</span><span>96%</span></div>
-      <p class="pickup">(pick up the phone &uarr;)</p>
-      <div class="phone__apps">
-        <div class="phone__contacts">
-          <a class="pri" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener"><svg class="ico ico--clock" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="2" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="2" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="2" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="5" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="2" height="1" fill="currentColor"/><rect x="11" y="10" width="2" height="1" fill="currentColor"/><rect x="5" y="11" width="6" height="1" fill="currentColor"/></svg> Book a conversation <span aria-hidden="true">&rarr;</span></a>
-          <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener"><svg class="ico ico--link" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="6" y="4" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="5" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="5" width="5" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="currentColor"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="5" height="1" fill="currentColor"/><rect x="6" y="8" width="4" height="1" fill="var(--cyan)"/><rect x="10" y="8" width="5" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="6" y="9" width="1" height="1" fill="currentColor"/><rect x="9" y="9" width="1" height="1" fill="currentColor"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="9" y="10" width="1" height="1" fill="currentColor"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="11" width="2" height="1" fill="currentColor"/><rect x="11" y="11" width="2" height="1" fill="currentColor"/><rect x="5" y="12" width="6" height="1" fill="currentColor"/></svg> LinkedIn <span aria-hidden="true">&rarr;</span></a>
-          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener"><svg class="ico ico--pen" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="1" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="1" height="1" fill="currentColor"/><rect x="12" y="2" width="2" height="1" fill="var(--accent)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="10" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="2" height="1" fill="var(--accent)"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="1" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--accent)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="8" y="5" width="1" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="var(--accent)"/><rect x="11" y="5" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="1" height="1" fill="currentColor"/><rect x="8" y="6" width="2" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="1" height="1" fill="currentColor"/><rect x="6" y="8" width="2" height="1" fill="var(--accent)"/><rect x="8" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="2" height="1" fill="var(--accent)"/><rect x="7" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="2" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="4" height="1" fill="currentColor"/><rect x="2" y="12" width="2" height="1" fill="currentColor"/></svg> Substack <span aria-hidden="true">&rarr;</span></a>
-          <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener"><svg class="ico ico--doc" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="2" width="7" height="1" fill="var(--surface)"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="11" y="2" width="1" height="1" fill="var(--line)"/><rect x="12" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="7" height="1" fill="var(--surface)"/><rect x="10" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="2" height="1" fill="var(--surface)"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="7" height="1" fill="var(--surface)"/><rect x="10" y="4" width="5" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="var(--surface)"/><rect x="4" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="10" y="5" width="4" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="11" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="var(--surface)"/><rect x="4" y="7" width="6" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="4" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="11" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="1" height="1" fill="var(--surface)"/><rect x="4" y="9" width="4" height="1" fill="var(--cyan)"/><rect x="8" y="9" width="6" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="11" height="1" fill="var(--surface)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="13" height="1" fill="currentColor"/></svg> R&eacute;sum&eacute; / CV <span aria-hidden="true">&rarr;</span></a>
-          <a href="mailto:omomo.oj@gmail.com"><svg class="ico ico--mail" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--accent)"/><rect x="3" y="4" width="10" height="1" fill="var(--surface)"/><rect x="13" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--accent)"/><rect x="5" y="5" width="6" height="1" fill="var(--surface)"/><rect x="11" y="5" width="2" height="1" fill="var(--accent)"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="3" height="1" fill="var(--surface)"/><rect x="5" y="6" width="2" height="1" fill="var(--accent)"/><rect x="7" y="6" width="2" height="1" fill="var(--surface)"/><rect x="9" y="6" width="2" height="1" fill="var(--accent)"/><rect x="11" y="6" width="3" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--surface)"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="5" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="3" height="1" fill="var(--surface)"/><rect x="5" y="8" width="2" height="1" fill="var(--accent)"/><rect x="7" y="8" width="2" height="1" fill="var(--surface)"/><rect x="9" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="3" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="2" height="1" fill="var(--accent)"/><rect x="5" y="9" width="6" height="1" fill="var(--surface)"/><rect x="11" y="9" width="2" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="3" y="10" width="10" height="1" fill="var(--surface)"/><rect x="13" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> Email <span aria-hidden="true">&rarr;</span></a>
-        </div>
-      </div>
-    </div>
-    <div class="phone__keys">
-      <b>1</b><b>2<em>abc</em></b><b>3<em>def</em></b>
-      <b>4<em>ghi</em></b><b>5<em>jkl</em></b><b>6<em>mno</em></b>
-      <b>7<em>pqrs</em></b><b>8<em>tuv</em></b><b>9<em>wxyz</em></b>
-      <b>*</b><b>0</b><b>#</b>
-    </div>
-    <p class="phone__foot">Open channel</p>
-  </div>
+  <p class="pickup">(pick up the phone &uarr;)</p>
+  <p class="contact-tag">for hiring + collabs.</p>
+  <nav class="contact-links" aria-label="Contact channels">
+    <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack</a>
+    <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener">R&eacute;sum&eacute; / CV</a>
+    <a href="mailto:omomo.oj@gmail.com">Email</a>
+  </nav>
 </div>
 <header class="masthead">
   <span><b>TAMARA</b> &nbsp;/&nbsp; AI GTM Engineer</span>

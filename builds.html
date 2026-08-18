@@ -1911,6 +1911,98 @@ a.deskicon[aria-current="page"]{
   border-color:var(--line-hard);
 }
 
+/* ---- file explorer: address bar, folders, status bar ---- */
+
+.addressbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+  font-family:var(--font-mono);
+  font-size:11px;
+}
+.addressbar__lbl{color:var(--muted);}
+.addressbar__field{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--surface);
+  border:1.5px solid var(--line-hard);
+  padding:6px 10px;
+  color:var(--ink);
+}
+.addressbar__field .ico{width:14px;height:14px;}
+
+.folders{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+  gap:6px;
+  padding:20px 16px 24px;
+  background:var(--surface);
+  min-height:220px;
+  align-content:start;
+}
+.fold{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:9px;
+  padding:14px 6px 12px;
+  background:none;
+  border:1px dotted transparent;
+  cursor:pointer;
+  font-family:var(--font-mono);
+  color:var(--ink);
+  text-align:center;
+}
+.fold .ico{
+  image-rendering:pixelated;
+  filter:drop-shadow(2px 2px 0 rgba(20,18,15,.28));
+  transition:transform .12s steps(2);
+}
+.fold__name{font-size:11px;line-height:1.35;letter-spacing:.02em;}
+.fold__flag{
+  background:var(--chip2);
+  border:1.5px solid var(--line-hard);
+  padding:1px 6px;
+  font-size:8px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.fold:hover,.fold:focus-visible{
+  background:color-mix(in srgb, var(--accent) 34%, transparent);
+  border-color:var(--line-hard);
+  outline:none;
+}
+.fold:hover .ico{transform:translateY(-2px);}
+.fold:active .ico{transform:translateY(1px);}
+
+.statusbar{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:7px 12px;
+  border-top:1.5px solid var(--line-hard);
+  background:var(--surface-2);
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+}
+.statusbar span:first-child{
+  border:1.5px solid var(--line);
+  padding:2px 10px;
+  background:var(--surface);
+}
+
+@media (max-width:700px){
+  .folders{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));padding:14px 10px 18px;}
+  .fold .ico{width:44px;height:44px;}
+  .addressbar{font-size:10px;}
+}
+
 </style>
 </head>
 <body>
@@ -2107,62 +2199,45 @@ a.deskicon[aria-current="page"]{
   <section class="window" id="index">
     <div class="window__bar">
       <svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
-      <span class="window__name">builds_index.txt</span>
-      <span class="window__ref">archived</span>
-          <span class="winbtns"><b>_</b><b>&#9723;</b><b>&times;</b></span>
+      <span class="window__name">case_studies &mdash; tamara_omomo</span>
+      <span class="winbtns"><b>_</b><b>&#9723;</b><b>&times;</b></span>
     </div>
-    <div class="menubar"><span>File</span><span>Edit</span><span>Format</span><span>Help</span></div>
-    <div class="window__body">
-      <div class="indexhead">
-        <span class="lbl">// shipped to production &middot; click a line to open it</span>
-        <a class="btn-line btn-line--sm" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener">Book a conversation &rarr;</a>
-      </div>
-      <ol class="idx idx--builds">
-        <li>
-          <span class="idx__no">001.</span>
-          <button class="idx__link" id="case-07" data-modal="m-case-07">Personas write the <em>outbound</em></button>
-          <span class="idx__flag">latest</span>
-          <span class="idx__meta">15 min</span>
-        </li>
-        <li>
-          <span class="idx__no">002.</span>
-          <button class="idx__link" id="case-01" data-modal="m-case-01">Leads while you <em>sleep</em></button>
-          
-          <span class="idx__meta">Daily leads</span>
-        </li>
-        <li>
-          <span class="idx__no">003.</span>
-          <button class="idx__link" id="case-02" data-modal="m-case-02">Hot leads stop going <em>cold</em></button>
-          
-          <span class="idx__meta">11 min</span>
-        </li>
-        <li>
-          <span class="idx__no">004.</span>
-          <button class="idx__link" id="case-03" data-modal="m-case-03">Agents that qualify like an <em>SDR</em></button>
-          
-          <span class="idx__meta">+38%</span>
-        </li>
-        <li>
-          <span class="idx__no">005.</span>
-          <button class="idx__link" id="case-04" data-modal="m-case-04">Calendars full <em>before</em> the doors open</button>
-          
-          <span class="idx__meta">Pre-booked</span>
-        </li>
-        <li>
-          <span class="idx__no">006.</span>
-          <button class="idx__link" id="case-05" data-modal="m-case-05">Budget arguments, <em>settled</em></button>
-          
-          <span class="idx__meta">$1.1M</span>
-        </li>
-        <li>
-          <span class="idx__no">007.</span>
-          <button class="idx__link" id="case-06" data-modal="m-case-06">GTM off the <em>ops backlog</em></button>
-          
-          <span class="idx__meta">Self-serve</span>
-        </li>
-      </ol>
-      <p class="idx__count">// 7 entries</p>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+    <div class="addressbar">
+      <span class="addressbar__lbl">Address:</span>
+      <span class="addressbar__field"><svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> C:\tamara_omomo\builds</span>
     </div>
+    <div class="folders">
+          <button class="fold" id="case-07" data-modal="m-case-07">
+            <svg class="ico ico--folder" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+            <span class="fold__name">Persona engine</span><span class="fold__flag">latest</span>
+          </button>
+          <button class="fold" id="case-01" data-modal="m-case-01">
+            <svg class="ico ico--folder" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+            <span class="fold__name">Outbound engine</span>
+          </button>
+          <button class="fold" id="case-02" data-modal="m-case-02">
+            <svg class="ico ico--folder" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+            <span class="fold__name">Routing engine</span>
+          </button>
+          <button class="fold" id="case-03" data-modal="m-case-03">
+            <svg class="ico ico--folder" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+            <span class="fold__name">Research agents</span>
+          </button>
+          <button class="fold" id="case-04" data-modal="m-case-04">
+            <svg class="ico ico--folder" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+            <span class="fold__name">Event campaigns</span>
+          </button>
+          <button class="fold" id="case-05" data-modal="m-case-05">
+            <svg class="ico ico--folder" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+            <span class="fold__name">Attribution</span>
+          </button>
+          <button class="fold" id="case-06" data-modal="m-case-06">
+            <svg class="ico ico--folder" viewBox="0 0 16 16" width="60" height="60" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+            <span class="fold__name">In-house tools</span>
+          </button>
+    </div>
+    <div class="statusbar"><span>7 object(s)</span><span>Double-click to open</span></div>
   </section>
 
   <!-- ============ THE LAB ============ -->

@@ -1966,6 +1966,28 @@ a.deskicon[aria-current="page"]{
   border-color:var(--line-hard);
 }
 
+/* ---- the pop-up sits offset, so the window beneath still reads ---- */
+@media (min-width:901px){
+  .casemodal{
+    align-items:flex-start;
+    justify-content:flex-end;
+    padding:0;
+    background:rgba(20,18,15,.22);
+  }
+  .casemodal .casewin{
+    margin:196px 5vw 70px 0;
+    max-width:640px;
+  }
+  /* the stack and telemetry stay centred — they aren't part of the folder scene */
+  #m-w-stack, #m-w-telemetry{
+    align-items:start;
+    justify-content:center;
+    padding:24px 16px 40px;
+    background:rgba(20,18,15,.45);
+  }
+  #m-w-stack .casewin, #m-w-telemetry .casewin{margin:auto;max-width:720px;}
+}
+
 </style>
 </head>
 <body>

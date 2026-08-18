@@ -24,8 +24,9 @@
   --faint:#9B9486;
   --line:#DED7C8;
   --line-hard:#14120F;
-  --accent:#FF7A9C;
-  --accent-ink:#2A0B14;
+  --accent:#FFC93C;
+  --accent-ink:#241A00;
+  --accent-text:#8A6500;
   --cyan:#4FC2AC;
   --lime:#7FB2F0;
   --yellow:#FFD97A;
@@ -45,8 +46,9 @@
     --faint:#736D60;
     --line:#332E23;
     --line-hard:#4A4434;
-    --accent:#FF8FAB;
-    --accent-ink:#2A0B14;
+    --accent:#FFC93C;
+    --accent-ink:#241A00;
+    --accent-text:#FFD35C;
     --cyan:#7FE0CE;
     --lime:#9AC4F5;
     --yellow:#FFE099;
@@ -63,8 +65,9 @@
   --faint:#736D60;
   --line:#332E23;
   --line-hard:#4A4434;
-  --accent:#FF8FAB;
-  --accent-ink:#2A0B14;
+  --accent:#FFC93C;
+  --accent-ink:#241A00;
+  --accent-text:#FFD35C;
   --cyan:#7FE0CE;
   --lime:#9AC4F5;
   --yellow:#FFE099;
@@ -100,7 +103,7 @@ a{color:inherit;}
   color:var(--muted);
   margin:0;
 }
-.lbl--on{color:var(--accent);}
+.lbl--on{color:var(--accent-text);}
 
 .rule{height:1px;background:var(--line);border:0;margin:0;}
 
@@ -121,7 +124,7 @@ a{color:inherit;}
   color:var(--muted);
 }
 .masthead b{color:var(--ink);font-weight:400;}
-.masthead .live{color:var(--accent);}
+.masthead .live{color:var(--accent-text);}
 .masthead .live::before{
   content:"";
   display:inline-block;
@@ -167,7 +170,7 @@ a{color:inherit;}
   max-width:22ch;
   text-wrap:balance;
 }
-.open h1 em{font-style:normal;color:var(--accent);}
+.open h1 em{font-style:normal;color:var(--accent-text);}
 .open p{
   margin:0;
   max-width:62ch;
@@ -201,7 +204,7 @@ a{color:inherit;}
 /* ---- boot / self test ----------------------------------------- */
 
 #boot{
-  --boot-hot:#FF7A9C;
+  --boot-hot:#FFC93C;
   --boot-dim:#6FD6C4;
   position:fixed;
   inset:0;
@@ -356,7 +359,7 @@ a{color:inherit;}
   font-size:11px;
   cursor:pointer;
 }
-.window__close:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+.window__close:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent-text);}
 .window__close:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
 .window__body{padding:22px 20px 24px;}
@@ -370,7 +373,7 @@ a{color:inherit;}
   line-height:1.3;
   letter-spacing:-.005em;
 }
-.window h2 em{font-style:normal;color:var(--accent);}
+.window h2 em{font-style:normal;color:var(--accent-text);}
 .window > .window__body > .lbl:first-child{margin-bottom:14px;}
 
 /* ---- readme-style prose ------------------------------------- */
@@ -399,7 +402,7 @@ a{color:inherit;}
 .readout{background:var(--surface);padding:16px 15px 17px;display:flex;flex-direction:column;gap:10px;}
 .readout__hd{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
 .readout__val{font-family:var(--font-display);font-size:32px;line-height:1.1;letter-spacing:-.02em;}
-.readout__val b{font-weight:400;color:var(--accent);}
+.readout__val b{font-weight:400;color:var(--accent-text);}
 .readout__note{margin:0;font-size:11.5px;line-height:1.6;color:var(--muted);}
 .gauge{display:flex;gap:2px;height:6px;}
 .gauge i{flex:1;background:var(--line);}
@@ -435,15 +438,15 @@ a{color:inherit;}
 .build__hd:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
 .build__no{flex:none;color:var(--faint);font-size:11px;letter-spacing:.1em;}
 .build__name{flex:1;min-width:0;font-size:12.5px;letter-spacing:.04em;}
-.build__stat{flex:none;color:var(--accent);font-size:12.5px;letter-spacing:.04em;}
+.build__stat{flex:none;color:var(--accent-text);font-size:12.5px;letter-spacing:.04em;}
 .build__sign{flex:none;width:13px;text-align:center;color:var(--faint);}
 .build__hd[aria-expanded="true"]{background:var(--surface-2);}
-.build__hd[aria-expanded="true"] .build__sign{color:var(--accent);}
+.build__hd[aria-expanded="true"] .build__sign{color:var(--accent-text);}
 
 .build__panel{padding:0 15px 16px 15px;background:var(--surface-2);}
 .build__panel[hidden]{display:none;}
 .build__panel dl{margin:0;display:grid;gap:11px;max-width:76ch;}
-.build__panel dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+.build__panel dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-text);}
 .build__panel dd{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink);}
 .build__panel .more{
   display:inline-block;
@@ -451,7 +454,7 @@ a{color:inherit;}
   font-size:10px;
   letter-spacing:.2em;
   text-transform:uppercase;
-  color:var(--accent);
+  color:var(--accent-text);
   text-decoration:none;
   border-bottom:1px solid var(--accent);
   padding-bottom:2px;
@@ -469,7 +472,7 @@ a{color:inherit;}
   font-size:12px;
 }
 .chain__node b{flex:none;width:54px;font-weight:400;color:var(--faint);font-size:10px;letter-spacing:.16em;}
-.chain__node:last-child b{color:var(--accent);}
+.chain__node:last-child b{color:var(--accent-text);}
 
 /* ---- stack ---------------------------------------------------- */
 
@@ -481,7 +484,7 @@ a{color:inherit;}
   font-size:10px;
   letter-spacing:.22em;
   text-transform:uppercase;
-  color:var(--accent);
+  color:var(--accent-text);
   padding-bottom:7px;
   border-bottom:1px solid var(--line);
 }
@@ -494,7 +497,40 @@ a{color:inherit;}
   gap:4px;
   align-items:stretch;
 }
-.bay li{font-size:12px;color:var(--ink);}
+.bay li{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  min-height:92px;
+  padding:12px 5px 10px;
+  border:1px solid transparent;
+  font-family:var(--font-mono);
+  font-size:9px;
+  line-height:1.35;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--ink);
+  text-align:center;
+  transition:background .1s, border-color .1s;
+}
+.bay li .ico{
+  flex:none;
+  image-rendering:pixelated;
+  filter:drop-shadow(1px 1px 0 rgba(20,18,15,.2));
+}
+.bay li span{
+  display:block;
+  width:100%;
+  hyphens:auto;
+  overflow-wrap:anywhere;
+}
+.bay li:hover{
+  border-color:var(--line-hard);
+  border-style:dotted;
+  background:var(--surface-2);
+}
 
 
 /* ---- links grid ------------------------------------------------ */
@@ -513,7 +549,7 @@ a{color:inherit;}
   text-transform:uppercase;
 }
 .links a:hover,.links a:focus-visible{background:var(--accent);color:var(--accent-ink);outline:none;}
-.links a.pri{color:var(--accent);}
+.links a.pri{color:var(--accent-text);}
 .links a.pri:hover,.links a.pri:focus-visible{color:var(--accent-ink);}
 
 /* ---- dock (the cards) ------------------------------------------ */
@@ -557,7 +593,7 @@ a{color:inherit;}
 .card[aria-pressed="true"]{
   background:var(--accent);
   color:var(--accent-ink);
-  border-color:var(--accent);
+  border-color:var(--accent-text);
   box-shadow:2px 2px 0 var(--line-hard);
 }
 .card--tray{
@@ -595,7 +631,7 @@ a{color:inherit;}
 .monitor__bar b{color:var(--ink);font-weight:400;}
 .monitor__bar .spark{
   margin-left:auto;
-  color:var(--accent);
+  color:var(--accent-text);
   letter-spacing:.1em;
 }
 .monitor__screen{
@@ -634,7 +670,7 @@ a{color:inherit;}
   white-space:pre-wrap;
   word-break:break-all;
 }
-.proc__log b{color:var(--accent);font-weight:400;}
+.proc__log b{color:var(--accent-text);font-weight:400;}
 
 @media (max-width:700px){
   .monitor{grid-template-columns:1fr;}
@@ -688,7 +724,7 @@ a{color:inherit;}
   max-width:24ch;
   text-wrap:balance;
 }
-.pagehead h1 .dot{color:var(--accent);}
+.pagehead h1 .dot{color:var(--accent-text);}
 .pagehead__lede{
   margin:0;
   max-width:64ch;
@@ -710,7 +746,7 @@ a{color:inherit;}
 
 .tagchip{
   flex:none;
-  background:var(--yellow);
+  background:var(--cyan);
   color:var(--ink) !important;
   color:var(--accent-ink);
   padding:3px 8px;
@@ -724,7 +760,7 @@ a{color:inherit;}
   font-family:var(--font-display);
   font-size:28px;
   line-height:1.15;
-  color:var(--accent);
+  color:var(--accent-text);
   letter-spacing:-.01em;
 }
 .case__stat small{
@@ -791,7 +827,7 @@ a{color:inherit;}
   border:1px solid var(--line);
   padding:2px 7px;
 }
-.state--on{color:var(--accent);border-color:var(--accent);}
+.state--on{color:var(--accent-text);border-color:var(--accent-text);}
 .lab__item h3{
   margin:0;
   font-family:var(--font-display);
@@ -831,7 +867,7 @@ a{color:inherit;}
   font-size:10px;
   letter-spacing:.2em;
   text-transform:uppercase;
-  color:var(--accent);
+  color:var(--accent-text);
 }
 
 .subscribe{
@@ -854,7 +890,7 @@ a{color:inherit;}
   text-transform:uppercase;
   color:var(--ink);
 }
-.btn-line:hover,.btn-line:focus-visible{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);outline:none;}
+.btn-line:hover,.btn-line:focus-visible{background:var(--accent);color:var(--accent-ink);border-color:var(--accent-text);outline:none;}
 
 /* ---- track record ------------------------------------------------ */
 
@@ -893,7 +929,7 @@ a{color:inherit;}
 .card[aria-current="page"]{
   background:var(--accent);
   color:var(--accent-ink);
-  border-color:var(--accent);
+  border-color:var(--accent-text);
 }
 a.card{text-decoration:none;display:inline-flex;align-items:center;}
 
@@ -923,7 +959,7 @@ a.card{text-decoration:none;display:inline-flex;align-items:center;}
 }
 .colophon__nav{display:flex;flex-wrap:wrap;gap:8px 18px;}
 .colophon a{text-decoration:none;color:var(--muted);}
-.colophon a:hover,.colophon a:focus-visible{color:var(--accent);}
+.colophon a:hover,.colophon a:focus-visible{color:var(--accent-text);}
 
 /* ---- desktop icon field ---------------------------------------------- */
 
@@ -988,6 +1024,110 @@ body::before{
 }
 .bay li:hover .ico{transform:translate(-1px,-1px);}
 
+/* ---- interactive icon strip ------------------------------------------ */
+
+.iconbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:4px;
+}
+.iconbtn{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  background:var(--surface);
+  border:1.5px solid var(--line-hard);
+  box-shadow:2px 2px 0 var(--line-hard);
+  padding:7px 11px 7px 8px;
+  font-family:var(--font-mono);
+  font-size:9.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink);
+  cursor:pointer;
+  transition:transform .1s steps(2), box-shadow .1s steps(2), background .1s;
+}
+.iconbtn .ico{image-rendering:pixelated;}
+.iconbtn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--line-hard);background:var(--surface-2);}
+.iconbtn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--line-hard);}
+.iconbtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+/* ---- modal dialog ---------------------------------------------------- */
+
+.scrim{
+  position:fixed;
+  inset:0;
+  z-index:800;
+  background:rgba(20,18,15,.35);
+  display:grid;
+  place-items:center;
+  padding:22px;
+}
+.scrim[hidden]{display:none;}
+.dialog{
+  width:100%;
+  max-width:380px;
+  background:var(--surface);
+  border:1.5px solid var(--line-hard);
+  box-shadow:6px 6px 0 var(--line-hard);
+}
+.dialog__bar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:7px 8px 7px 10px;
+  background:var(--accent);
+  color:var(--accent-ink);
+  border-bottom:1.5px solid var(--line-hard);
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.dialog__bar span{flex:1;}
+.dialog__x{
+  width:18px;height:16px;
+  display:grid;place-items:center;
+  background:var(--surface);
+  border:1.5px solid var(--line-hard);
+  color:var(--ink);
+  font:inherit;
+  font-size:10px;
+  cursor:pointer;
+}
+.dialog__x:hover{background:var(--yellow);}
+.dialog__body{
+  display:flex;
+  gap:15px;
+  align-items:flex-start;
+  padding:20px 18px;
+}
+.dialog__body .ico{flex:none;image-rendering:pixelated;}
+.dialog__body p{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink);}
+.dialog__foot{
+  border-top:1.5px solid var(--line);
+  padding:12px;
+  display:flex;
+  justify-content:center;
+}
+.dialog__ok{
+  min-width:96px;
+  background:var(--surface);
+  border:1.5px solid var(--line-hard);
+  box-shadow:2px 2px 0 var(--line-hard);
+  padding:8px 18px;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink);
+  cursor:pointer;
+}
+.dialog__ok:hover{background:var(--cyan);}
+.dialog__ok:active{transform:translate(2px,2px);box-shadow:0 0 0;}
+.dialog__ok:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
 </style>
 </head>
 <body>
@@ -1011,6 +1151,14 @@ body::before{
   </div>
 </div>
 
+
+<div class="scrim" id="scrim" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title">
+    <div class="dialog__bar"><span id="dlg-title">Message</span><button class="dialog__x" id="dlg-x" aria-label="Close">&times;</button></div>
+    <div class="dialog__body"><span id="dlg-icon"></span><p id="dlg-text"></p></div>
+    <div class="dialog__foot"><button class="dialog__ok" id="dlg-ok">OK</button></div>
+  </div>
+</div>
 <header class="masthead">
   <span><b>TAMARA</b> &nbsp;/&nbsp; AI GTM Engineer</span>
   <span class="live">Available Q3 &rsquo;26 &middot; Berlin / Remote</span>
@@ -1022,11 +1170,16 @@ body::before{
   <section class="pagehead">
     <p class="lbl">tamara@gtm:~$ ls -l ./builds</p>
     <h1>The case studies<span class="dot">.</span></h1>
-    <p class="pagehead__lede">Seven systems from the seam between marketing, sales and code. Each one replaced a manual, leaky process &mdash; and moved a number I can point to.</p>
+    <p class="pagehead__lede">Systems from the seam between marketing, sales and code. Each one replaced a manual, leaky process &mdash; and moved a number I can point to.</p>
     <div class="pagehead__meta">
-      <span><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> 07 units &mdash; and counting</span>
+      <span><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> and counting</span>
       <span><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="14" y="2" width="1" height="1" fill="var(--accent)"/><rect x="10" y="3" width="1" height="1" fill="var(--accent)"/><rect x="14" y="3" width="1" height="1" fill="var(--accent)"/><rect x="10" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="var(--accent)"/><rect x="6" y="5" width="1" height="1" fill="var(--accent)"/><rect x="10" y="5" width="1" height="1" fill="var(--accent)"/><rect x="14" y="5" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="var(--accent)"/><rect x="14" y="6" width="1" height="1" fill="var(--accent)"/><rect x="2" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="var(--accent)"/><rect x="14" y="7" width="1" height="1" fill="var(--accent)"/><rect x="2" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="var(--accent)"/><rect x="14" y="8" width="1" height="1" fill="var(--accent)"/><rect x="2" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="var(--accent)"/><rect x="14" y="9" width="1" height="1" fill="var(--accent)"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="6" y="10" width="1" height="1" fill="var(--accent)"/><rect x="10" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="var(--accent)"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> all shipped to production</span>
-      <span><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="2" height="1" fill="currentColor"/><rect x="2" y="2" width="3" height="1" fill="currentColor"/><rect x="2" y="3" width="4" height="1" fill="currentColor"/><rect x="2" y="4" width="5" height="1" fill="currentColor"/><rect x="2" y="5" width="6" height="1" fill="currentColor"/><rect x="2" y="6" width="7" height="1" fill="currentColor"/><rect x="2" y="7" width="8" height="1" fill="currentColor"/><rect x="2" y="8" width="9" height="1" fill="currentColor"/><rect x="2" y="9" width="6" height="1" fill="currentColor"/><rect x="2" y="10" width="2" height="1" fill="currentColor"/><rect x="5" y="10" width="4" height="1" fill="currentColor"/><rect x="2" y="11" width="1" height="1" fill="currentColor"/><rect x="6" y="11" width="4" height="1" fill="currentColor"/><rect x="7" y="12" width="4" height="1" fill="currentColor"/><rect x="8" y="13" width="2" height="1" fill="currentColor"/></svg> click a unit to open it</span>
+    </div>
+    <div class="iconbar">
+      <button class="iconbtn" data-dialog-title="Still running" data-dialog="Everything on this page is in production and still running. None of it is a prototype or a slide."><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="7" y="1" width="2" height="1" fill="currentColor"/><rect x="6" y="2" width="1" height="1" fill="currentColor"/><rect x="7" y="2" width="2" height="1" fill="var(--yellow)"/><rect x="9" y="2" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="currentColor"/><rect x="7" y="3" width="2" height="1" fill="var(--yellow)"/><rect x="9" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="5" height="1" fill="currentColor"/><rect x="7" y="4" width="2" height="1" fill="var(--yellow)"/><rect x="9" y="4" width="5" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="10" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="8" height="1" fill="var(--yellow)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="6" height="1" fill="var(--yellow)"/><rect x="11" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="3" height="1" fill="var(--yellow)"/><rect x="7" y="8" width="2" height="1" fill="currentColor"/><rect x="9" y="8" width="3" height="1" fill="var(--yellow)"/><rect x="12" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="3" height="1" fill="var(--yellow)"/><rect x="6" y="9" width="1" height="1" fill="currentColor"/><rect x="9" y="9" width="1" height="1" fill="currentColor"/><rect x="10" y="9" width="3" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="3" height="1" fill="currentColor"/><rect x="11" y="10" width="3" height="1" fill="currentColor"/></svg>In production</button>
+      <button class="iconbtn" data-dialog-title="Build time" data-dialog="Most of these went from problem to production in two to six weeks, not quarters. The slow part is never the code — it's agreeing what the number should be."><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="12" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="2" width="10" height="1" fill="var(--surface)"/><rect x="13" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="1" height="1" fill="currentColor"/><rect x="4" y="3" width="7" height="1" fill="var(--yellow)"/><rect x="11" y="3" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="1" height="1" fill="currentColor"/><rect x="5" y="4" width="5" height="1" fill="var(--yellow)"/><rect x="10" y="4" width="1" height="1" fill="currentColor"/><rect x="5" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="5" width="3" height="1" fill="var(--yellow)"/><rect x="9" y="5" width="1" height="1" fill="currentColor"/><rect x="6" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="1" height="1" fill="var(--yellow)"/><rect x="8" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="currentColor"/><rect x="6" y="7" width="3" height="1" fill="var(--yellow)"/><rect x="9" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="5" height="1" fill="var(--cyan)"/><rect x="10" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="7" height="1" fill="var(--cyan)"/><rect x="11" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="10" height="1" fill="var(--surface)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="12" height="1" fill="currentColor"/></svg>How long</button>
+      <button class="iconbtn" data-dialog-title="What broke" data-dialog="Plenty. Enrichment that hallucinated job titles, a routing rule that sent every German lead to the wrong rep, a canary send that caught a broken merge field before 500 people saw it. That's why there's a human gate in almost every workflow here."><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="10" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="12" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="10" height="1" fill="var(--accent)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="1" height="1" fill="var(--accent)"/><rect x="4" y="6" width="1" height="1" fill="currentColor"/><rect x="5" y="6" width="1" height="1" fill="var(--accent)"/><rect x="6" y="6" width="1" height="1" fill="currentColor"/><rect x="7" y="6" width="1" height="1" fill="var(--accent)"/><rect x="8" y="6" width="1" height="1" fill="currentColor"/><rect x="9" y="6" width="1" height="1" fill="var(--accent)"/><rect x="10" y="6" width="1" height="1" fill="currentColor"/><rect x="11" y="6" width="2" height="1" fill="var(--accent)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="var(--accent)"/><rect x="4" y="7" width="1" height="1" fill="currentColor"/><rect x="5" y="7" width="1" height="1" fill="var(--accent)"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="1" height="1" fill="var(--accent)"/><rect x="8" y="7" width="1" height="1" fill="currentColor"/><rect x="9" y="7" width="1" height="1" fill="var(--accent)"/><rect x="10" y="7" width="1" height="1" fill="currentColor"/><rect x="11" y="7" width="2" height="1" fill="var(--accent)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="1" height="1" fill="var(--accent)"/><rect x="4" y="8" width="1" height="1" fill="currentColor"/><rect x="5" y="8" width="1" height="1" fill="var(--accent)"/><rect x="6" y="8" width="1" height="1" fill="currentColor"/><rect x="7" y="8" width="1" height="1" fill="var(--accent)"/><rect x="8" y="8" width="1" height="1" fill="currentColor"/><rect x="9" y="8" width="1" height="1" fill="var(--accent)"/><rect x="10" y="8" width="1" height="1" fill="currentColor"/><rect x="11" y="8" width="2" height="1" fill="var(--accent)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="1" height="1" fill="var(--accent)"/><rect x="4" y="9" width="1" height="1" fill="currentColor"/><rect x="5" y="9" width="1" height="1" fill="var(--accent)"/><rect x="6" y="9" width="1" height="1" fill="currentColor"/><rect x="7" y="9" width="1" height="1" fill="var(--accent)"/><rect x="8" y="9" width="1" height="1" fill="currentColor"/><rect x="9" y="9" width="1" height="1" fill="var(--accent)"/><rect x="10" y="9" width="1" height="1" fill="currentColor"/><rect x="11" y="9" width="2" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="10" height="1" fill="var(--accent)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="11" width="10" height="1" fill="currentColor"/><rect x="4" y="12" width="8" height="1" fill="currentColor"/></svg>What broke</button>
+      <button class="iconbtn" data-dialog-title="Where" data-dialog="Built in Berlin, deployed wherever the revenue team sits. Remote-ready and used to working across time zones."><svg class="ico" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="8" height="1" fill="currentColor"/><rect x="2" y="2" width="2" height="1" fill="currentColor"/><rect x="4" y="2" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="2" width="2" height="1" fill="currentColor"/><rect x="8" y="2" width="2" height="1" fill="var(--cyan)"/><rect x="10" y="2" width="2" height="1" fill="currentColor"/><rect x="13" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="2" height="1" fill="var(--cyan)"/><rect x="4" y="3" width="2" height="1" fill="currentColor"/><rect x="6" y="3" width="2" height="1" fill="var(--cyan)"/><rect x="8" y="3" width="2" height="1" fill="currentColor"/><rect x="10" y="3" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="3" width="1" height="1" fill="currentColor"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="4" width="1" height="1" fill="currentColor"/><rect x="7" y="4" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="4" width="1" height="1" fill="currentColor"/><rect x="9" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="11" y="4" width="1" height="1" fill="currentColor"/><rect x="12" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="0" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="2" height="1" fill="var(--cyan)"/><rect x="3" y="5" width="2" height="1" fill="currentColor"/><rect x="5" y="5" width="2" height="1" fill="var(--cyan)"/><rect x="7" y="5" width="2" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="var(--cyan)"/><rect x="11" y="5" width="2" height="1" fill="currentColor"/><rect x="13" y="5" width="2" height="1" fill="var(--cyan)"/><rect x="15" y="5" width="1" height="1" fill="currentColor"/><rect x="0" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="3" y="6" width="2" height="1" fill="currentColor"/><rect x="5" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="7" y="6" width="2" height="1" fill="currentColor"/><rect x="9" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="11" y="6" width="2" height="1" fill="currentColor"/><rect x="13" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="15" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="3" y="7" width="1" height="1" fill="currentColor"/><rect x="4" y="7" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="7" width="1" height="1" fill="currentColor"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="1" height="1" fill="currentColor"/><rect x="9" y="7" width="2" height="1" fill="var(--cyan)"/><rect x="11" y="7" width="1" height="1" fill="currentColor"/><rect x="12" y="7" width="2" height="1" fill="var(--cyan)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="2" height="1" fill="var(--cyan)"/><rect x="4" y="8" width="2" height="1" fill="currentColor"/><rect x="6" y="8" width="2" height="1" fill="var(--cyan)"/><rect x="8" y="8" width="2" height="1" fill="currentColor"/><rect x="10" y="8" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="8" width="1" height="1" fill="currentColor"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="2" height="1" fill="currentColor"/><rect x="4" y="9" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="9" width="2" height="1" fill="currentColor"/><rect x="8" y="9" width="2" height="1" fill="var(--cyan)"/><rect x="10" y="9" width="2" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="10" width="8" height="1" fill="currentColor"/></svg>Where</button>
     </div>
   </section>
 
@@ -1745,6 +1898,48 @@ body::before{
       window.addEventListener("resize", bsize);
       stopBootRain = function(){ if (braf) cancelAnimationFrame(braf); braf = null; };
     }
+  })();
+
+  /* ---- retro dialogs on the decorative icons ---- */
+  (function(){
+    var scrim = document.getElementById("scrim");
+    if (!scrim) return;
+    var titleEl = document.getElementById("dlg-title");
+    var textEl = document.getElementById("dlg-text");
+    var iconEl = document.getElementById("dlg-icon");
+    var lastFocus = null;
+
+    function openDialog(title, text, iconHTML, trigger){
+      lastFocus = trigger || null;
+      titleEl.textContent = title;
+      textEl.textContent = text;
+      iconEl.innerHTML = iconHTML || "";
+      scrim.hidden = false;
+      document.getElementById("dlg-ok").focus();
+    }
+    function closeDialog(){
+      scrim.hidden = true;
+      if (lastFocus) lastFocus.focus();
+    }
+
+    document.getElementById("dlg-ok").addEventListener("click", closeDialog);
+    document.getElementById("dlg-x").addEventListener("click", closeDialog);
+    scrim.addEventListener("click", function(e){ if (e.target === scrim) closeDialog(); });
+    document.addEventListener("keydown", function(e){
+      if (e.key === "Escape" && !scrim.hidden) closeDialog();
+    });
+
+    document.querySelectorAll("[data-dialog]").forEach(function(el){
+      el.addEventListener("click", function(){
+        var svg = el.querySelector("svg");
+        openDialog(
+          el.getAttribute("data-dialog-title") || "Message",
+          el.getAttribute("data-dialog"),
+          svg ? svg.outerHTML.replace(/width="\d+"/, 'width="40"').replace(/height="\d+"/, 'height="40"') : "",
+          el
+        );
+      });
+    });
   })();
 
   /* ---- display scheme ---- */

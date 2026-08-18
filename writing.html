@@ -1742,6 +1742,119 @@ body::before{
   .idx__meta{order:3;}
 }
 
+/* ---- resource explorer ---- */
+.explorer__head{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+}
+.explorer{
+  display:grid;
+  grid-template-columns:186px 1fr;
+  min-height:300px;
+}
+.explorer__side{
+  border-right:1px solid var(--line);
+  padding:14px 10px;
+  display:grid;
+  gap:3px;
+  align-content:start;
+  background:var(--surface-2);
+}
+.explorer__sidehd{
+  margin:0 0 6px 4px;
+  font-family:var(--font-mono);
+  font-size:9.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.folder{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  width:100%;
+  padding:8px 9px;
+  background:transparent;
+  border:1px solid transparent;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--ink);
+  text-align:left;
+  cursor:pointer;
+}
+.folder .ico{flex:none;image-rendering:pixelated;}
+.folder i{margin-left:auto;font-style:normal;font-size:10px;opacity:.6;}
+.folder:hover{background:var(--surface);}
+.folder.is-on{background:var(--accent);color:var(--accent-ink);border-color:var(--line-hard);}
+.folder[disabled]{opacity:.5;cursor:not-allowed;}
+.folder:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+
+.explorer__pane{padding:14px 16px 18px;}
+.crumb{
+  margin:0 0 16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  color:var(--faint);
+}
+.grp{margin-bottom:20px;}
+.grp[hidden]{display:none;}
+.grp__hd{
+  margin:0 0 8px;
+  padding-bottom:6px;
+  border-bottom:1px dotted var(--line);
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.res{
+  display:grid;
+  grid-template-columns:20px 1fr;
+  gap:2px 8px;
+  padding:8px 2px;
+  text-decoration:none;
+}
+.res__mark{color:var(--accent-text);font-size:13px;line-height:1.2;}
+.res__t{
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  color:#2b4bd8;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+:root:not([data-theme="light"]) .res__t{color:#8fa8ff;}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .res__t{color:#2b4bd8;}}
+:root[data-theme="dark"] .res__t{color:#8fa8ff;}
+.res__by{
+  grid-column:2;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  color:var(--muted);
+}
+.res:hover .res__t{background:var(--chip1);color:var(--ink);}
+
+@media (max-width:700px){
+  .explorer{grid-template-columns:1fr;}
+  .explorer__side{
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    grid-auto-flow:column;
+    grid-auto-columns:max-content;
+    overflow-x:auto;
+    gap:6px;
+  }
+  .explorer__sidehd{display:none;}
+}
+
 </style>
 </head>
 <body>
@@ -1822,34 +1935,56 @@ body::before{
 
   <section class="window" id="posts">
     <div class="window__bar">
-      <svg class="ico ico--cassette" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="1" fill="currentColor"/><rect x="1" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="2" width="12" height="1" fill="var(--surface)"/><rect x="14" y="2" width="1" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="var(--surface)"/><rect x="3" y="3" width="10" height="1" fill="currentColor"/><rect x="13" y="3" width="1" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--surface)"/><rect x="3" y="4" width="1" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="4" width="4" height="1" fill="currentColor"/><rect x="10" y="4" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="4" width="1" height="1" fill="currentColor"/><rect x="13" y="4" width="1" height="1" fill="var(--surface)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="1" height="1" fill="currentColor"/><rect x="4" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="5" y="5" width="2" height="1" fill="currentColor"/><rect x="9" y="5" width="2" height="1" fill="currentColor"/><rect x="11" y="5" width="1" height="1" fill="var(--cyan)"/><rect x="12" y="5" width="1" height="1" fill="currentColor"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="var(--surface)"/><rect x="3" y="6" width="1" height="1" fill="currentColor"/><rect x="4" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="6" y="6" width="4" height="1" fill="currentColor"/><rect x="10" y="6" width="2" height="1" fill="var(--cyan)"/><rect x="12" y="6" width="1" height="1" fill="currentColor"/><rect x="13" y="6" width="1" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="var(--surface)"/><rect x="3" y="7" width="10" height="1" fill="currentColor"/><rect x="13" y="7" width="1" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="12" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="1" height="1" fill="currentColor"/><rect x="4" y="9" width="2" height="1" fill="var(--surface)"/><rect x="6" y="9" width="4" height="1" fill="currentColor"/><rect x="10" y="9" width="2" height="1" fill="var(--surface)"/><rect x="12" y="9" width="1" height="1" fill="currentColor"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="14" height="1" fill="currentColor"/></svg>
-      <span class="window__name">thoughts_index.txt</span>
-      <span class="window__ref">archived</span>
+      <svg class="ico ico--doc" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="1" width="10" height="1" fill="currentColor"/><rect x="2" y="2" width="1" height="1" fill="currentColor"/><rect x="3" y="2" width="7" height="1" fill="var(--surface)"/><rect x="10" y="2" width="1" height="1" fill="currentColor"/><rect x="11" y="2" width="1" height="1" fill="var(--line)"/><rect x="12" y="2" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="1" fill="currentColor"/><rect x="3" y="3" width="7" height="1" fill="var(--surface)"/><rect x="10" y="3" width="1" height="1" fill="currentColor"/><rect x="11" y="3" width="2" height="1" fill="var(--surface)"/><rect x="13" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="currentColor"/><rect x="3" y="4" width="7" height="1" fill="var(--surface)"/><rect x="10" y="4" width="5" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="var(--surface)"/><rect x="4" y="5" width="6" height="1" fill="var(--cyan)"/><rect x="10" y="5" width="4" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="1" height="1" fill="currentColor"/><rect x="3" y="6" width="11" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="1" height="1" fill="currentColor"/><rect x="3" y="7" width="1" height="1" fill="var(--surface)"/><rect x="4" y="7" width="6" height="1" fill="var(--cyan)"/><rect x="10" y="7" width="4" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="1" height="1" fill="currentColor"/><rect x="3" y="8" width="11" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="currentColor"/><rect x="3" y="9" width="1" height="1" fill="var(--surface)"/><rect x="4" y="9" width="4" height="1" fill="var(--cyan)"/><rect x="8" y="9" width="6" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="currentColor"/><rect x="3" y="10" width="11" height="1" fill="var(--surface)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="11" width="13" height="1" fill="currentColor"/></svg>
+      <span class="window__name">thoughts.txt</span>
+      <span class="window__ref">resource explorer</span>
     </div>
-    <div class="menubar"><span>File</span><span>Edit</span><span>Format</span><span>Help</span></div>
-    <div class="window__body">
-      <div class="indexhead">
-        <span class="lbl">// archive &middot; currently writing on</span>
-        <a class="btn-line btn-line--sm" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack &rarr;</a>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+    <div class="explorer__head">
+      <p class="lbl">// writing on GTM engineering, AI agents &amp; revenue systems.</p>
+      <a class="btn-line btn-line--sm" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">&#9654; Subscribe on Substack</a>
+    </div>
+    <div class="explorer">
+      <nav class="explorer__side" aria-label="Categories">
+        <p class="explorer__sidehd">Folders</p>
+        <button class="folder is-on" data-cat="all"      style="--yellow:#F5A623"><svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>All posts</button>
+        <button class="folder"       data-cat="agents"   style="--yellow:#FFD93C"><svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>AI agents</button>
+        <button class="folder"       data-cat="systems"  style="--yellow:#4FC2AC"><svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>Revenue systems</button>
+        <button class="folder"       data-cat="attrib"   style="--yellow:#7FB2F0"><svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>Attribution</button>
+        <button class="folder"       data-cat="soon"     style="--yellow:#E58FB0" disabled><svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>Playbooks <i>&#128274;</i></button>
+      </nav>
+      <div class="explorer__pane">
+        <p class="crumb"><svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg> C:\thoughts\<span id="crumb">all</span></p>
+
+        <div class="grp" data-cat="agents">
+          <p class="grp__hd">// AI agents</p>
+          <a class="res" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">
+            <span class="res__mark">&#8767;</span>
+            <span class="res__t">What 60k-account research agents taught me about AI in GTM</span>
+            <span class="res__by">Where agents beat off-the-shelf enrichment, and where they fail</span>
+          </a>
+        </div>
+
+        <div class="grp" data-cat="systems">
+          <p class="grp__hd">// Revenue systems</p>
+          <a class="res" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">
+            <span class="res__mark">&#8767;</span>
+            <span class="res__t">Speed-to-lead is a systems problem, not a hustle problem</span>
+            <span class="res__by">4 hrs &rarr; 11 mins without hiring anyone</span>
+          </a>
+        </div>
+
+        <div class="grp" data-cat="attrib">
+          <p class="grp__hd">// Attribution</p>
+          <a class="res" href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">
+            <span class="res__mark">&#8767;</span>
+            <span class="res__t">The $1.1M question: what actually closes your pipeline?</span>
+            <span class="res__by">Why last-touch is lying to you</span>
+          </a>
+        </div>
+
+        <p class="idx__count" id="reslen">// 3 entries</p>
       </div>
-      <ol class="idx">
-        <li>
-          <span class="idx__no">001.</span>
-          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">What <em>60k-account</em> research agents taught me about AI in GTM</a>
-          <span class="idx__meta">AI agents</span>
-        </li>
-        <li>
-          <span class="idx__no">002.</span>
-          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Speed-to-lead is a <em>systems</em> problem, not a hustle problem</a>
-          <span class="idx__meta">Revenue systems</span>
-        </li>
-        <li>
-          <span class="idx__no">003.</span>
-          <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">The <em>$1.1M</em> question: what actually closes your pipeline?</a>
-          <span class="idx__meta">Attribution</span>
-        </li>
-      </ol>
-      <p class="idx__count">// 3 entries</p>
     </div>
   </section>
 
@@ -2289,6 +2424,30 @@ body::before{
       window.addEventListener("resize", bsize);
       stopBootRain = function(){ if (braf) cancelAnimationFrame(braf); braf = null; };
     }
+  })();
+
+  /* ---- resource explorer folders ---- */
+  (function(){
+    var folders = document.querySelectorAll(".folder[data-cat]");
+    if (!folders.length) return;
+    var groups = document.querySelectorAll(".grp[data-cat]");
+    var crumb = document.getElementById("crumb");
+    var count = document.getElementById("reslen");
+    folders.forEach(function(f){
+      f.addEventListener("click", function(){
+        if (f.disabled) return;
+        var cat = f.getAttribute("data-cat");
+        folders.forEach(function(o){ o.classList.toggle("is-on", o === f); });
+        var shown = 0;
+        groups.forEach(function(g){
+          var on = (cat === "all" || g.getAttribute("data-cat") === cat);
+          g.hidden = !on;
+          if (on) shown += g.querySelectorAll(".res").length;
+        });
+        if (crumb) crumb.textContent = cat;
+        if (count) count.textContent = "// " + shown + (shown === 1 ? " entry" : " entries");
+      });
+    });
   })();
 
   /* ---- modals (the stack phone) ---- */

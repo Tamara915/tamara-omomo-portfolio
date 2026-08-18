@@ -1545,108 +1545,6 @@ body::before{
   .window__ref{order:3;}
 }
 
-/* ================= case-study stickers ================= */
-
-.stickers{
-  display:grid;
-  gap:16px;
-  grid-template-columns:repeat(auto-fill,minmax(228px,1fr));
-}
-.sticker{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:6px;
-  min-height:250px;
-  text-align:left;
-  padding:14px 14px 12px;
-  background:var(--surface);
-  border:2px solid var(--line-hard);
-  box-shadow:5px 5px 0 var(--line-hard);
-  font-family:var(--font-mono);
-  color:var(--ink);
-  cursor:pointer;
-  transition:transform .12s steps(2), box-shadow .12s steps(2), background .12s;
-}
-.sticker:nth-child(3n+1){transform:rotate(-1.1deg);}
-.sticker:nth-child(3n+2){transform:rotate(.7deg);}
-.sticker:nth-child(3n+3){transform:rotate(-.4deg);}
-.sticker:hover,.sticker:focus-visible{
-  transform:rotate(0deg) translate(-3px,-3px);
-  box-shadow:9px 9px 0 var(--line-hard);
-  background:var(--surface-2);
-  outline:none;
-}
-.sticker:active{transform:rotate(0deg) translate(2px,2px);box-shadow:1px 1px 0 var(--line-hard);}
-
-.sticker__top{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:2px;}
-
-/* the object sits on a colour chip, like the desktop programs */
-.sticker .ico{
-  padding:8px;
-  border:2px solid var(--line-hard);
-  background:var(--chip, var(--chip4));
-  box-shadow:3px 3px 0 var(--line-hard);
-  --accent:var(--line-hard);
-  --cyan:var(--line-hard);
-  --yellow:var(--line-hard);
-  --lime:var(--line-hard);
-  --surface:#FFFFFF;
-  transition:transform .12s steps(2), box-shadow .12s steps(2);
-}
-.sticker:nth-child(4n+1) .ico{--chip:var(--chip1);}
-.sticker:nth-child(4n+2) .ico{--chip:var(--chip2);}
-.sticker:nth-child(4n+3) .ico{--chip:var(--chip3);}
-.sticker:nth-child(4n+4) .ico{--chip:var(--chip1);}
-.sticker:hover .ico{transform:translate(-2px,-2px) rotate(-4deg);box-shadow:5px 5px 0 var(--line-hard);}
-
-.sticker__no{
-  font-size:10px;
-  letter-spacing:.18em;
-  color:var(--faint);
-}
-.sticker__flag{
-  margin-left:auto;
-  background:var(--chip2);
-  border:1.5px solid var(--line-hard);
-  padding:3px 8px;
-  font-size:8.5px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-}
-.sticker__stat{
-  font-family:var(--font-display);
-  font-size:30px;
-  line-height:1.02;
-  color:var(--accent-text);
-}
-.sticker__sub{
-  font-size:9px;
-  line-height:1.45;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--faint);
-}
-.sticker__name{
-  font-family:var(--font-display);
-  font-size:15px;
-  line-height:1.25;
-  letter-spacing:.005em;
-  color:var(--ink);
-  margin-top:3px;
-}
-.sticker__open{
-  margin-top:auto;
-  padding-top:9px;
-  width:100%;
-  border-top:1px dashed var(--line);
-  font-size:9.5px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--accent-text);
-}
-
 /* ---- the pop-up ---- */
 
 .casemodal{
@@ -1853,6 +1751,40 @@ body::before{
     gap:6px;
   }
   .explorer__sidehd{display:none;}
+}
+
+/* ---- builds index rows ---- */
+.idx--builds li{gap:12px;}
+.idx__link{
+  flex:1;
+  min-width:0;
+  text-align:left;
+  background:none;
+  border:0;
+  padding:0;
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--ink);
+  border-bottom:1px solid transparent;
+  cursor:pointer;
+}
+.idx__link em{font-style:normal;color:var(--accent-text);}
+.idx__link:hover,.idx__link:focus-visible{border-bottom-color:var(--ink);outline:none;}
+.idx__flag{
+  flex:none;
+  background:var(--chip2);
+  border:1.5px solid var(--line-hard);
+  padding:2px 7px;
+  font-family:var(--font-mono);
+  font-size:8.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.idx__meta{font-variant-numeric:tabular-nums;}
+@media (max-width:700px){
+  .idx--builds li{flex-wrap:wrap;}
+  .idx__link{flex:1 1 100%;order:2;}
+  .idx__flag,.idx__meta{order:3;}
 }
 
 </style>

@@ -2290,21 +2290,20 @@ a.deskicon[aria-current="page"]{
     .window__bar.is-drag:hover{filter:brightness(1.06);}
   .window__bar.is-drag:active{filter:brightness(.96);}
 
-  .dragtip{
-    margin-left:10px;
-    flex:none;
-    background:var(--chip1);
-    color:var(--ink);
-    border:1.5px solid var(--line-hard);
-    padding:2px 8px;
-    font-family:var(--font-mono);
-    font-size:9px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    animation:tipbob 1.6s ease-in-out infinite;
-  }
-  @keyframes tipbob{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+
 }
+
+/* ---- the PS ---- */
+.ps{
+  max-width:1020px;
+  margin:22px auto 0;
+  padding:0 20px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  color:var(--desktop-dim);
+}
+@media (max-width:900px){ .ps{display:none;} }
 
 </style>
 </head>
@@ -2567,6 +2566,8 @@ a.deskicon[aria-current="page"]{
 
 </main>
 
+
+<p class="ps">PS: you can drag and drop this tab in a funky way</p>
 
 <footer class="colophon">
   <span>&copy; 2026 Tamara Omomo</span>
@@ -3068,26 +3069,6 @@ a.deskicon[aria-current="page"]{
         win.style.transform = "";
       });
     });
-  })();
-
-  /* ---- one-time nudge that windows are draggable ---- */
-  (function(){
-    if (window.matchMedia("(max-width:900px)").matches) return;
-    var KEY = "omomo-drag-tip";
-    try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
-    var bar = document.querySelector(".window__bar.is-drag");
-    if (!bar) return;
-    var tip = document.createElement("span");
-    tip.className = "dragtip";
-    tip.textContent = "\u2190 drag this window";
-    bar.appendChild(tip);
-    function dismiss(){
-      tip.remove();
-      try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
-      document.removeEventListener("pointerdown", dismiss);
-    }
-    document.addEventListener("pointerdown", dismiss);
-    setTimeout(dismiss, 14000);
   })();
 
   /* ---- resource explorer folders ---- */

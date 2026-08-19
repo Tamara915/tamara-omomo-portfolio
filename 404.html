@@ -2275,18 +2275,35 @@ a.deskicon[aria-current="page"]{
     opacity:.97;
   }
   .casewin.is-dragging,.contactwin.is-dragging{box-shadow:14px 14px 0 var(--line-hard);}
-  .window__bar.is-drag::after{
-    content:"";
-    width:20px;
-    height:9px;
-    margin-left:6px;
+  /* a grip that reads as "grab me" */
+  .grip{
     flex:none;
-    opacity:.35;
-    background-image:repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px);
-    background-size:20px 2px;
-    background-repeat:repeat-y;
-    background-position:0 2px, 0 6px;
+    width:13px;
+    height:17px;
+    margin-right:4px;
+    opacity:.8;
+    background-image:radial-gradient(currentColor 45%, transparent 46%);
+    background-size:5px 5px;
+    transition:opacity .12s, transform .12s;
   }
+  .window__bar.is-drag:hover .grip{opacity:1;transform:scale(1.12);}
+    .window__bar.is-drag:hover{filter:brightness(1.06);}
+  .window__bar.is-drag:active{filter:brightness(.96);}
+
+  .dragtip{
+    margin-left:10px;
+    flex:none;
+    background:var(--chip1);
+    color:var(--ink);
+    border:1.5px solid var(--line-hard);
+    padding:2px 8px;
+    font-family:var(--font-mono);
+    font-size:9px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    animation:tipbob 1.6s ease-in-out infinite;
+  }
+  @keyframes tipbob{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 }
 
 </style>
@@ -2941,6 +2958,11 @@ a.deskicon[aria-current="page"]{
       var win = bar.parentElement;
       if (!win) return;
       bar.classList.add("is-drag");
+      bar.title = "Drag to move \u00b7 double-click to reset";
+      var grip = document.createElement("span");
+      grip.className = "grip";
+      grip.setAttribute("aria-hidden", "true");
+      bar.insertBefore(grip, bar.firstChild);
 
       var dx = 0, dy = 0, sx = 0, sy = 0, baseL = 0, baseT = 0, dragging = false;
 
@@ -2987,6 +3009,26 @@ a.deskicon[aria-current="page"]{
         win.style.transform = "";
       });
     });
+  })();
+
+  /* ---- one-time nudge that windows are draggable ---- */
+  (function(){
+    if (window.matchMedia("(max-width:900px)").matches) return;
+    var KEY = "omomo-drag-tip";
+    try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+    var bar = document.querySelector(".window__bar.is-drag");
+    if (!bar) return;
+    var tip = document.createElement("span");
+    tip.className = "dragtip";
+    tip.textContent = "\u2190 drag this window";
+    bar.appendChild(tip);
+    function dismiss(){
+      tip.remove();
+      try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+      document.removeEventListener("pointerdown", dismiss);
+    }
+    document.addEventListener("pointerdown", dismiss);
+    setTimeout(dismiss, 14000);
   })();
 
   /* ---- resource explorer folders ---- */

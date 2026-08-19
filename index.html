@@ -1368,6 +1368,80 @@ body::before{
   .obj,.hangline{animation:none !important;transition:none !important;}
 }
 
+/* ================= glossy object icons ================= */
+
+.obj{
+  display:inline-block;
+  line-height:1;
+  filter:drop-shadow(0 3px 2px rgba(20,18,15,.3));
+  transform-origin:50% 0;
+  transition:transform .15s ease;
+}
+.obj-sm{font-size:17px;margin-right:8px;vertical-align:-3px;}
+.card .obj-sm{margin-right:8px;}
+.deskicon .obj-lg{font-size:54px;}
+.iconbtn .obj-sm{font-size:19px;margin-right:0;}
+
+.deskicon:hover .obj-lg{transform:scale(1.12) rotate(-4deg);}
+.deskicon:active .obj-lg{transform:scale(.94);}
+.card:hover .obj-sm,.iconbtn:hover .obj-sm{transform:scale(1.18) rotate(-6deg);}
+
+/* the deskicon chip styling only applies to pixel .ico, so emoji sit bare like the reference */
+.deskicon .obj-lg{padding:6px 0 2px;}
+
+@keyframes objbob{0%,92%,100%{transform:translateY(0)}96%{transform:translateY(-4px)}}
+.deskicon .obj-lg{animation:objbob 6s ease-in-out infinite;}
+.deskicon:nth-child(2) .obj-lg{animation-delay:1.5s;}
+.deskicon:nth-child(3) .obj-lg{animation-delay:3s;}
+.deskicon:nth-child(4) .obj-lg{animation-delay:4.5s;}
+.deskicon:hover .obj-lg{animation:none;}
+
+/* ---- the hanging receiver ---- */
+
+#contactmodal{padding-top:0;align-content:start;}
+
+.hangline{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-decoration:none;
+  margin:0 auto -8px;
+  transform-origin:50% 0;
+  animation:swing 3.4s ease-in-out infinite;
+  z-index:1;
+}
+.cord{
+  display:block;
+  width:3px;
+  height:clamp(34px,6vh,64px);
+  background:repeating-linear-gradient(180deg, var(--tel-line) 0 6px, transparent 6px 9px);
+}
+.receiver{
+  width:clamp(64px,10vw,92px);
+  height:auto;
+  transform:rotate(-38deg);
+  filter:drop-shadow(0 6px 4px rgba(20,18,15,.35));
+  transition:transform .15s ease;
+}
+.hangline:hover .receiver,.hangline:focus-visible .receiver{transform:rotate(-20deg) scale(1.1);}
+.hangline:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+@keyframes swing{0%,100%{transform:rotate(-3.5deg)}50%{transform:rotate(3.5deg)}}
+
+.pickup{
+  margin:0;
+  padding:9px 10px 3px;
+  text-align:center;
+  font-family:Georgia, "Times New Roman", serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .obj,.hangline{animation:none !important;transition:none !important;}
+}
+
 /* ================= contact scene (taiwoade-style) ================= */
 
 #contactmodal[hidden]{display:none;}
@@ -1969,16 +2043,17 @@ a.deskicon[aria-current="page"]{
 
 /* ---- the pop-up sits offset, so the window beneath still reads ---- */
 @media (min-width:901px){
-  .casemodal{
+  .casemodal:not(#contactmodal){
     align-items:flex-start;
     justify-content:flex-end;
     padding:0;
     background:rgba(20,18,15,.22);
   }
-  .casemodal .casewin{
+  .casemodal:not(#contactmodal) .casewin{
     margin:196px 5vw 70px 0;
     max-width:640px;
   }
+  #contactmodal .contactwin{max-width:430px;margin:auto;}
   /* the stack and telemetry stay centred — they aren't part of the folder scene */
   #m-w-stack, #m-w-telemetry{
     align-items:start;
@@ -2048,6 +2123,121 @@ a.deskicon[aria-current="page"]{
   .window{margin-bottom:16px;}
 }
 
+/* ================= contact, framed as a window ================= */
+
+#contactmodal{
+  background:rgba(20,18,15,.42);
+  align-items:center;
+  justify-content:center;
+  padding:20px 16px;
+  overflow-y:auto;
+}
+.contactwin{max-width:430px;margin:auto;}
+.contactwin__body{
+  padding:6px 22px 22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  background:var(--surface);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:38px 38px;
+}
+
+.hangline{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-decoration:none;
+  transform-origin:50% 0;
+  animation:swing 3.4s ease-in-out infinite;
+}
+.cord{
+  display:block;
+  width:3px;
+  height:34px;
+  background:repeating-linear-gradient(180deg, var(--tel-line) 0 6px, transparent 6px 9px);
+}
+.receiver{
+  width:78px;
+  height:auto;
+  transform:rotate(-38deg);
+  filter:drop-shadow(0 5px 3px rgba(20,18,15,.3));
+  transition:transform .15s ease;
+}
+.hangline:hover .receiver,.hangline:focus-visible .receiver{transform:rotate(-20deg) scale(1.08);}
+.hangline:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+@keyframes swing{0%,100%{transform:rotate(-3.5deg)}50%{transform:rotate(3.5deg)}}
+
+.pickup{
+  margin:14px 0 0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--muted);
+}
+.contact-tag{
+  margin:5px 0 0;
+  font-family:var(--font-display);
+  font-size:22px;
+  line-height:1.2;
+  color:var(--ink);
+}
+.contact-cta{
+  margin-top:16px;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  background:var(--chip1);
+  color:var(--ink);
+  border:2px solid var(--line-hard);
+  box-shadow:3px 3px 0 var(--line-hard);
+  padding:11px 18px;
+  text-decoration:none;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  transition:transform .1s steps(2), box-shadow .1s steps(2), background .1s;
+}
+.contact-cta:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--line-hard);background:var(--chip2);}
+.contact-cta:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--line-hard);}
+.contact-cta:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+.contact-links{
+  margin-top:16px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:6px 18px;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.contact-links a{
+  text-decoration:none;
+  color:var(--ink);
+  border-bottom:2px solid var(--line);
+  padding:4px 2px;
+}
+.contact-links a:hover,.contact-links a:focus-visible{border-bottom-color:var(--accent);outline:none;}
+
+@media (max-width:700px){
+  #contactmodal{padding:12px 10px;align-items:flex-start;}
+  .contactwin{max-width:100%;}
+  .contactwin__body{padding:4px 14px 18px;}
+  .receiver{width:64px;}
+  .cord{height:26px;}
+  .contact-tag{font-size:19px;}
+  .contact-cta{width:100%;justify-content:center;}
+  .contact-links{gap:4px 14px;}
+  .contact-links a{padding:9px 2px;}
+}
+
 </style>
 </head>
 <body>
@@ -2081,28 +2271,39 @@ a.deskicon[aria-current="page"]{
 </div>
 
 
-<div class="scrim" id="contactmodal" hidden>
-  <button class="contact-x" data-modal-close="contactmodal" aria-label="Close contact">&times;</button>
-  <a class="hangline" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener" aria-label="Pick up the phone — book a conversation">
-    <i class="cord"></i>
-    <svg class="receiver" viewBox="0 0 76 76" aria-hidden="true">
-      <path d="M17 53 A 31 31 0 0 1 53 17" stroke="var(--tel-line)" stroke-width="24" fill="none" stroke-linecap="round"/>
-      <path d="M17 53 A 31 31 0 0 1 53 17" stroke="var(--tel-body)" stroke-width="16" fill="none" stroke-linecap="round"/>
-      <ellipse cx="17" cy="53" rx="14" ry="9.5" transform="rotate(-50 17 53)" fill="var(--tel-body)" stroke="var(--tel-line)" stroke-width="3"/>
-      <ellipse cx="53" cy="17" rx="14" ry="9.5" transform="rotate(-50 53 17)" fill="var(--tel-body)" stroke="var(--tel-line)" stroke-width="3"/>
-      <ellipse cx="17" cy="53" rx="7" ry="4.5" transform="rotate(-50 17 53)" fill="var(--tel-shade)"/>
-      <ellipse cx="53" cy="17" rx="7" ry="4.5" transform="rotate(-50 53 17)" fill="var(--tel-shade)"/>
-    </svg>
-  </a>
-  <p class="pickup">(pick up the phone &uarr;)</p>
-  <p class="contact-tag">for hiring + collabs.</p>
-  <a class="contact-cta" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener">Book a conversation <span aria-hidden="true">&rarr;</span></a>
-  <nav class="contact-links" aria-label="Contact channels">
-    <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack</a>
-    <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener">R&eacute;sum&eacute; / CV</a>
-    <a href="mailto:omomo.oj@gmail.com">Email</a>
-  </nav>
+<div class="scrim casemodal" id="contactmodal" hidden>
+  <div class="casewin contactwin" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+    <div class="window__bar">
+      <svg class="ico ico--mail" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="14" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="12" height="1" fill="var(--surface)"/><rect x="14" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="1" fill="currentColor"/><rect x="2" y="4" width="1" height="1" fill="var(--accent)"/><rect x="3" y="4" width="10" height="1" fill="var(--surface)"/><rect x="13" y="4" width="1" height="1" fill="var(--accent)"/><rect x="14" y="4" width="1" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="1" height="1" fill="var(--surface)"/><rect x="3" y="5" width="2" height="1" fill="var(--accent)"/><rect x="5" y="5" width="6" height="1" fill="var(--surface)"/><rect x="11" y="5" width="2" height="1" fill="var(--accent)"/><rect x="13" y="5" width="1" height="1" fill="var(--surface)"/><rect x="14" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="3" height="1" fill="var(--surface)"/><rect x="5" y="6" width="2" height="1" fill="var(--accent)"/><rect x="7" y="6" width="2" height="1" fill="var(--surface)"/><rect x="9" y="6" width="2" height="1" fill="var(--accent)"/><rect x="11" y="6" width="3" height="1" fill="var(--surface)"/><rect x="14" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--surface)"/><rect x="7" y="7" width="2" height="1" fill="var(--accent)"/><rect x="9" y="7" width="5" height="1" fill="var(--surface)"/><rect x="14" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="3" height="1" fill="var(--surface)"/><rect x="5" y="8" width="2" height="1" fill="var(--accent)"/><rect x="7" y="8" width="2" height="1" fill="var(--surface)"/><rect x="9" y="8" width="2" height="1" fill="var(--accent)"/><rect x="11" y="8" width="3" height="1" fill="var(--surface)"/><rect x="14" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="1" height="1" fill="var(--surface)"/><rect x="3" y="9" width="2" height="1" fill="var(--accent)"/><rect x="5" y="9" width="6" height="1" fill="var(--surface)"/><rect x="11" y="9" width="2" height="1" fill="var(--accent)"/><rect x="13" y="9" width="1" height="1" fill="var(--surface)"/><rect x="14" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="1" height="1" fill="var(--accent)"/><rect x="3" y="10" width="10" height="1" fill="var(--surface)"/><rect x="13" y="10" width="1" height="1" fill="var(--accent)"/><rect x="14" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
+      <span class="window__name" id="contact-title">contact.exe</span>
+      <span class="window__ref">open channel</span>
+      <button class="window__close" data-modal-close="contactmodal" aria-label="Close contact">&times;</button>
+    </div>
+    <div class="menubar"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>H</u>elp</span></div>
+    <div class="contactwin__body">
+      <a class="hangline" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener" aria-label="Pick up the phone — book a conversation">
+        <i class="cord"></i>
+        <svg class="receiver" viewBox="0 0 76 76" aria-hidden="true">
+          <path d="M17 53 A 31 31 0 0 1 53 17" stroke="var(--tel-line)" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <path d="M17 53 A 31 31 0 0 1 53 17" stroke="var(--tel-body)" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <ellipse cx="17" cy="53" rx="14" ry="9.5" transform="rotate(-50 17 53)" fill="var(--tel-body)" stroke="var(--tel-line)" stroke-width="3"/>
+          <ellipse cx="53" cy="17" rx="14" ry="9.5" transform="rotate(-50 53 17)" fill="var(--tel-body)" stroke="var(--tel-line)" stroke-width="3"/>
+          <ellipse cx="17" cy="53" rx="7" ry="4.5" transform="rotate(-50 17 53)" fill="var(--tel-shade)"/>
+          <ellipse cx="53" cy="17" rx="7" ry="4.5" transform="rotate(-50 53 17)" fill="var(--tel-shade)"/>
+        </svg>
+      </a>
+      <p class="pickup">(pick up the phone &uarr;)</p>
+      <p class="contact-tag">for hiring + collabs.</p>
+      <a class="contact-cta" href="https://calendly.com/omomo-oj/intro-conversation" target="_blank" rel="noopener">Book a conversation <span aria-hidden="true">&rarr;</span></a>
+      <nav class="contact-links" aria-label="Contact channels">
+        <a href="https://www.linkedin.com/in/tamara-omomo/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://substack.com/@tamaraomomo" target="_blank" rel="noopener">Substack</a>
+        <a href="https://docs.google.com/document/d/1ZizhIk2o-Jp9eopj6Be41oMVhywWKPYZUBPDq5irOlk/edit?usp=sharing" target="_blank" rel="noopener">R&eacute;sum&eacute; / CV</a>
+        <a href="mailto:omomo.oj@gmail.com">Email</a>
+      </nav>
+    </div>
+    <div class="statusbar"><span>Ready</span><span>omomo.oj@gmail.com</span></div>
+  </div>
 </div>
 <div class="scrim casemodal" id="m-w-telemetry" hidden>
   <div class="casewin" role="dialog" aria-modal="true" aria-label="Telemetry">

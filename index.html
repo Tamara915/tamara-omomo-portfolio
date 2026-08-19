@@ -2265,6 +2265,30 @@ a.deskicon[aria-current="page"]{
   .notfound__acts .contact-cta,.notfound__acts .btn-line{width:100%;justify-content:center;text-align:center;}
 }
 
+/* ---- draggable windows ---- */
+@media (min-width:901px){
+  .window__bar.is-drag{cursor:move;touch-action:none;user-select:none;}
+  .window__bar.is-drag .window__name{cursor:move;}
+  .window{position:relative;}
+  .window.is-dragging{
+    box-shadow:0 18px 0 -6px rgba(0,0,0,.3), 12px 12px 0 var(--line-hard);
+    opacity:.97;
+  }
+  .casewin.is-dragging,.contactwin.is-dragging{box-shadow:14px 14px 0 var(--line-hard);}
+  .window__bar.is-drag::after{
+    content:"";
+    width:20px;
+    height:9px;
+    margin-left:6px;
+    flex:none;
+    opacity:.35;
+    background-image:repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px);
+    background-size:20px 2px;
+    background-repeat:repeat-y;
+    background-position:0 2px, 0 6px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2941,6 +2965,63 @@ a.deskicon[aria-current="page"]{
       window.addEventListener("resize", bsize);
       stopBootRain = function(){ if (braf) cancelAnimationFrame(braf); braf = null; };
     }
+  })();
+
+  /* ---- windows drag by their title bar ---- */
+  (function(){
+    if (window.matchMedia("(max-width:900px)").matches) return;   // phones scroll instead
+    var top = 40;
+
+    document.querySelectorAll(".window__bar").forEach(function(bar){
+      var win = bar.parentElement;
+      if (!win) return;
+      bar.classList.add("is-drag");
+
+      var dx = 0, dy = 0, sx = 0, sy = 0, baseL = 0, baseT = 0, dragging = false;
+
+      bar.addEventListener("pointerdown", function(e){
+        if (e.target.closest("button, a, .menubar")) return;
+        var r = win.getBoundingClientRect();
+        baseL = r.left - dx;
+        baseT = r.top - dy;
+        sx = e.clientX; sy = e.clientY;
+        dragging = true;
+        win.style.zIndex = ++top;
+        win.classList.add("is-dragging");
+        try { bar.setPointerCapture(e.pointerId); } catch (err) {}
+        e.preventDefault();
+      });
+
+      bar.addEventListener("pointermove", function(e){
+        if (!dragging) return;
+        var w = win.offsetWidth, h = win.offsetHeight;
+        var nx = dx + (e.clientX - sx), ny = dy + (e.clientY - sy);
+        // never let a window get lost: keep 140px of it and its bar on screen
+        var minX = -(baseL + w - 140), maxX = window.innerWidth - baseL - 140;
+        var minY = -baseT, maxY = window.innerHeight - baseT - 46;
+        nx = Math.max(minX, Math.min(maxX, nx));
+        ny = Math.max(minY, Math.min(maxY, ny));
+        win.style.transform = "translate(" + nx + "px," + ny + "px)";
+        win._ox = nx; win._oy = ny;
+      });
+
+      function end(e){
+        if (!dragging) return;
+        dragging = false;
+        dx = win._ox || dx; dy = win._oy || dy;
+        win.classList.remove("is-dragging");
+        try { bar.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+      bar.addEventListener("pointerup", end);
+      bar.addEventListener("pointercancel", end);
+
+      // double-click the bar to put it back
+      bar.addEventListener("dblclick", function(e){
+        if (e.target.closest("button, a")) return;
+        dx = 0; dy = 0; win._ox = 0; win._oy = 0;
+        win.style.transform = "";
+      });
+    });
   })();
 
   /* ---- resource explorer folders ---- */

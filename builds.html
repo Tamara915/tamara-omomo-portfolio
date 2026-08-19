@@ -2237,6 +2237,34 @@ a.deskicon[aria-current="page"]{
   .contact-links a{padding:9px 2px;}
 }
 
+/* ---- 404 ---- */
+.notfound{
+  background:var(--surface);
+  padding:44px 24px 40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:6px;
+}
+.notfound .ico{image-rendering:pixelated;filter:drop-shadow(3px 3px 0 rgba(20,18,15,.28));margin-bottom:10px;}
+.notfound__code{
+  margin:0;
+  font-family:var(--font-display);
+  font-size:clamp(44px,9vw,76px);
+  line-height:1;
+  color:var(--accent-text);
+}
+.notfound__msg{margin:6px 0 0;font-family:var(--font-display);font-size:clamp(17px,3vw,22px);color:var(--ink);}
+.notfound__sub{margin:2px 0 0;font-family:var(--font-mono);font-size:12px;color:var(--muted);max-width:42ch;}
+.notfound__acts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;}
+.notfound__acts .contact-cta{margin-top:0;}
+@media (max-width:700px){
+  .notfound{padding:30px 16px 28px;}
+  .notfound__acts{width:100%;}
+  .notfound__acts .contact-cta,.notfound__acts .btn-line{width:100%;justify-content:center;text-align:center;}
+}
+
 </style>
 </head>
 <body>

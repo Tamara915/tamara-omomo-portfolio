@@ -2446,7 +2446,7 @@ a.deskicon[aria-current="page"]{
   <h1 class="visually-hidden">Case studies &mdash; Tamara Omomo, AI GTM Engineer</h1>
 
 
-  <section class="window win--explorer" id="index" data-open-default="m-case-07">
+  <section class="window win--explorer" id="index">
     <div class="window__bar">
       <svg class="ico ico--folder" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="2" width="5" height="1" fill="currentColor"/><rect x="1" y="3" width="1" height="1" fill="currentColor"/><rect x="2" y="3" width="3" height="1" fill="var(--yellow)"/><rect x="5" y="3" width="1" height="1" fill="currentColor"/><rect x="6" y="3" width="1" height="1" fill="var(--yellow)"/><rect x="7" y="3" width="1" height="1" fill="currentColor"/><rect x="1" y="4" width="13" height="1" fill="currentColor"/><rect x="1" y="5" width="1" height="1" fill="currentColor"/><rect x="2" y="5" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="5" width="1" height="1" fill="currentColor"/><rect x="1" y="6" width="1" height="1" fill="currentColor"/><rect x="2" y="6" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="6" width="1" height="1" fill="currentColor"/><rect x="1" y="7" width="1" height="1" fill="currentColor"/><rect x="2" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="7" y="7" width="1" height="1" fill="var(--cyan)"/><rect x="8" y="7" width="5" height="1" fill="var(--yellow)"/><rect x="13" y="7" width="1" height="1" fill="currentColor"/><rect x="1" y="8" width="1" height="1" fill="currentColor"/><rect x="2" y="8" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="8" width="1" height="1" fill="currentColor"/><rect x="1" y="9" width="1" height="1" fill="currentColor"/><rect x="2" y="9" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="9" width="1" height="1" fill="currentColor"/><rect x="1" y="10" width="1" height="1" fill="currentColor"/><rect x="2" y="10" width="11" height="1" fill="var(--yellow)"/><rect x="13" y="10" width="1" height="1" fill="currentColor"/><rect x="1" y="11" width="14" height="1" fill="currentColor"/></svg>
       <span class="window__name">builds &mdash; tamara_omomo</span>
@@ -3283,15 +3283,6 @@ a.deskicon[aria-current="page"]{
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
 
-    // the explorer opens with its first folder already showing, like the reference
-    if (!location.hash) {
-      var host = document.querySelector("[data-open-default]");
-      if (host) {
-        var id = host.getAttribute("data-open-default");
-        var trigger = document.querySelector('[data-modal="' + id + '"]');
-        show(id, trigger);
-      }
-    }
 
     document.querySelectorAll(".scrim[id]").forEach(function(m){
       m.addEventListener("click", function(e){ if (e.target === m) hide(m.id); });

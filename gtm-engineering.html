@@ -3031,15 +3031,6 @@ a.deskicon[aria-current="page"]{
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
 
-    // the explorer opens with its first folder already showing, like the reference
-    if (!location.hash) {
-      var host = document.querySelector("[data-open-default]");
-      if (host) {
-        var id = host.getAttribute("data-open-default");
-        var trigger = document.querySelector('[data-modal="' + id + '"]');
-        show(id, trigger);
-      }
-    }
 
     document.querySelectorAll(".scrim[id]").forEach(function(m){
       m.addEventListener("click", function(e){ if (e.target === m) hide(m.id); });

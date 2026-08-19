@@ -1,8 +1,8 @@
 {
   "name": "tamaraomomo-portfolio",
   "private": true,
-  "description": "Static site \u2014 this package.json exists only so Netlify installs @netlify/blobs before bundling the serverless functions.",
+  "description": "Static site. This package.json exists so Netlify installs @netlify/blobs before bundling the serverless functions. The version is pinned exactly: 11.0.1 requires Node >= 22.12, which netlify.toml sets. A newer release could raise that floor again and break the build.",
   "dependencies": {
-    "@netlify/blobs": "^11.0.1"
+    "@netlify/blobs": "11.0.1"
   }
 }

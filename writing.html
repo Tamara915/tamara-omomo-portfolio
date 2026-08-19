@@ -8,6 +8,8 @@
 <meta property="og:title" content="Thoughts — Tamara Omomo, AI GTM Engineer">
 <meta property="og:description" content="Writing on GTM engineering, AI agents and revenue systems.">
 <meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
 
 /* =============================================================
@@ -169,7 +171,7 @@ a{color:inherit;}
   background:var(--accent);
   margin-right:7px;
   vertical-align:1px;
-  animation:pulse 1.6s ease-in-out infinite;
+  opacity:.9;
 }
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 
@@ -1260,12 +1262,9 @@ body::before{
 :is(.deskicon,.bay li,.iconbtn):hover .ico--pen{animation:tick .45s steps(3) infinite;}
 
 /* a slow idle bob so the desktop feels alive before anyone touches it */
-@keyframes idlebob{0%,92%,100%{transform:translateY(0)}96%{transform:translateY(-4px)}}
-.deskicon .ico{animation:idlebob 6s ease-in-out infinite;}
-.deskicon:nth-child(2) .ico{animation-delay:1.5s;}
-.deskicon:nth-child(3) .ico{animation-delay:3s;}
-.deskicon:nth-child(4) .ico{animation-delay:4.5s;}
-.deskicon:hover .ico{animation:none;}
+/* icons stay still until you touch them */
+.deskicon .ico{transition:transform .14s steps(2);}
+.deskicon:hover .ico{transform:translateY(-3px);}
 
 @media (prefers-reduced-motion: reduce){
   .ico{animation:none !important;}
@@ -2637,7 +2636,7 @@ a.deskicon[aria-current="page"]{
         head: spread ? ((Math.random() * (visible + len)) | 0) : -(1 + ((Math.random() * 6) | 0)),
         chars: chars,
         len: len,
-        every: 1 + ((Math.random() * 3) | 0),
+        every: 2 + ((Math.random() * 4) | 0),
         t: 0,
         hot: Math.random() < 0.1
       };
@@ -2690,6 +2689,11 @@ a.deskicon[aria-current="page"]{
       raf = requestAnimationFrame(frame);
     }
 
+    document.addEventListener("visibilitychange", function(){
+      if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+      else if (!raf && !reduce && !open.hidden) { raf = requestAnimationFrame(frame); }
+    });
+
     window.addEventListener("resize", function(){ readPalette(); size(); });
     if (window.ResizeObserver) {
       var ro = new ResizeObserver(function(){ readPalette(); size(); });
@@ -2726,7 +2730,7 @@ a.deskicon[aria-current="page"]{
         val: document.getElementById("p" + i + "v"),
         name: document.getElementById("p" + i + "n"),
         v: Math.random() * 70,
-        sp: 0.35 + Math.random() * 0.9
+        sp: 1.1 + Math.random() * 2.2
       };
     }).filter(function(b){ return b.el; });
 
@@ -2757,13 +2761,13 @@ a.deskicon[aria-current="page"]{
         b.v += b.sp;
         if (b.v >= 100) {
           b.v = 0;
-          b.sp = 0.35 + Math.random() * 0.9;
+          b.sp = 1.1 + Math.random() * 2.2;
           if (b.name) b.name.textContent = nextJob();
         }
         b.el.style.width = b.v.toFixed(0) + "%";
         b.val.textContent = b.v.toFixed(0) + "%";
       });
-      spark.textContent = "////////".slice(0, 1 + (Math.floor(Date.now() / 220) % 8));
+      spark.textContent = "////////".slice(0, 1 + (Math.floor(Date.now() / 900) % 8));
     }
     function pushLine(){
       lines.push(LOG[li % LOG.length]);
@@ -2773,8 +2777,8 @@ a.deskicon[aria-current="page"]{
     }
     pushLine(); pushLine(); pushLine();
     if (!reduce) {
-      setInterval(step, 90);
-      setInterval(pushLine, 1900);
+      setInterval(step, 320);
+      setInterval(pushLine, 4200);
     }
   }
 

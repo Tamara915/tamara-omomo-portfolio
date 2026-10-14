@@ -16,16 +16,4 @@
     <loc>https://tamaraomomo.com/about.html</loc>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://tamaraomomo.com/gtm-engineering</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tamaraomomo.com/ai-gtm</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tamaraomomo.com/revenue-systems</loc>
-    <priority>0.6</priority>
-  </url>
 </urlset>

@@ -1,4 +1,7 @@
 # Old URLs → new
+/gtm-engineering  /builds.html  301!
+/ai-gtm           /builds.html  301!
+/revenue-systems  /builds.html  301!
 /work.html        /builds.html  301!
 /work             /builds.html  301!
 
@@ -8,9 +11,6 @@
 /thoughts         /writing.html          200
 /writing          /writing.html          200
 /about            /about.html            200
-/gtm-engineering  /gtm-engineering.html  200
-/ai-gtm           /ai-gtm.html           200
-/revenue-systems  /revenue-systems.html  200
 /admin            /admin.html            200
 
 # Working files that live in the repo but should not be publicly reachable
